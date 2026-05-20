@@ -93,9 +93,9 @@ The core framework for this project. Pick one.
 
 | Tool | Active |
 |------|--------|
-| Vitest | `[active]` |
+| Vitest | |
 | Jest | |
-| None | |
+| None | `[active]` |
 
 ### E2E testing
 
