@@ -390,6 +390,7 @@ language. Agents must follow them when generating any file.
 - No raw values without a name — any number, size, duration, or colour used in code must be extracted to a named constant or design token so its purpose is clear and it can be changed in one place. For example, use `var(--space-md)` rather than `24px`, and `const retryDelayMs = 5000` rather than `5000`
 - No hardcoded colour values anywhere in stylesheets — always reference a CSS custom property
 - Prefer explicit over implicit — if something isn't obvious from the surrounding code, name it
+- **Modern platform first** — read `docs/modern-platform-guide.md` before writing any HTML, CSS, or JavaScript. Use native platform APIs unless that file explicitly permits a fallback.
 
 ### Secure coding
 
@@ -420,6 +421,7 @@ They apply regardless of which agent is used.
 - **Do not install unlisted dependencies** — only install packages directly required by the active stack selections or an explicit spec requirement
 - **Design tokens before styles** — read `docs/design-tokens.md` before writing any CSS. If the file is empty or incomplete, stop and ask the user to fill it in
 - **Read security config before generating HTML or deployment config** — read `docs/security.md` before generating `index.html`, `_headers`, `vercel.json`, or any middleware file. The header values and CSP directives defined there are the source of truth
+- **Modern platform before implementation** — read `docs/modern-platform-guide.md` before writing any HTML, CSS, or JavaScript. Use native platform APIs and features unless that file explicitly permits a fallback.
 - **Tests before implementation** — write tests first, then implement until they pass
 - **One spec at a time** — unless explicitly asked to scaffold multiple specs at once, implement one spec per session and confirm before moving to the next
 - **Read compatibility notes before setup** — before generating any config file, check the Stack compatibility notes section above for the active stack combination and follow any instructions there
