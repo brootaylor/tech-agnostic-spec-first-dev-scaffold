@@ -38,6 +38,7 @@ Both paths follow the same workflow and use the same specs.
 - **Spec-first workflow** — specs are written before any code is produced. The spec is the source of truth throughout, for humans and agents alike
 - **Tech-agnostic** — works with Vanilla, Astro, Eleventy, React, or Svelte out of the box. Framework, language, styles, testing tools, and build tool are all configurable via a simple stack selector in `docs/project-brief.md`
 - **AI agent agnostic** — not tied to any specific AI agent. Includes config for Claude Code, Cursor, and GitHub Copilot out of the box, with a clear pattern for adding others
+- **Modern platform guide** — a reference for which web platform APIs and features to use, and when a fallback is acceptable. Agents must read it before writing any HTML, CSS, or JavaScript
 - **Optional: service worker** — offline and caching support with a strategy selector and framework-specific guidance
 - **Optional: Storybook** — component development and documentation environment, with setup guidance for React, Svelte, and plain JavaScript
 - **Optional: security guidelines** — configurable security measures and best practices to follow during development, with framework-specific notes
@@ -48,6 +49,12 @@ Both paths follow the same workflow and use the same specs.
 ## Choosing your stack
 
 [`docs/project-brief.md`](./docs/project-brief.md) is the single source of truth for the project. It includes a stack selector where you mark your preferred framework, language, styles, testing tools, and build tool. Both humans and agents read it before doing anything.
+
+---
+
+## Modern platform guide
+
+[`docs/modern-platform-guide.md`](./docs/modern-platform-guide.md) defines which web platform APIs and features to use, and when a fallback is acceptable. Agents must read it before writing any HTML, CSS, or JavaScript. It's the source of truth for which modern features to use and when.
 
 ---
 
@@ -77,6 +84,7 @@ my-project/
 │
 ├── docs/
 │   ├── project-brief.md                  # ← single source of truth: stack, conventions, agent rules
+│   ├── modern-platform-guide.md          # ← which web platform APIs and features to use
 │   ├── design-tokens.md                  # ← colour, spacing, and typography definitions
 │   ├── service-worker.md                 # ← optional: caching strategy configuration
 │   ├── storybook.md                      # ← optional: component documentation environment

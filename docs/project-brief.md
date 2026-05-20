@@ -504,6 +504,7 @@ src/
   types/                                      # ← global types (TypeScript only)
 docs/
   project-brief.md                            # ← this file
+  modern-platform-guide.md                    # ← which web platform APIs and features to use
   design-tokens.md                            # ← design token definitions
   service-worker.md                           # ← service worker configuration
   storybook.md                                # ← storybook configuration
