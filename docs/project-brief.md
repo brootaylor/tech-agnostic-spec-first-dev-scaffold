@@ -167,6 +167,7 @@ CSP configuration, and framework-specific setup guidance.
 
 > Find your active selections in the sections below before generating any config files.
 > Each section is independent — only read what applies to your stack.
+> Humans should review the notes and follow any instructions before setup. Agents must follow the instructions when generating config files.
 
 ---
 
