@@ -29,20 +29,23 @@ These are the only sections you need to fill in before starting. Everything else
 
 **What it is:**
 > *One or two sentences describing the product. For example:
+> 
 > "A static documentation site for a component library. It covers usage guidelines, code examples, and design principles."*
 
 **Who it's for:**
 > *Who uses it and in what context. For example:
+> 
 > "Front-end developers at the company who need a reference when building new features."*
 
 **Key goals:**
 > *What does success look like? For example:
+> 
 > "Fast load times, accessible to WCAG 2.1 AA, easy to update without a developer."*
 
 **Known constraints:**
 > *Anything that limits what can be built or how. This includes technical constraints,
 > business rules, and environmental requirements. For example:*
->
+> 
 > - *"Must work without JavaScript enabled for core content"*
 > - *"No external analytics or third-party scripts"*
 > - *"Must support Safari 15 and above due to the user base — note any required polyfills in the Browser support section"*
