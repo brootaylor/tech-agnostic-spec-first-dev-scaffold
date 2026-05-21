@@ -28,23 +28,22 @@ These are the only sections you need to fill in before starting. Everything else
 > is as a reference — for you and for any AI agent working on the project.*
 
 **What it is:**
-> *One or two sentences describing the product. For example:
+> One or two sentences describing the product. For example:
 > 
-> "A static documentation site for a component library. It covers usage guidelines, code examples, and design principles."*
+> *"A static documentation site for a component library. It covers usage guidelines, code examples, and design principles."*
 
 **Who it's for:**
-> *Who uses it and in what context. For example:
+> Who uses it and in what context. For example:
 > 
-> "Front-end developers at the company who need a reference when building new features."*
+> *"Front-end developers at the company who need a reference when building new features."*
 
 **Key goals:**
-> *What does success look like? For example:
+> What does success look like? For example:
 > 
-> "Fast load times, accessible to WCAG 2.1 AA, easy to update without a developer."*
+> *"Fast load times, accessible to WCAG 2.1 AA, easy to update without a developer."*
 
 **Known constraints:**
-> *Anything that limits what can be built or how. This includes technical constraints,
-> business rules, and environmental requirements. For example:*
+> Anything that limits what can be built or how. This includes technical constraints, business rules, and environmental requirements. For example:
 > 
 > - *"Must work without JavaScript enabled for core content"*
 > - *"No external analytics or third-party scripts"*
