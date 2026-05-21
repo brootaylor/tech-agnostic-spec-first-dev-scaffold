@@ -69,7 +69,9 @@ The core framework for this project. Pick one.
 | Astro | |
 | **Component Frameworks** | |
 | React | |
+| React + Next.js | |
 | Svelte | |
+| Svelte + SvelteKit | |
 | **No framework** | |
 | Vanilla | `[active]` |
 
@@ -162,14 +164,34 @@ CSP configuration, and framework-specific setup guidance.
 
 ## Stack compatibility notes
 
-Notes on combinations that require specific setup steps or additional packages
-beyond the defaults. Agents must read the relevant note below before generating
-any config file for that combination.
+> Find your active selections in the sections below before generating any config files.
+> Each section is independent — only read what applies to your stack.
 
-- **Eleventy** — includes its own build pipeline. Build selection does not apply
-- **Astro** — includes its own build pipeline. Build selection does not apply
-- **React** — pair with Vite for a simple setup, or Next.js for a full meta-framework. Build selection does not apply
-- **Svelte** — pair with Vite for a simple setup, or SvelteKit for a full meta-framework. Build selection does not apply
+---
+
+### Build pipeline
+
+Notes for frameworks that manage their own build pipeline. The **Build** selection
+in the Stack section above does not apply to these.
+
+- **Eleventy** — includes its own build pipeline; ignore the Build selection
+- **Astro** — includes its own build pipeline; ignore the Build selection
+- **React** — if `React + Next.js` is not active, ask before setup:
+  *"Do you want a simple Vite setup, or a full meta-framework with Next.js?"*
+  Mark the answer active in the Framework table before continuing. Ignore the Build selection either way.
+- **Svelte** — if `Svelte + SvelteKit` is not active, ask before setup:
+  *"Do you want a simple Vite setup, or a full meta-framework with SvelteKit?"*
+  Mark the answer active in the Framework table before continuing. Ignore the Build selection either way.
+- **React + Next.js** — Next.js manages its own build pipeline; ignore the Build selection
+- **Svelte + SvelteKit** — SvelteKit manages its own build pipeline; ignore the Build selection
+
+---
+
+### Tool combinations
+
+Notes for specific combinations that require extra setup steps or have known
+conflicts. Check here whenever two or more selections interact.
+
 - **Vanilla + Vite + Jest** — Jest requires additional config to handle ESM modules in a Vite project. Prefer Vitest for Vite-based stacks to avoid this complexity
 - **Tailwind** — requires PostCSS config. Install `tailwindcss`, `postcss`, and `autoprefixer` as dev dependencies and generate `tailwind.config.js`
 - **Tailwind + Astro** — use the official `@astrojs/tailwind` integration (`npx astro add tailwind`) rather than configuring PostCSS manually; the integration handles the config automatically
@@ -179,10 +201,12 @@ any config file for that combination.
 - **ESLint + Svelte** — add `eslint-plugin-svelte` as a dev dependency
 - **ESLint + Astro** — add `eslint-plugin-astro` and `astro-eslint-parser` as dev dependencies. The `.eslintrc` must set `astro-eslint-parser` as the parser for `.astro` files
 
-### Framework-specific testing setup
+---
 
-Testing tools require framework-specific wiring that goes beyond a standard
-install. Read the relevant note below before generating any test config file.
+### Testing setup
+
+Testing tools require framework-specific wiring beyond a standard install. Read
+the relevant entry below before generating any test config file.
 
 **React + Vitest**
 - Install `@testing-library/react`, `@testing-library/jest-dom`, and `jsdom`
@@ -220,7 +244,9 @@ install. Read the relevant note below before generating any test config file.
 - Eleventy manages its own build; Vitest is configured independently with no special integration needed
 - Vitest will only run tests against JS/TS utility modules — it cannot test Eleventy templates directly
 
-### Framework-specific TypeScript setup
+---
+
+### TypeScript setup
 
 **Astro + TypeScript**
 - Install `@astrojs/check` and `typescript` as dev dependencies
@@ -237,7 +263,9 @@ install. Read the relevant note below before generating any test config file.
 - This significantly increases setup complexity. If TypeScript is only needed for the Eleventy
   config file itself, use a `.eleventy.ts` approach with `ts-node` instead
 
-### Framework-specific Sass setup
+---
+
+### Sass setup
 
 **Astro + Sass**
 - Install `sass` only — Astro's Vite integration handles compilation automatically. No PostCSS
@@ -248,7 +276,9 @@ install. Read the relevant note below before generating any test config file.
   (e.g. the `sass` CLI with `--watch`, or a Gulp task). Add the compiled CSS output directory
   to `.gitignore` and to Eleventy's passthrough copy config
 
-### Storybook compatibility
+---
+
+### Storybook
 
 **Astro + Storybook** and **Eleventy + Storybook**
 - Do not run `npx storybook@latest init` without checking compatibility first — support for
@@ -528,7 +558,9 @@ docs/
 
 - **Vanilla + Vite** — `src/index.html` is the default home page and `src/scripts/main.js` is the JavaScript file it references. Both are included as minimal starting files to build out
 - **React** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the React app
+- **React + Next.js** — pages and routing are managed by Next.js. Remove `src/index.html` and `src/scripts/main.js` if switching to Next.js
 - **Svelte** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the Svelte app
+- **Svelte + SvelteKit** — pages and routing are managed by SvelteKit. Remove `src/index.html` and `src/scripts/main.js` if switching to SvelteKit
 - **Astro** — pages and templating are managed by Astro's own file-based routing. Remove `src/index.html` and `src/scripts/main.js` if switching to Astro
 - **Eleventy** — pages and templating are managed by Eleventy's own templating system. Remove `src/index.html` and `src/scripts/main.js` if switching to Eleventy
 
