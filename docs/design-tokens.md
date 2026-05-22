@@ -3,8 +3,7 @@
 Design tokens are the named values that define the visual language of this project.
 They are defined once and referenced everywhere — in components, pages, and layouts.
 
-> *Fill in the tables below with your project's token values before writing any styles.
-> Delete any categories that don't apply. Add new categories as needed.*
+> *The values below are sensible baselines — adjust them to match your project's visual language before building components.*
 
 ---
 
@@ -65,19 +64,19 @@ values appear. Never reference primitives directly in component styles.
 
 | Token | Value | Notes |
 |-------|-------|-------|
-| `--color-slate-50` | | Lightest neutral |
-| `--color-slate-100` | | |
-| `--color-slate-200` | | |
-| `--color-slate-300` | | |
-| `--color-slate-500` | | Mid neutral |
-| `--color-slate-700` | | |
-| `--color-slate-900` | | Darkest neutral |
-| `--color-brand-300` | | Light brand tint |
-| `--color-brand-500` | | Primary brand |
-| `--color-brand-700` | | Dark brand shade |
-| `--color-red-500` | | Error / danger |
-| `--color-green-500` | | Success |
-| `--color-amber-500` | | Warning |
+| `--color-slate-50` | `#f8fafc` | Lightest neutral |
+| `--color-slate-100` | `#f1f5f9` | |
+| `--color-slate-200` | `#e2e8f0` | |
+| `--color-slate-300` | `#cbd5e1` | |
+| `--color-slate-500` | `#64748b` | Mid neutral |
+| `--color-slate-700` | `#334155` | |
+| `--color-slate-900` | `#0f172a` | Darkest neutral |
+| `--color-brand-300` | `#93c5fd` | Light brand tint |
+| `--color-brand-500` | `#3b82f6` | Primary brand |
+| `--color-brand-700` | `#1d4ed8` | Dark brand shade |
+| `--color-red-500` | `#ef4444` | Error / danger |
+| `--color-green-500` | `#22c55e` | Success |
+| `--color-amber-500` | `#f59e0b` | Warning |
 
 > *Rename the scale to match your palette — `slate`, `blue`, `zinc`, etc.
 > Add or remove steps as needed. The names don't matter; the two-layer pattern does.*
@@ -158,18 +157,17 @@ table above is filled in.
 
 ## Spacing
 
-All values in `rem`. The scale should follow a consistent ratio — e.g. multiples of
-`0.25rem` (4px base) or `0.5rem` (8px base).
+All values in `rem`. The scale uses a 4px base (`0.25rem` steps) to align with standard design tool grids.
 
 | Token | Value | px equivalent | Usage |
 |-------|-------|--------------|-------|
-| `--space-xs` | | | Tight internal padding, icon gaps |
-| `--space-sm` | | | Component internal padding |
-| `--space-md` | | | Default component padding, small gaps |
-| `--space-lg` | | | Section gaps, card padding |
-| `--space-xl` | | | Large section gaps |
-| `--space-2xl` | | | Page-level vertical rhythm |
-| `--space-3xl` | | | Hero sections, major layout gaps |
+| `--space-xs` | `0.25rem` | 4px | Tight internal padding, icon gaps |
+| `--space-sm` | `0.5rem` | 8px | Component internal padding |
+| `--space-md` | `1rem` | 16px | Default component padding, small gaps |
+| `--space-lg` | `1.5rem` | 24px | Section gaps, card padding |
+| `--space-xl` | `2rem` | 32px | Large section gaps |
+| `--space-2xl` | `3rem` | 48px | Page-level vertical rhythm |
+| `--space-3xl` | `4rem` | 64px | Hero sections, major layout gaps |
 
 ---
 
@@ -179,8 +177,8 @@ All values in `rem`. The scale should follow a consistent ratio — e.g. multipl
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--font-sans` | | Body text, UI elements |
-| `--font-mono` | | Code blocks, technical labels |
+| `--font-sans` | `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif` | Body text, UI elements |
+| `--font-mono` | `ui-monospace, 'Cascadia Code', 'Fira Code', monospace` | Code blocks, technical labels |
 
 ### Font sizes
 
@@ -188,37 +186,37 @@ All values in `rem`.
 
 | Token | Value | px equivalent | Usage |
 |-------|-------|--------------|-------|
-| `--text-xs` | | | Labels, captions |
-| `--text-sm` | | | Secondary text, helper copy |
-| `--text-base` | | | Body text |
-| `--text-lg` | | | Subheadings, lead text |
-| `--text-xl` | | | Section headings |
-| `--text-2xl` | | | Page headings |
-| `--text-3xl` | | | Hero headings |
+| `--text-xs` | `0.75rem` | 12px | Labels, captions |
+| `--text-sm` | `0.875rem` | 14px | Secondary text, helper copy |
+| `--text-base` | `1rem` | 16px | Body text |
+| `--text-lg` | `1.125rem` | 18px | Subheadings, lead text |
+| `--text-xl` | `1.25rem` | 20px | Section headings |
+| `--text-2xl` | `1.5rem` | 24px | Page headings |
+| `--text-3xl` | `2rem` | 32px | Hero headings |
 
 ### Font weights
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--weight-regular` | | Body text |
-| `--weight-medium` | | Emphasis, labels |
-| `--weight-bold` | | Headings, strong emphasis |
+| `--weight-regular` | `400` | Body text |
+| `--weight-medium` | `500` | Emphasis, labels |
+| `--weight-bold` | `700` | Headings, strong emphasis |
 
 ### Line heights
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--leading-tight` | | Headings |
-| `--leading-normal` | | Body text |
-| `--leading-loose` | | Long-form / prose |
+| `--leading-tight` | `1.25` | Headings |
+| `--leading-normal` | `1.5` | Body text |
+| `--leading-loose` | `1.75` | Long-form / prose |
 
 ### Letter spacing
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--tracking-tight` | | Large display headings |
-| `--tracking-normal` | | Body text |
-| `--tracking-wide` | | Uppercase labels, badges |
+| `--tracking-tight` | `-0.025em` | Large display headings |
+| `--tracking-normal` | `0em` | Body text |
+| `--tracking-wide` | `0.05em` | Uppercase labels, badges |
 
 ---
 
@@ -226,12 +224,12 @@ All values in `rem`.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--radius-sm` | | Buttons, inputs |
-| `--radius-md` | | Cards, panels |
-| `--radius-lg` | | Modals, large surfaces |
-| `--radius-full` | | Pills, avatars |
-| `--border-width-default` | | Standard borders |
-| `--border-width-focus` | | Focus ring border width |
+| `--radius-sm` | `0.25rem` | Buttons, inputs |
+| `--radius-md` | `0.375rem` | Cards, panels |
+| `--radius-lg` | `0.5rem` | Modals, large surfaces |
+| `--radius-full` | `9999px` | Pills, avatars |
+| `--border-width-default` | `1px` | Standard borders |
+| `--border-width-focus` | `2px` | Focus ring border width |
 
 > Border *colours* live in the Colour → Semantic section above
 > (`--color-border-default`, `--color-border-focus`) so they adapt to the active theme.
@@ -245,9 +243,9 @@ directly into the accessibility requirements in component specs.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--focus-ring-width` | | Width of the focus outline |
-| `--focus-ring-offset` | | Gap between element and ring |
-| `--focus-ring-color` | | Alias `--color-border-focus` |
+| `--focus-ring-width` | `2px` | Width of the focus outline |
+| `--focus-ring-offset` | `2px` | Gap between element and ring |
+| `--focus-ring-color` | `var(--color-border-focus)` | Alias `--color-border-focus` |
 
 > The focus ring must meet a minimum **3:1 contrast ratio** against adjacent colours
 > (WCAG 2.1 AA). Verify both light and dark theme values before marking any
@@ -259,9 +257,9 @@ directly into the accessibility requirements in component specs.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--shadow-sm` | | Subtle lift — inputs, buttons |
-| `--shadow-md` | | Cards, dropdowns |
-| `--shadow-lg` | | Modals, overlays |
+| `--shadow-sm` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | Subtle lift — inputs, buttons |
+| `--shadow-md` | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` | Cards, dropdowns |
+| `--shadow-lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | Modals, overlays |
 
 > If the project uses dark mode, consider reducing shadow opacity in the dark
 > theme — heavy shadows on dark surfaces can look harsh.
@@ -275,12 +273,12 @@ rather than raw values, so motion can be tuned globally.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--duration-fast` | | Micro-interactions (hover, focus) |
-| `--duration-base` | | Standard transitions |
-| `--duration-slow` | | Larger, more deliberate animations |
-| `--easing-default` | | General-purpose easing |
-| `--easing-out` | | Elements entering the screen |
-| `--easing-in` | | Elements leaving the screen |
+| `--duration-fast` | `100ms` | Micro-interactions (hover, focus) |
+| `--duration-base` | `200ms` | Standard transitions |
+| `--duration-slow` | `400ms` | Larger, more deliberate animations |
+| `--easing-default` | `cubic-bezier(0.4, 0, 0.2, 1)` | General-purpose easing |
+| `--easing-out` | `cubic-bezier(0, 0, 0.2, 1)` | Elements entering the screen |
+| `--easing-in` | `cubic-bezier(0.4, 0, 1, 1)` | Elements leaving the screen |
 
 > All animated components must respect `prefers-reduced-motion`. The recommended
 > approach is to set all durations to `0ms` inside a `@media (prefers-reduced-motion: reduce)`
@@ -294,12 +292,12 @@ A named scale prevents magic numbers accumulating across components and layouts.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--z-base` | | Default stacking context |
-| `--z-raised` | | Sticky elements, floating labels |
-| `--z-dropdown` | | Menus, autocomplete panels |
-| `--z-overlay` | | Backdrop / scrim layers |
-| `--z-modal` | | Dialogs, drawers |
-| `--z-toast` | | Notifications, toasts |
+| `--z-base` | `0` | Default stacking context |
+| `--z-raised` | `10` | Sticky elements, floating labels |
+| `--z-dropdown` | `100` | Menus, autocomplete panels |
+| `--z-overlay` | `200` | Backdrop / scrim layers |
+| `--z-modal` | `300` | Dialogs, drawers |
+| `--z-toast` | `400` | Notifications, toasts |
 
 ---
 
