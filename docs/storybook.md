@@ -261,7 +261,10 @@ each other.
 - Add the following scripts to `package.json`:
   - `"storybook": "storybook dev -p 6006"`
   - `"build-storybook": "storybook build"`
-- Write at least one story per component that has a spec with status `Ready` or `Complete`
-- Story files should be co-located with the component: `src/components/<Name>/<Name>.stories.{js|jsx|ts|tsx|svelte}`
+- Write at least one story per component, layout, and page that has a spec with status `Ready` or `Complete`
+- Story files should be co-located with the file they describe:
+  - `src/components/<Name>/<Name>.stories.{js|jsx|ts|tsx|svelte}`
+  - `src/layouts/<Name>/<Name>.stories.{js|jsx|ts|tsx|svelte}`
+  - `src/pages/<Name>/<Name>.stories.{js|jsx|ts|tsx|svelte}`
 - Include `tags: ['autodocs']` in every story's default export to enable automatic
   documentation page generation

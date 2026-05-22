@@ -509,45 +509,48 @@ File extensions follow the active stack selection in the Stack section above.
 src/
   components/
     <ComponentName>/
-      <ComponentName>.{js|ts|jsx|tsx|svelte}  # ← implementation
-      <ComponentName>.test.{js|ts}            # ← unit tests
-      <ComponentName>.{css|scss}              # ← styles (extension matches active Styles selection)
-      <ComponentName>.spec.md                 # ← co-located spec (copied from docs/specs/components/)
+      <ComponentName>.{js|ts|jsx|tsx|svelte}              # ← implementation
+      <ComponentName>.stories.{js|jsx|ts|tsx|svelte}      # ← stories (Storybook only)
+      <ComponentName>.test.{js|ts}                        # ← unit tests
+      <ComponentName>.{css|scss}                          # ← styles (extension matches active Styles selection)
+      <ComponentName>.spec.md                             # ← co-located spec (copied from docs/specs/components/)
   pages/
     <PageName>/
-      <PageName>.{js|ts|jsx|tsx|svelte}       # ← implementation
-      <PageName>.test.{js|ts}                 # ← unit tests
-      <PageName>.{css|scss}                   # ← styles
-      <PageName>.spec.md                      # ← co-located spec
+      <PageName>.{js|ts|jsx|tsx|svelte}                   # ← implementation
+      <PageName>.stories.{js|jsx|ts|tsx|svelte}           # ← stories (Storybook only)
+      <PageName>.test.{js|ts}                             # ← unit tests
+      <PageName>.{css|scss}                               # ← styles
+      <PageName>.spec.md                                  # ← co-located spec
   layouts/
     <LayoutName>/
-      <LayoutName>.{js|ts|jsx|tsx|svelte}     # ← implementation
-      <LayoutName>.{css|scss}                 # ← styles
-      <LayoutName>.spec.md                    # ← co-located spec
+      <LayoutName>.{js|ts|jsx|tsx|svelte}                 # ← implementation
+      <LayoutName>.stories.{js|jsx|ts|tsx|svelte}         # ← stories (Storybook only)
+      <LayoutName>.{css|scss}                             # ← styles
+      <LayoutName>.spec.md                                # ← co-located spec
   scripts/
-    main.js                                   # ← default starting file (Vanilla + Vite only)
+    main.js                                               # ← default starting file (Vanilla + Vite only)
   styles/
-    tokens.{css|scss}                         # ← design token values (extension matches active Styles selection)
-    main.{css|scss}                           # ← global styles, imports tokens
+    tokens.{css|scss}                                     # ← design token values (extension matches active Styles selection)
+    main.{css|scss}                                       # ← global styles, imports tokens
   assets/
-    icons/                                    # ← SVG icons (inlined in components, not via <img>)
-    images/                                   # ← raster images (png, jpg, webp) referenced via <img>
-  lib/                                        # ← shared utilities
-  types/                                      # ← global types (TypeScript only)
+    icons/                                                # ← SVG icons (inlined in components, not via <img>)
+    images/                                               # ← raster images (png, jpg, webp) referenced via <img>
+  lib/                                                    # ← shared utilities
+  types/                                                  # ← global types (TypeScript only)
 docs/
-  project-brief.md                            # ← this file
-  modern-platform-guide.md                    # ← which web platform APIs and features to use
-  design-tokens.md                            # ← design token definitions
-  service-worker.md                           # ← service worker configuration
-  storybook.md                                # ← storybook configuration
-  security.md                                 # ← security headers and CSP configuration
-  features/                                   # ← user-facing feature specs
+  project-brief.md                                        # ← this file
+  modern-platform-guide.md                                # ← which web platform APIs and features to use
+  design-tokens.md                                        # ← design token definitions
+  service-worker.md                                       # ← service worker configuration
+  storybook.md                                            # ← storybook configuration
+  security.md                                             # ← security headers and CSP configuration
+  features/                                               # ← user-facing feature specs
   specs/
-    _component-template.spec.md               # ← spec template
-    components/                               # ← authoritative component specs
-    pages/                                    # ← page / view specs
-    layouts/                                  # ← layout specs
-    hooks/                                    # ← hook specs
+    _component-template.spec.md                           # ← spec template
+    components/                                           # ← authoritative component specs
+    pages/                                                # ← page / view specs
+    layouts/                                              # ← layout specs
+    hooks/                                                # ← hook specs
 ```
 
 ### Assets
