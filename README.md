@@ -1,6 +1,6 @@
 # Tech-Agnostic Spec-First Development Scaffold
 
-A starter template for building web projects — framework-agnostic, spec-driven, and works whether you build by hand, use an AI coding agent, or both.
+A starter template for building web projects — tech-agnostic, spec-driven, and works whether you build by hand, use an AI coding agent, or both.
 
 ---
 
