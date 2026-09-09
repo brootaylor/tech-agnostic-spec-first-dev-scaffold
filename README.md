@@ -9,21 +9,26 @@ A starter template for building web projects — tech-agnostic, spec-first, and 
 
 ## Quick start
 
-```bash
-git clone https://github.com/brootaylor/tech-agnostic-spec-first-dev-scaffold.git my-project
-cd my-project
-```
+**Get the files.** Either route lands you the same repo:
 
-Then take whichever route matches what you have:
+- **[Use this template](https://github.com/brootaylor/tech-agnostic-spec-first-dev-scaffold/generate)** — *starts a clean copy under your own GitHub account, with none of this repo's history. Needs a GitHub account.*
+- **Or clone it**:
 
-| You have | Start here |
-|----------|-----------|
-| An empty folder | [docs/workflow.md](./docs/workflow.md) — the ten-step guide |
-| A codebase that already exists | [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) — merge the scaffold in, audit it, then rejoin the workflow at Step 4 |
+  ```bash
+  git clone https://github.com/brootaylor/tech-agnostic-spec-first-dev-scaffold.git my-project
+  cd my-project
+  ```
+
+**Then take the route that matches what you have:**
+
+| You have | Start here | Your first moves |
+|----------|-----------|------------------|
+| An empty folder | [docs/workflow.md](./docs/workflow.md) — the ten-step guide | Point your agent at the scaffold, describe the project in `docs/project-brief.md`, pick your stack and install it. |
+| A codebase that already exists | [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) | Merge the scaffold in by hand, then `/survey` drafts the brief and `/audit` grades what's already there. |
 
 Only the setup differs. Both routes reach the same specs, the same build loop, and the same gates.
 
-If you have a GitHub account, use the **"Use this template"** button to start from a clean copy of the repo.
+You'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org) (LTS) — the full list is in [docs/workflow.md → Prerequisites](./docs/workflow.md#prerequisites).
 
 ---
 
