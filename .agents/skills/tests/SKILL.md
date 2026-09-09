@@ -74,7 +74,14 @@ Apply the smallest practical diff:
 5. If a `Verify` command already exists, add the real test command to it between
    typecheck and build while preserving any established project checks. Do not
    create verification or CI only because `/tests` was invoked.
-6. Update the testing section of `docs/project-brief.md` only if the project
+6. Set the runner you installed or adopted `[active]` under Stack -> Unit testing
+   in `docs/project-brief.md`, clearing the mark that was there. **Step 2 reads
+   that mark as the human's own selection and lets it override every default**,
+   so leaving it on `None` after installing Vitest means the next run of this
+   skill reads a selection the project's own config contradicts. If the runner is
+   not one of the table's rows, say so and leave the marks alone rather than
+   adding a row - `/tests` detects stacks the table does not cover, by design.
+7. Update the testing section of `docs/project-brief.md` only if the project
    needs a stack-specific testing note it does not already carry.
 
 Do not write a broad test suite for existing app code. This skill proves the
@@ -104,6 +111,8 @@ or fix the example test.
 Stop with a concise report:
 
 - runner chosen or reused
+- the Stack -> Unit testing mark now set in `docs/project-brief.md`, or why it
+  was left alone
 - commands added or updated
 - existing verification command updated, or confirmation that none exists
 - example test added

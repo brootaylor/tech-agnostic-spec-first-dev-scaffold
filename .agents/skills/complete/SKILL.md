@@ -98,9 +98,11 @@ only value this skill may put there.
 
 ## Step 1 - log the work
 
-Check whether the work order is a feature, fix, or rollback. A fix is marked
-`Type: Fix` and has no source spec. A rollback is marked `Type: Rollback` and
-records the exact target feature, archive, commit, and parent.
+Read the work order's `Type:` line: `Feature`, `Fix`, or `Rollback`. A fix has no
+source spec. A rollback records the exact target feature, archive, commit, and
+parent. A work order written before this line existed may have none at all -
+treat the absence of `Type: Fix` and `Type: Rollback` as a feature, and say you
+inferred it.
 
 ### Write the spec status back
 
@@ -133,8 +135,13 @@ A feature spec goes `Complete` when its own acceptance criteria are met.
   `context/history/features/NN-name.md`. Number sequentially from what is
   already in that folder. The spec status written above is the authority on what
   is built; this archive is the record of how it was built.
-- **Fix** - archive it to `context/history/fixes/name.md`. A fix has no source
-  spec, so there is no status to write back.
+- **Fix** - archive it to `context/history/fixes/NN-name.md`, numbering
+  sequentially from what is already in that folder, the same way features are
+  numbered. **The number is what makes the write safe.** Fixes are named from a
+  short description of the bug, so two of them collide far more readily than two
+  features do - and an unnumbered write would overwrite the older archive with
+  nothing reporting it. A fix has no source spec, so there is no status to write
+  back.
 - **Rollback** - archive it to
   `context/history/rollbacks/YYYY-MM-DD-NN-name.md`, preserving the original
   completed feature archive. Create `context/history/rollbacks/` first if an
@@ -202,13 +209,20 @@ documentation changes. The archive is the build history.
 the deletion into this feature's commit. The HTML mockups were always throwaway.
 Skip this if the feature didn't consume prototypes.
 
-**Read `docs/design-tokens.md` first and confirm the ported values are actually
-there.** Deleting `prototypes/` is the point of no return: `theme.css` exists
+**Compare `docs/design-tokens.md` against `prototypes/theme.css` first, value by
+value.** Deleting `prototypes/` is the point of no return: `theme.css` exists
 nowhere else, and a theme that only reached the stylesheet leaves
 `docs/design-tokens.md` - the file every agent is told to read before writing any
-CSS - a blank template for the life of the project. Nothing errors, and no later
-pass detects it. If the tokens are missing there, **stop and hand back to
-`/implement`** to finish the port before anything is deleted.
+CSS - holding the scaffold's baseline palette for the life of the project.
+Nothing errors, and no later pass detects it.
+
+**"Are there tokens in the file" is not the check.** That file ships complete, so
+it is full whether the port ran or not, and a skipped port looks exactly like a
+finished one. Two things have to hold before anything is deleted: every colour,
+type and spacing value in `theme.css` resolves to a matching entry in
+`docs/design-tokens.md`, and that file's `**Last updated:**` line no longer holds
+the template's placeholder comment. If either fails, **stop and hand back to
+`/implement`** to finish the port.
 
 ## Step 2 - make the work commit
 

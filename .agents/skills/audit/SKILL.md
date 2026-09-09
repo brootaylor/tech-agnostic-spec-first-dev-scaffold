@@ -82,6 +82,10 @@ Read:
   is a finding, whether or not any build step mentioned it
 - `docs/project-brief.md`, for the conventions, secure-coding rules, browser
   targets, and accessibility standard that apply project-wide
+- `docs/security.md`, for the security lens - the project's own declared headers,
+  Content Security Policy (CSP) directives, and CSP exceptions table. Read it
+  whenever the Security selection in `docs/project-brief.md` is active or the
+  scope includes deployment config
 - `context/findings.md`, for existing IDs and statuses
 - git working tree status
 - relevant source files, tests, and configs for the chosen scope
@@ -133,6 +137,13 @@ expectations. Apply only the selected lens or lenses:
 - **Security:** missing authentication or authorization, client-controlled
   ownership, injection, unsafe parsing or deserialization, sensitive-data
   exposure, secret handling, insecure defaults, and trust-boundary mistakes.
+  Also measure the deployed configuration against the project's own contract in
+  `docs/security.md`, when the Security selection is active: headers the code or
+  provider config omits, weakens, or contradicts, and any external origin the
+  code loads that its CSP exceptions table does not list. That file is the source
+  of truth for those values, and generic secure-coding review does not reach
+  them - a project whose shipped headers disagree with its own security document
+  passes every other check in this lens.
   Inspect existing dependency or scanner output when available, but never imply
   that local manifest inspection is a current vulnerability scan.
 - **Performance:** N+1 queries, repeated network or database work, unnecessary

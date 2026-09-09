@@ -163,8 +163,12 @@ The agent must read `docs/design-tokens.md` before writing any styles.
 
 ## Test cases
 
-The agent will generate one test function per entry. IDs must be unique within
-this spec and must match the test file exactly.
+The agent will generate one test function per entry, **once the project has a
+test runner** — a real `Test` command under Commands in `AGENTS.md` is the
+switch, and `/tests` is what adds one. Unit testing ships as `None`, so on a
+fresh clone these entries are the contract for what must eventually be proven,
+not work the agent can do yet; it will say so rather than claim a case was
+tested. IDs must be unique within this spec and must match the test file exactly.
 
 ### Render
 

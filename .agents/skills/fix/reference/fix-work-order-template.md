@@ -52,7 +52,7 @@ clear: a fresh session resumes from the first unchecked step.
 - If a test runner is configured and this fix touches in-scope logic (parsers,
   formatters, validators, data transforms), the fix ships with a test that fails
   before it and passes after. The testing gate is on only when `AGENTS.md` lists
-  a real `test` command under Commands.
+  a real `Test` command under Commands.
 
 ## Notes for the "Ai"
 

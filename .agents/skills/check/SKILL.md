@@ -72,7 +72,7 @@ type:
 - **Server/API** - start it and hit the endpoints.
 - **Library** - exercise the public API through an example or the test command.
 
-If a `test` command is declared in `AGENTS.md`, you may run it as *one* input, but
+If a `Test` command is declared in `AGENTS.md`, you may run it as *one* input, but
 `/check` is broader than unit tests: it checks real behavior, which is exactly the
 evidence UI and integration steps ride on instead of unit tests.
 

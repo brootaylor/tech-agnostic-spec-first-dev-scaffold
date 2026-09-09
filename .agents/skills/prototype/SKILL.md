@@ -27,8 +27,12 @@ rather than asking from scratch:
 - `docs/project-brief.md` - "What this project is" for the product, its audience,
   and any known constraints that bear on the look; "Accessibility standard" for
   the contrast and motion floor the theme has to clear
-- `docs/design-tokens.md` - if it has already been filled in, those values are
-  the starting point rather than something to reinvent
+- `docs/design-tokens.md` - **check its `**Last updated:**` line before treating
+  anything in it as direction.** The file ships complete, so a full palette is
+  not evidence anyone chose it. While that line still holds the placeholder
+  comment, every value is the scaffold's baseline: ignore it and ask Step 2's
+  questions from scratch. Once it carries a date, those values are the user's own
+  and are the starting point rather than something to reinvent
 - `docs/features/` - the feature specs that name the screens worth mocking
 - `docs/specs/pages/` and `docs/specs/layouts/` - any page or layout spec already
   written

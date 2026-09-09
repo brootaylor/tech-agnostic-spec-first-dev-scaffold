@@ -34,8 +34,9 @@ node_modules/
 # Your own state file and decision log. They accumulate a record of your work on
 # your project, so they are yours and are never committed to the scaffold. Both
 # are created on first use. The convention travels with the scaffold; the
-# entries do not. (sessions-archive.md is a legacy name, ignored so an older
-# narrative log cannot be committed by accident.)
+# entries do not. (sessions-archive.md is optional: keep sessions.md short by
+# rotating its oldest entries there, so the "Where things stand" block at the
+# top stays the cold-start brief rather than the header of a long history.)
 context/sessions.md
 context/decisions.md
 context/sessions-archive.md

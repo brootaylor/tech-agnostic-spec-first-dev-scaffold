@@ -1,6 +1,6 @@
 ---
 name: survey
-description: "Read an existing codebase and draft docs/project-brief.md from what is actually there - stack, package manager, real run commands, conventions, entry points - separating what the code proves from what it only suggests, and naming what cannot be determined from code at all. Shows the proposed brief and writes only on explicit approval. Use when the user runs /survey, has just adopted the scaffold into a project that already has code, asks what stack a codebase uses, or needs docs/project-brief.md filled in for a project nobody has documented. Not for a new project with no code yet - that is /discovery."
+description: "Read an existing codebase and draft docs/project-brief.md, plus the Commands rows in AGENTS.md, from what is actually there - stack, package manager, real run commands, conventions, entry points - separating what the code proves from what it only suggests, and naming what cannot be determined from code at all. Shows the proposed drafts and writes only on explicit approval. Use when the user runs /survey, has just adopted the scaffold into a project that already has code, asks what stack a codebase uses, or needs docs/project-brief.md filled in for a project nobody has documented. Not for a new project with no code yet - that is /discovery."
 ---
 
 # survey - read a codebase, draft the brief from the evidence
@@ -62,7 +62,8 @@ whole files into the response.
    (`eslint-plugin-jsx-a11y`, `axe-core`, `pa11y`) shows someone was aiming at a
    standard. Read both - and see Step 2 for what they do and do not settle.
 3. **Scripts** - the actual dev, build, test, and lint commands, read off the
-   manifest rather than reconstructed. These fill the Commands section.
+   manifest rather than reconstructed. These fill the Commands section of
+   `AGENTS.md` - see Step 3.
 4. **Source layout** - entry points, directory structure, routing convention,
    where components live, how styles are authored (plain CSS, modules, a
    preprocessor, CSS-in-JS, utility classes in markup).
@@ -137,10 +138,10 @@ finding the user will want, and it is invisible from either side alone.
 
 ## Step 3 - draft the brief
 
-Produce the proposed contents of `docs/project-brief.md` without writing
-anything yet. Fill in the setup-checklist sections and leave everything below
-them alone - that is reference material the scaffold ships, and it is not this
-skill's to rewrite.
+Produce the proposed contents of `docs/project-brief.md`, plus the Commands rows
+for `AGENTS.md`, without writing anything yet. In the brief, fill in the
+setup-checklist sections and leave everything below them alone - that is
+reference material the scaffold ships, and it is not this skill's to rewrite.
 
 **Under "What this project is"** - describe what the application actually does,
 read from its routes, entry points, and user-facing strings. Say plainly that
@@ -163,10 +164,20 @@ say "none found" rather than marking anything. That is a true and useful fact.
 > independently of the table. Record the actual stack in plain prose under the
 > table and leave the table's own categories alone.
 
-**The Commands section** - the project's real commands, exactly as the manifest
+**The Commands section of `AGENTS.md`** - not the brief; that file has no
+Commands section. This is the second and last file this skill writes, and only
+those rows. Fill them with the project's real commands, exactly as the manifest
 declares them, with the package manager the lockfile proves. Delete rows that do
-not apply. **Never invent a command to fill a row**; a missing test command is a
-fact `/tests` exists to change.
+not apply, and leave `Test` and `Verify` absent - `/tests` and `/ci` own those
+two. **Never invent a command to fill a row**; a missing test command is a fact
+`/tests` exists to change.
+
+These rows are the one part of the survey the rest of the loop executes rather
+than reads. `/check` and `/try` start the app from them, `/debug` reproduces a
+failure with them, and `/implement` and `/complete` build from them. Left as the
+shipped `<command>` placeholders they raise no error - each skill reports a gap
+and carries on with less evidence than it should have - and on an adopted project
+nothing else ever fills them.
 
 Then present the draft with three lists beside it:
 
@@ -186,8 +197,9 @@ the draft.**
 
 ## Step 4 - write only after approval
 
-Write `docs/project-brief.md` only on explicit approval. If the user asks for
-changes, revise and show the affected sections again first.
+Write `docs/project-brief.md`, and the Commands rows in `AGENTS.md`, only on
+explicit approval. If the user asks for changes, revise and show the affected
+sections again first.
 
 If the brief already contains real content - the user filled some in, or a
 previous survey ran - never replace it silently. Show what would change and why,
@@ -202,9 +214,11 @@ After writing:
 
 ## Rules
 
-- **`docs/project-brief.md` is the only file this skill writes**, and only on
-  explicit approval. Never edit source, config, specs, `context/` files, or
-  `.gitignore`. Never install, build, commit, branch, or push.
+- **`docs/project-brief.md` and the Commands section of `AGENTS.md` are the only
+  files this skill writes**, and only on explicit approval. Nothing else in
+  `AGENTS.md` is this skill's to touch. Never edit source, config, specs,
+  `context/` files, or `.gitignore`. Never install, build, commit, branch, or
+  push.
 - **Never run the project's scripts to find out what they do.** Read them. A
   build or test command in an unfamiliar repository can do anything, and this
   skill has no reason to execute it. Reading is enough to record it.

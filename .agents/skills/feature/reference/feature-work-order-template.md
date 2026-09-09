@@ -1,9 +1,15 @@
 # Feature: <name>
 
+**Type:** Feature
 **Spec:** `docs/specs/components/<name>.spec.md`
 **Base commit:** <filled in by /implement before the first step>
 **Work status:** not started
 
+> `Type:` is what `/complete` reads to decide which folder under
+> `context/history/` this archives to, and what `/status` reports. Declare it
+> rather than leaving it to be inferred from the absence of `Type: Fix` and
+> `Type: Rollback`.
+>
 > `Spec:` is load-bearing. `/implement` reads that file as the contract, `/check`
 > proves the work against its acceptance criteria, and `/complete` writes
 > `**Status:** Complete` back to it. A `Type: Fix` work order has no source spec
@@ -72,7 +78,7 @@ session reads which boxes are ticked and resumes from the first unchecked step.
   (parsers, formatters, validators, data transforms - not components or
   integration/render routes), so each logic-bearing step ships its test. If no
   runner is configured, say so and rely on screenshot plus build evidence. The
-  testing gate is on only when `AGENTS.md` lists a real `test` command under
+  testing gate is on only when `AGENTS.md` lists a real `Test` command under
   Commands; `/tests` adds one.
 
 ## Notes for the "Ai"

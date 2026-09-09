@@ -193,7 +193,10 @@ building components against the mockups:
 
 1. `docs/design-tokens.md` - the durable token document. Every agent is told to
    read it before writing any CSS, so a theme that never lands here leaves that
-   instruction pointing at an empty template for the rest of the project.
+   instruction pointing at the scaffold's shipped baseline palette for the rest
+   of the project. The file arrives complete, so nothing looks wrong when this
+   step is skipped - the step's "done when" has to name matching values and a
+   dated `**Last updated:**` line, not merely a non-empty file.
 2. the app's global stylesheet - `src/styles/tokens.{css|scss}`, where the values
    actually resolve at runtime.
 
@@ -231,7 +234,7 @@ code exists. Run the draft against these questions:
 - **Done-whens.** Is each one observable and checkable by `/check`, or is it a
   vague "it works"? Make it concrete.
 - **Testing.** Does the predicted coverage match the gate - in-scope logic gets a
-  test when a `test` command is declared in `AGENTS.md`, UI/integration rides on
+  test when a `Test` command is declared in `AGENTS.md`, UI/integration rides on
   screenshot + build? Does it cover the spec's own **Test cases** section?
 - **Fidelity to the contract.** Walk the spec's interface, behaviour, states, and
   accessibility requirements one by one. Is each one satisfied by some step? A

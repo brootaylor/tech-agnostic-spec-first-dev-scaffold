@@ -1,14 +1,29 @@
 # Design Tokens
 
+**Last updated:** <!-- e.g. 2025-01-15 — replace this comment once the values below are yours -->
+
 > **This is a design reference, not a spec.** It defines the values every
 > component references, but it carries no `**Status:**` line and is never
-> promoted to `Ready`. Nothing gates it: it simply has to be filled in before any
-> styles are written (`docs/workflow.md` Step 6).
+> promoted to `Ready`. It simply has to be settled before any styles are written
+> (`docs/workflow.md` Step 6) — and the dated line above is how the loop tells
+> settled from shipped-as-is. See the callout below.
 
 Design tokens are the named values that define the visual language of this project.
 They are defined once and referenced everywhere — in components, pages, and layouts.
 
-> *The values below are sensible baselines — adjust them to match your project's visual language before building components.*
+> [!IMPORTANT]
+> **Every value below is the scaffold's shipped baseline, not a decision anyone
+> made for your project.** *This file arrives complete — a full palette, both
+> themes, spacing, type, shadows — because a worked example teaches the two-layer
+> system better than a blank table does. The cost is that "filled in" and
+> "settled" look identical here, so nothing can stop an agent building your
+> product in the scaffold's colours. The dated line at the top of this file is the
+> one signal that separates them: while it still holds the placeholder comment,
+> treat every value as unreviewed and say so before writing any CSS. Replace the
+> comment with a date when the values are genuinely yours. The shipped palette in
+> particular has not been checked against the accessibility standard in
+> `docs/project-brief.md`, and adopting it unchanged is not a conformance claim
+> you could support.*
 
 ---
 

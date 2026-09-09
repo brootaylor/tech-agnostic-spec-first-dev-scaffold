@@ -55,7 +55,10 @@ into `docs/design-tokens.md` **and** the app's global stylesheet before any
 component is built. Both halves are required: `/complete` deletes `prototypes/`
 afterwards, and a theme that only reached the stylesheet leaves
 `docs/design-tokens.md` - the file every agent is told to read before writing
-CSS - an empty template for the rest of the project.
+CSS - holding the scaffold's shipped baseline palette for the rest of the
+project. That file arrives complete, so it looks correct either way; the port is
+done when its values match `theme.css` and its `**Last updated:**` line carries a
+date rather than the template's placeholder comment.
 
 **Resuming?** If the **work order** already has some build steps checked off
 (`- [x]`), this feature was started earlier and interrupted (often a cleared
@@ -166,7 +169,7 @@ review and approval gate below after every step.
    command as the automated gate. It is only an umbrella for checks the project
    actually has, so do not invent tests or other checks to satisfy it. If no
    `Verify` command exists, run the documented build command, and the test
-   command when the project declares one. **A real `test` command under Commands
+   command when the project declares one. **A real `Test` command under Commands
    in `AGENTS.md` is the switch**, and `/tests` is what adds one: while one is
    declared, a step that adds logic must ship a passing test in the same diff and
    the suite must be green before the step is approved; while none is declared,
@@ -289,6 +292,11 @@ Then tell the user `/complete` makes the one work-level commit and logs the work
 - Iterate until each step works; never commit code the user hasn't approved.
 - Follow the conventions in `docs/project-brief.md`, the platform guidance in
   `docs/modern-platform-guide.md`, and the tokens in `docs/design-tokens.md`.
+- Read `docs/security.md` before any step generates `index.html`, `_headers`,
+  `vercel.json`, `render.yaml`, `next.config.js`, or a middleware file. Its
+  header values and Content Security Policy (CSP) directives are the source of
+  truth; do not invent or vary them here. A step that loads a resource from an
+  external origin also adds it to that file's CSP exceptions table.
 - Build only what the spec says. If the spec is wrong or thin, stop and ask the
   human to change it — do not improvise, and do not edit the spec yourself.
 - Never create, switch, merge, or delete a branch. Per-step commits are optional

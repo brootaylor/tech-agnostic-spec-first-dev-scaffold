@@ -68,7 +68,10 @@ Gather these, then synthesize. Don't dump file contents; explain.
    first, what this unblocks later).
 5. **Design reference** - if `prototypes/` exists and the spec is UI-facing, note
    which mockups apply. `docs/design-tokens.md` is the durable source for colour,
-   spacing, and type.
+   spacing, and type - but it ships complete, so read its `**Last updated:**`
+   line before reporting that the values exist. A placeholder comment there means
+   the palette is the scaffold's baseline and nobody has settled it, which is a
+   blocker worth naming rather than a reference to lean on.
 
 ## Output
 
@@ -84,8 +87,10 @@ A short, scannable briefing, not a wall of text. Aim for something like:
     Touches: the dark palette in tokens.css, a toggle component in the header,
       and localStorage under the color-scheme key.
     Size: medium - one reviewable cycle once theme-toggle is settled.
-    Reference: docs/design-tokens.md already defines both palettes, so the token
-      values exist; the toggle only swaps data-theme and defines no colours.
+    Reference: docs/design-tokens.md defines both palettes, but its Last updated
+      line is still the placeholder - those are the scaffold's baselines, not
+      settled values. The toggle only swaps data-theme and defines no colours,
+      so it is not blocked; the first spec that styles anything will be.
     Missing before Ready: one unticked row in the Draft -> Ready checklist -
       "Every required component has reached Ready".
 

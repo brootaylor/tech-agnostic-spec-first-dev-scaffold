@@ -111,7 +111,7 @@ Everything from `/feature` down is the build loop — see
 
 The scaffold comes with a full set of starter files: root config (`README.md`, `package.json`, `.gitignore`, `.nvmrc`), docs (`project-brief.md`, `design-tokens.md`, feature and spec examples), default source files (`src/index.html`, `src/scripts/main.js`, `src/assets/icons/spinner.svg`), agent configs under `.agents/`, and the build loop's empty working state under `context/`.
 
-The spec and feature files are illustrative examples — replace or modify them to suit your project.
+The spec and feature files are illustrative examples — replace or modify them to suit your project. So are the token values in `docs/design-tokens.md`: that file arrives complete rather than blank, and every value in it is a baseline waiting to be replaced at Step 6, not a choice made for you.
 
 > **Commit everything before making any changes.** This gives you a clean baseline to return to.
 
@@ -266,7 +266,7 @@ See `docs/specs/components/button.spec.md` for a complete worked example.
 Read `docs/design-tokens.md` and create the token and main style files.
 ```
 
-If `docs/design-tokens.md` is empty, the agent will stop and ask you to fill it in first.
+The file arrives complete rather than blank, so "filled in" is not the test. Its `**Last updated:**` line is: while that still holds the placeholder comment, the values are the scaffold's baselines and the agent will stop and ask you to settle them first. Replace the comment with a date once they are yours.
 
 > **Want to settle the look first?** `/prototype` writes throwaway static mockups to `prototypes/` that share one set of theme variables. It runs once a feature spec exists (Step 4) and before you build — its one durable output is that theme, which becomes this file. Nothing else it writes is meant to ship.
 
@@ -311,7 +311,7 @@ If the agent stops to ask a question, the spec is likely ambiguous in that area.
 
 Generated code appears in `src/` under the relevant directory (see the table in Step 5). Check it against the spec:
 
-- Does every `TC-##` in the spec have a corresponding passing test?
+- Does every `TC-##` in the spec have a corresponding passing test? *(Only once the project has a test runner — unit testing ships as `None`, so until you have run `/tests` there is nothing to write tests with, and the agent will say so rather than claim a case was covered.)*
 - Does the implementation match the behaviour described?
 - Are the accessibility requirements met?
 

@@ -242,6 +242,8 @@ Keep the copies after this step. `/survey` will also point out anything in them 
 
 Read the draft back against the repository rather than accepting it. The separation of evidence from inference is the point of the skill, but an inference is still an inference, and this file is the yardstick for everything in C through G.
 
+`/survey` also proposes the Commands rows in `AGENTS.md` — the project's real dev-server, build, production-server and lint commands, read off its manifest. Approve those alongside the brief. **This is the only step on this path that fills them.** `docs/workflow.md` Step 3 is where a greenfield project writes them, and you skipped it by already existing; Step D's `/tests` and `/ci` own only the `Test` and `Verify` rows. Left as the shipped `<command>` placeholders they produce no error — `/check` and `/try` cannot start the app, `/debug` cannot reproduce a failure, and `/implement` and `/complete` build nothing before committing, each reporting a gap and carrying on.
+
 ### What you settle yourself
 
 Two fields `/survey` reports on but will not decide:
