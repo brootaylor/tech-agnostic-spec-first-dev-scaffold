@@ -7,7 +7,7 @@ description: Interactively prototype the look of a project. Asks about the desir
 
 Where this sits in the workflow:
 
-    WORKFLOW Step 4  ->  [prototype]  ->  /feature  ->  build
+    workflow Step 4  ->  [prototype]  ->  /feature  ->  build
     (feature spec        (lock the       (one spec    (real
      written)             look)           at a time)   code)
 

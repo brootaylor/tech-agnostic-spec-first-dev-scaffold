@@ -1,4 +1,4 @@
-# WORKFLOW.md
+# Workflow
 
 A step-by-step guide to using this scaffold to build a web project — by hand or with an "Ai" coding agent.
 
@@ -89,7 +89,7 @@ feature spec (Step 4) to prototype against. The mockups are throwaway — the
 theme is the keeper, and becomes `docs/design-tokens.md`.
 
 Everything from `/feature` down is the build loop — see
-[AGENTS.md](./AGENTS.md) for the full skill reference.
+[AGENTS.md](../AGENTS.md) for the full skill reference.
 
 ---
 
@@ -115,7 +115,7 @@ The spec and feature files are illustrative examples — replace or modify them 
 
 > **Commit everything before making any changes.** This gives you a clean baseline to return to.
 
-> **Already have a codebase?** These ten steps assume you are starting from an empty folder. To bring an existing project under the loop — an inherited repository, a prototype that outgrew itself, an "Ai"-generated app that needs to become production-ready — read [`docs/adopting-an-existing-project.md`](./docs/adopting-an-existing-project.md) instead. It covers merging the scaffold into a repository that is already occupied, then rejoins this guide at Step 4.
+> **Already have a codebase?** These ten steps assume you are starting from an empty folder. To bring an existing project under the loop — an inherited repository, a prototype that outgrew itself, an "Ai"-generated app that needs to become production-ready — read [`docs/adopting-an-existing-project.md`](./adopting-an-existing-project.md) instead. It covers merging the scaffold into a repository that is already occupied, then rejoins this guide at Step 4.
 
 ---
 

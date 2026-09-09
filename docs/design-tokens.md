@@ -3,7 +3,7 @@
 > **This is a design reference, not a spec.** It defines the values every
 > component references, but it carries no `**Status:**` line and is never
 > promoted to `Ready`. Nothing gates it: it simply has to be filled in before any
-> styles are written (`WORKFLOW.md` Step 6).
+> styles are written (`docs/workflow.md` Step 6).
 
 Design tokens are the named values that define the visual language of this project.
 They are defined once and referenced everywhere — in components, pages, and layouts.
@@ -80,7 +80,7 @@ toggle appears broken.
 Tokens live in `src/styles/tokens.{css|scss}` and are imported by
 `src/styles/main.{css|scss}`, which is loaded once at the top level of the project.
 Neither file is pre-created in the scaffold. They are created at **Step 6 of
-`WORKFLOW.md`**, not during initial project setup — this document has to be filled
+`docs/workflow.md`**, not during initial project setup — this document has to be filled
 in first, since its values are what the files implement. The file extension follows
 the active Styles selection in `docs/project-brief.md`.
 

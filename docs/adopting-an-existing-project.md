@@ -2,11 +2,11 @@
 
 Bringing a codebase that already exists under the build loop — a prototype that outgrew itself, an inherited repository, or an "Ai"-generated app that now has to become production-ready.
 
-**Only the setup differs.** Steps A and B replace `WORKFLOW.md` Steps 1 to 3, Steps C to E are the loop pointed at repairs rather than features, and from Step F this is `WORKFLOW.md` Steps 4 to 10 unchanged. There is no second workflow to learn.
+**Only the setup differs.** Steps A and B replace `docs/workflow.md` Steps 1 to 3, Steps C to E are the loop pointed at repairs rather than features, and from Step F this is `docs/workflow.md` Steps 4 to 10 unchanged. There is no second workflow to learn.
 
-This page is the sequence, not the execution. Each step names the skill that carries it — `/survey`, `/audit`, `/tests`, `/fix` — and holds what no individual skill can know: the order they run in, why one must precede another, and which route a given problem takes. It stands to those skills as `WORKFLOW.md` stands to `/feature` and `/implement`.
+This page is the sequence, not the execution. Each step names the skill that carries it — `/survey`, `/audit`, `/tests`, `/fix` — and holds what no individual skill can know: the order they run in, why one must precede another, and which route a given problem takes. It stands to those skills as `docs/workflow.md` stands to `/feature` and `/implement`.
 
-`WORKFLOW.md` assumes an empty folder: the scaffold is cloned into it first, and the app is then built inside it. This path is the inverse — the code is already there and the scaffold merges in on top — and the difference is not only the install. A greenfield project writes a spec and then builds to it. Here the code came first, so the early work is finding out what is there, establishing a standard to measure it against, and building a safety net before changing anything.
+`docs/workflow.md` assumes an empty folder: the scaffold is cloned into it first, and the app is then built inside it. This path is the inverse — the code is already there and the scaffold merges in on top — and the difference is not only the install. A greenfield project writes a spec and then builds to it. Here the code came first, so the early work is finding out what is there, establishing a standard to measure it against, and building a safety net before changing anything.
 
 ---
 
@@ -124,13 +124,13 @@ rm -rf /tmp/scaffold/.git
 
 ### A4 — Check for name collisions, then copy
 
-Look before merging into `docs/`. The scaffold's filenames are distinctive, but `security.md` is plausible in any project. List every file at any depth, because the copy below merges recursively and a nested collision would not show up in a top-level listing:
+Look before merging into `docs/`. Most of the scaffold's filenames are distinctive, but `workflow.md` and `security.md` are plausible in any project — a project's own process notes are as likely to be called `workflow.md` as anything else. List every file at any depth, because the copy below merges recursively and a nested collision would not show up in a top-level listing:
 
 ```bash
 find "$PROJECT/docs" -type f 2>/dev/null
 ```
 
-If any of the scaffold's filenames appear in that listing — `project-brief.md`, `setup.md`, `design-tokens.md`, `security.md`, `service-worker.md`, `storybook.md`, `modern-platform-guide.md`, `adopting-an-existing-project.md` — rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it.
+If any of the scaffold's filenames appear in that listing — `project-brief.md`, `setup.md`, `design-tokens.md`, `security.md`, `service-worker.md`, `storybook.md`, `modern-platform-guide.md`, `workflow.md`, `adopting-an-existing-project.md` — rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it.
 
 Then copy the workflow layer across:
 
@@ -138,7 +138,7 @@ Then copy the workflow layer across:
 cd "$PROJECT"
 cp -R /tmp/scaffold/.agents .
 cp -R /tmp/scaffold/context .
-cp    /tmp/scaffold/AGENTS.md /tmp/scaffold/WORKFLOW.md .
+cp    /tmp/scaffold/AGENTS.md .
 mkdir -p docs && cp -R /tmp/scaffold/docs/. docs/
 ```
 
@@ -219,7 +219,7 @@ Then open your agent in the project and run `/status`. It should report the spec
 
 > **Human + agent.** `/survey` drafts; the human reviews and approves. Nothing is written without that approval.
 
-This is the step to resist skipping, and the one most likely to be skipped. It is `WORKFLOW.md` Step 2, with one change of posture: **the Stack section records what the project already uses, not what you would have chosen.** If you intend to change a choice later, that is a migration with its own spec, not a line edit here.
+This is the step to resist skipping, and the one most likely to be skipped. It is `docs/workflow.md` Step 2, with one change of posture: **the Stack section records what the project already uses, not what you would have chosen.** If you intend to change a choice later, that is a migration with its own spec, not a line edit here.
 
 > [!IMPORTANT]
 > **An empty brief produces an audit that finds almost nothing and says so confidently.** *`/audit` measures the code against the conventions, browser targets, and accessibility standard recorded here. With the shipped placeholders still in place it falls back to generic review, reports few findings, and gives no sign that the yardstick was blank. On a client engagement that is worse than no audit: it is a clean bill of health you cannot support.*
@@ -321,7 +321,7 @@ Findings the client decides not to fix are `accepted`, with their reason recorde
 
 So the usual answer to "there are no specs" is: correct, and none are needed yet.
 
-When you do write one, follow `WORKFLOW.md` Steps 4 to 6 as written: a feature spec in `docs/features/`, component specs in `docs/specs/`, and design tokens if the visual layer is in scope. Promote the specs to `Ready` yourself — the tokens document carries no status and is never promoted — then run the normal loop.
+When you do write one, follow `docs/workflow.md` Steps 4 to 6 as written: a feature spec in `docs/features/`, component specs in `docs/specs/`, and design tokens if the visual layer is in scope. Promote the specs to `Ready` yourself — the tokens document carries no status and is never promoted — then run the normal loop.
 
 ### Where the intent comes from
 

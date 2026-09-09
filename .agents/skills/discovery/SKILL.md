@@ -7,7 +7,7 @@ description: "Optional deep, multi-turn project discovery that helps the user fi
 
 Where this can sit in the workflow:
 
-    WORKFLOW Step 2 + Step 4  ->  write them by hand  ->  Step 5 (component specs)
+    workflow Step 2 + Step 4  ->  write them by hand  ->  Step 5 (component specs)
                               \
                                ->  [discovery]  ->  review and approve  ->  Step 5
 
@@ -17,7 +17,7 @@ job is to help the user think through the product, preserve the depth and nuance
 of that conversation, and write the user-owned planning files only when the user
 asks for drafts.
 
-It covers `WORKFLOW.md` Steps 2 and 4: the setup checklist in
+It covers `docs/workflow.md` Steps 2 and 4: the setup checklist in
 `docs/project-brief.md`, and the first feature specs in `docs/features/`. It
 stops there. Component specs are Step 5, written one at a time against a settled
 feature spec, and design tokens are Step 6.
@@ -158,8 +158,8 @@ After writing:
 - report which files changed
 - list any retained TODOs or unresolved decisions
 - remind the user that every one of these files remains theirs to edit directly
-- point at `WORKFLOW.md` Step 5 as the next step: a component spec for each item
-  in the feature's "Components required" list, using
+- point at `docs/workflow.md` Step 5 as the next step: a component spec for each
+  item in the feature's "Components required" list, using
   `docs/specs/_component-template.spec.md`
 - mention that `/brief <spec>` will read back any spec, at any status, and say
   what it still needs before it can be promoted to `Ready`

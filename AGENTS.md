@@ -24,8 +24,8 @@ is selected in `docs/project-brief.md`, not assumed here.
 
 The build loop is a workflow layer, not an app skeleton. The workflow files come
 first: the scaffold is cloned into an empty folder, and the stack is then set up
-*inside* that clone at `WORKFLOW.md` Step 3 - `package.json` populated and the
-framework's config files written from the Stack selections in
+*inside* that clone at `docs/workflow.md` Step 3 - `package.json` populated and
+the framework's config files written from the Stack selections in
 `docs/project-brief.md`.
 
 > [!IMPORTANT]
@@ -100,9 +100,9 @@ The project's own documentation set is authoritative for everything else:
 - `docs/setup.md` - read once, before any implementation code exists: the
   initial setup procedure, and the compatibility notes for stack combinations
   that need extra wiring. Nothing in the build loop reads it afterwards
-- `WORKFLOW.md` - the ten-step human guide from setup through to deployment
+- `docs/workflow.md` - the ten-step human guide from setup through to deployment
 - `docs/adopting-an-existing-project.md` - the setup half of that guide for a
-  project that already has code; it rejoins `WORKFLOW.md` at Step 4
+  project that already has code; it rejoins `docs/workflow.md` at Step 4
 
 ## Specs are contracts
 
@@ -326,7 +326,7 @@ spec is the contract, so a wrong result usually means a spec that was promoted t
 ## Workflow
 
 Build one feature, fix, or rollback at a time, behind review gates. This is the
-automated form of `WORKFLOW.md` Steps 4-10, not a second workflow: the spec
+automated form of `docs/workflow.md` Steps 4-10, not a second workflow: the spec
 `**Status:**` line is still the queue, and Steps 4-6 (writing feature specs,
 component specs, and design tokens) stay human work. Each skill is plain markdown
 any capable agent can read and follow. Where each tool finds them:
@@ -417,7 +417,7 @@ file, so a skill followed manually behaves the same as one invoked.
 a rollback's `Complete` -> `Ready` is a restoration rather than that move (see
 "Specs are contracts" above). And no skill creates, switches, merges, or deletes
 a branch; the loop commits to whatever branch is checked out, matching the
-"commit your work" checkpoints in `WORKFLOW.md`.
+"commit your work" checkpoints in `docs/workflow.md`.
 
 Deployment is also explicit. `/release` can prepare local Render or Vercel config
 and run readiness checks, but it must stop before deploy, remote service changes,
@@ -472,8 +472,8 @@ commands.
 ## Commands
 
 Fill these in for your stack, from the selections in `docs/project-brief.md`, as
-part of `WORKFLOW.md` Step 3. Delete any row that does not apply, and do not
-invent a command to fill a gap.
+part of `docs/workflow.md` Step 3. Delete any row that does not apply, and do
+not invent a command to fill a gap.
 
 - Dev server: `<command>` (http://localhost:<port>)
 - Build: `<command>`

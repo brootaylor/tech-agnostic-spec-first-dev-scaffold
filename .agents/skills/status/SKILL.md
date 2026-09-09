@@ -20,7 +20,7 @@ reports comes from disk and git. That is the point: a fresh session can run
 `/status` and know exactly as much as the last one did.
 
 For setup problems - an unfilled `docs/project-brief.md`, missing commands in
-`AGENTS.md`, or agent pointers that were never wired up - see `WORKFLOW.md`
+`AGENTS.md`, or agent pointers that were never wired up - see `docs/workflow.md`
 Steps 1-3 rather than this skill.
 
 ## Input

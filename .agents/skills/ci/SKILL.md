@@ -7,7 +7,7 @@ description: Set up or normalize automatic GitHub checks for a spec-first projec
 
 Where this sits in the workflow:
 
-    WORKFLOW.md setup  ->  [ci]  ->  Verify locally  ->  GitHub runs Verify
+    workflow.md setup  ->  [ci]  ->  Verify locally  ->  GitHub runs Verify
     (project commands)    (setup)    (same recipe)      (pull requests)
 
 This skill gives local work and GitHub one shared automated command. It is an
@@ -143,8 +143,8 @@ part of this skill.
   with their existing fallback behavior when it is absent.
 - `/status` does not report missing or stale CI. Its inputs are the spec queue,
   the work order, the findings ledger, git, `context/sessions.md` and progress
-  drift between those; it sends setup gaps to `WORKFLOW.md` Steps 1-3 instead.
-  So nothing watches for drift between the `Verify` command documented in
+  drift between those; it sends setup gaps to `docs/workflow.md` Steps 1-3
+  instead. So nothing watches for drift between the `Verify` command documented in
   `AGENTS.md` and the workflow on disk - rerun `/ci` when the project's checks
   change.
 

@@ -20,8 +20,8 @@ will review against it, find little, and give no sign the yardstick was blank.
 This skill closes that gap the only way it can be closed honestly: by reading the
 code and reporting what is there, marked by how well each claim is supported.
 
-It is `WORKFLOW.md` Step 2 for a project that skipped Steps 1 to 3 by already
-existing. See `docs/adopting-an-existing-project.md`, Step B.
+It is `docs/workflow.md` Step 2 for a project that skipped Steps 1 to 3 by
+already existing. See `docs/adopting-an-existing-project.md`, Step B.
 
 How it differs from its neighbors:
 

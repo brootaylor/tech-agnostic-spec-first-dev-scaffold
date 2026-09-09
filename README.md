@@ -18,8 +18,8 @@ Then take whichever route matches what you have:
 
 | You have | Start here |
 |----------|-----------|
-| An empty folder | [WORKFLOW.md](./WORKFLOW.md) — the ten-step guide |
-| A codebase that already exists | [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) — merge the scaffold in, audit it, then rejoin WORKFLOW.md at Step 4 |
+| An empty folder | [docs/workflow.md](./docs/workflow.md) — the ten-step guide |
+| A codebase that already exists | [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) — merge the scaffold in, audit it, then rejoin the workflow at Step 4 |
 
 Only the setup differs. Both routes reach the same specs, the same build loop, and the same gates.
 
@@ -69,7 +69,7 @@ In the order you meet them:
 
 | File | Purpose |
 |------|---------|
-| [`WORKFLOW.md`](./WORKFLOW.md) | Step-by-step guide from setup through to deployment — start here |
+| [`docs/workflow.md`](./docs/workflow.md) | Step-by-step guide from setup through to deployment — start here |
 | [`docs/project-brief.md`](./docs/project-brief.md) | Single source of truth — stack selector, conventions, agent rules |
 | [`docs/setup.md`](./docs/setup.md) | One-time setup — the procedure, and compatibility notes per stack combination |
 | [`docs/modern-platform-guide.md`](./docs/modern-platform-guide.md) | Which web platform APIs and features to use |
@@ -156,14 +156,18 @@ Others sit outside the loop — `/discovery`, `/survey`, `/fix`, `/rollback`, `/
 
 ```
 my-project/
+├── README.md
+├── AGENTS.md                               ← cross-tool agent instructions and skill reference
 ├── docs/
+│   ├── workflow.md                         ← the ten-step guide, setup to deployment
+│   ├── adopting-an-existing-project.md     ← setup route for an existing codebase
 │   ├── project-brief.md                    ← single source of truth
+│   ├── setup.md                            ← one-time setup: procedure and stack compatibility notes
 │   ├── modern-platform-guide.md
 │   ├── design-tokens.md
 │   ├── service-worker.md
 │   ├── storybook.md
 │   ├── security.md
-│   ├── adopting-an-existing-project.md     ← setup route for an existing codebase
 │   ├── features/                           ← user-facing feature specs
 │   │   └── _feature-template.md
 │   ├── specs/                              ← technical specs for components, pages, layouts
@@ -174,7 +178,7 @@ my-project/
 │   │   └── hooks/                          ← reusable-logic specs, only if you need them
 │   └── reference/                          ← reference images a spec points at
 ├── src/                                    ← three files ship; the subdirectories below are yours to create
-│   ├── index.html                          ← ships; some stacks manage their own — see WORKFLOW.md Step 3
+│   ├── index.html                          ← ships; some stacks manage their own — see workflow.md Step 3
 │   ├── scripts/main.js                     ← ships; the application entry point
 │   ├── assets/icons/spinner.svg            ← ships; a spec depends on it — keep it whatever your stack
 │   ├── components/

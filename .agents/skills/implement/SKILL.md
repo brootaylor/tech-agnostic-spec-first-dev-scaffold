@@ -79,8 +79,8 @@ history to work with. On resume, the line is already filled - leave it alone.
 
 This loop does not create, switch, merge, or delete branches. It commits to
 whatever branch is checked out, matching the "commit your work" checkpoints in
-`WORKFLOW.md`. If the user wants feature branches, that is their call to make
-before running `/implement`.
+`docs/workflow.md`. If the user wants feature branches, that is their call to
+make before running `/implement`.
 
 ### Type: Rollback safeguard
 

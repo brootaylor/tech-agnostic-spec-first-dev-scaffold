@@ -71,7 +71,7 @@ Mark exactly one option per category as `[active]`. Leave all others blank.
 > recommendation.** *They sit on Vanilla, JavaScript, plain CSS, and Vite because
 > the example specs and the `src/` starting files are written against that
 > combination — nothing about it has been chosen for your project. Replace them
-> with your own selections (`WORKFLOW.md` Step 2) before any setup runs, clearing
+> with your own selections (`docs/workflow.md` Step 2) before any setup runs, clearing
 > the shipped mark rather than adding a second one beside it. Nothing errors if
 > you don't: an agent reads a shipped default exactly as it reads a settled
 > decision, and will install and scaffold against it.*
@@ -485,6 +485,7 @@ docs/
   storybook.md                                            # ← storybook configuration
   security.md                                             # ← security headers and CSP configuration
   setup.md                                                # ← one-time setup: procedure and stack compatibility notes
+  workflow.md                                             # ← the ten-step human guide, setup to deployment
   adopting-an-existing-project.md                         # ← setup guide for a codebase that already exists
   features/                                               # ← user-facing feature specs
     _feature-template.md                                  # ← feature spec template
@@ -503,7 +504,6 @@ context/                                                  # ← the build loop's
   findings.md                                             # ← review findings ledger, written by /audit
   history/                                                # ← archived work orders: features, fixes, rollbacks
 AGENTS.md                                                 # ← cross-tool agent instructions and skill reference
-WORKFLOW.md                                               # ← the ten-step human guide, setup to deployment
 ```
 
 ### Assets
