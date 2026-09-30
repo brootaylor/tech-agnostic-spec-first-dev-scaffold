@@ -6,6 +6,7 @@
   "first-heading-h1": false,
   "no-bare-urls": false,
   "no-inline-html": false,
+  "table-column-style": false,
   "no-trailing-punctuation": {
     "punctuation": ".,;:"
   }
