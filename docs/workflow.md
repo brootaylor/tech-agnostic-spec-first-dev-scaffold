@@ -39,7 +39,7 @@ SPEC  ·  per feature, and always human work
       ▼
 BUILD LOOP  ·  per spec, one spec at a time      ← Steps 7 and 8
 
-      ├─  + /brief      preview a spec before committing to it
+      ├─  + /preview    preview a spec before committing to it
       │
       ├─  /feature ───▶  context/current-feature.md      « review gate »
       │                 the work order: small build steps
@@ -321,7 +321,7 @@ Once a spec's status is `Ready`, it's time to build.
 
 `/implement` needs no argument — it builds whatever work order `/feature` left in `context/current-feature.md`, one step at a time. For each step it shows the diff, explains it in plain English, runs whatever checks the project has, and waits for you to approve before moving on. It commits to whatever branch you're on and never creates or merges branches.
 
-To preview a spec before committing to it, run `/brief` — it explains what the spec involves, what it depends on, and what would block it, without writing anything.
+To preview a spec before committing to it, run `/preview` — it explains what the spec involves, what it depends on, and what would block it, without writing anything.
 
 If the agent stops to ask a question, the spec is likely ambiguous in that area. Go back, clarify the relevant section, and re-run.
 

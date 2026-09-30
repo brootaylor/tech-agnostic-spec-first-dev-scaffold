@@ -52,7 +52,7 @@ This is not advisory. It is the project's core rule, stated in
 
 | Status | What this skill does |
 |--------|----------------------|
-| `Draft` | **Stop.** Do not plan, do not build. Point at `/brief <spec>`, which reports what it still needs, and ask the human to finish it and set it to `Ready`. |
+| `Draft` | **Stop.** Do not plan, do not build. Point at `/preview <spec>`, which reports what it still needs, and ask the human to finish it and set it to `Ready`. |
 | `Ready` | Proceed. |
 | `Complete` | **Stop.** Do not re-implement or overwrite. Tell the user the human must update the spec and reset it to `Ready` first. |
 

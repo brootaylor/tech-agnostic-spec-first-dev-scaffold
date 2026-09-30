@@ -142,7 +142,7 @@ If you're building with an agent, the workflow is a set of shared skills in `.ag
 
 | Skill | What it does |
 |-------|--------------|
-| `/brief` | Preview a spec before committing to it — what it involves, what would block it |
+| `/preview` | Preview a spec before committing to it — what it involves, what would block it |
 | `/feature` | Turn a `Ready` spec into a work order with small, reviewable build steps |
 | `/implement` | Build those steps one at a time — diff, plain-English explanation, approval |
 | `/check` | Prove each "done when" against the running app |

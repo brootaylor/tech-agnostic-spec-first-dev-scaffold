@@ -31,7 +31,6 @@ How it differs from its neighbors:
 - `/audit` judges code against the brief. `/survey` produces the brief so
   `/audit` has something to judge against. **Survey never grades, never reports
   defects, and never opens a finding.**
-- `/brief` explains one spec. Unrelated, despite the similar name.
 
 ## Input
 

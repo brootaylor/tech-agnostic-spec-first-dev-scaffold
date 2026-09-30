@@ -1,23 +1,23 @@
 ---
-name: brief
-description: "Read-only briefing on a spec before you build it - the next Ready spec, or a named one whatever its status: what it involves, depends on, and touches, how big it is, and what still blocks it. Use when the user runs /brief, asks what the next feature involves, wants to preview a spec before /feature, asks why a Draft spec is not ready, or is deciding what to build next."
+name: preview
+description: "Read-only preview of a spec before you build it - the next Ready spec, or a named one whatever its status: what it involves, depends on, and touches, how big it is, and what still blocks it. Use when the user runs /preview, asks what the next feature involves, wants to preview a spec before /feature, asks why a Draft spec is not ready, or is deciding what to build next."
 ---
 
-# brief - understand a spec before you build it
+# preview - understand a spec before you build it
 
 Where this sits in the workflow:
 
-    docs/specs/*.spec.md  ->  [brief]  ->  /feature  ->  /implement
-    (the contract)            (read-only    (sequence     (build it)
-                               explainer)    it)
+    docs/specs/*.spec.md  ->  [preview]  ->  /feature  ->  /implement
+    (the contract)            (read-only      (sequence     (build it)
+                               explainer)      it)
 
 This skill answers one question: *what does this spec actually involve, before I
 commit to building it?* It reads the spec and its surrounding context and prints a
-short briefing so you can decide whether to build it now, reorder it, split it, or
+short preview so you can decide whether to build it now, reorder it, split it, or
 clear a blocker first. It is the read-only precursor to `/feature`.
 
 It is also the right tool for a `Draft` spec. `/feature` refuses to act on one;
-`/brief` will happily read it and tell you what is missing before it can be
+`/preview` will happily read it and tell you what is missing before it can be
 promoted to `Ready`.
 
 It never writes anything: no spec edits, no status changes, no branch, no commit.
@@ -25,16 +25,16 @@ It never writes anything: no spec edits, no status changes, no branch, no commit
 How it differs from its neighbors:
 
 - `/status` reports the *whole project*: the spec queue, current work, git, next
-  action. `/brief` zooms into *one spec* and explains it in depth.
-- `/feature` *writes* the work order at `current-feature.md`. `/brief` previews
+  action. `/preview` zooms into *one spec* and explains it in depth.
+- `/feature` *writes* the work order at `current-feature.md`. `/preview` shows
   what `/feature` would tackle, changing nothing.
 
 ## Input
 
-A spec, by name or path - e.g. `/brief "dark mode"`, `/brief button`, or
-`/brief docs/specs/components/button.spec.md`.
+A spec, by name or path - e.g. `/preview "dark mode"`, `/preview button`, or
+`/preview docs/specs/components/button.spec.md`.
 
-**With no argument, brief the next one** - the first `Ready` spec in
+**With no argument, preview the next one** - the first `Ready` spec in
 `docs/features/`, then `docs/specs/`, the same target `/feature` would pick.
 
 Unlike `/feature`, this skill reads a spec at **any** status. Briefing a `Draft`
@@ -47,7 +47,7 @@ neither is a work item - skip them when picking a target, and say so if one is
 named directly.
 
 If no spec exists yet, or every spec is a bare copy of one of those templates, say
-so plainly and point at writing one rather than inventing a briefing.
+so plainly and point at writing one rather than inventing a preview.
 
 ## What it reads
 
@@ -59,7 +59,7 @@ Gather these, then synthesize. Don't dump file contents; explain.
 2. **Dependency statuses** - the `**Status:**` line of every spec this one depends
    on, whatever its type. A `Ready` spec resting on a `Draft` one - a feature on a
    component, a page on a layout, a component on another component - is the single
-   most useful thing this briefing can surface.
+   most useful thing this preview can surface.
 3. **Project context** - `docs/project-brief.md` for stack, conventions, browser
    targets, and accessibility standard; the parent feature spec in
    `docs/features/` for product context when the target is a component spec.
@@ -75,7 +75,7 @@ Gather these, then synthesize. Don't dump file contents; explain.
 
 ## Output
 
-A short, scannable briefing, not a wall of text. Aim for something like:
+A short, scannable preview, not a wall of text. Aim for something like:
 
     docs/features/dark-mode.md - Dark mode
     Status: Draft - /feature will refuse this until it is promoted to Ready.
@@ -97,7 +97,7 @@ A short, scannable briefing, not a wall of text. Aim for something like:
     Next: finish and promote docs/specs/components/theme-toggle.spec.md, then
     this one, then /feature.
 
-Note what the shape of that briefing is doing: it traces every line back to a
+Note what the shape of that preview is doing: it traces every line back to a
 file. The dependency list comes from the spec's own table - **Components
 required** in a feature spec, **Dependencies** in a component, page, or layout
 spec - not from guessing what the spec sounds like it needs, and the
@@ -113,10 +113,10 @@ locked, or "clear X first" when a dependency blocks it.
 
 - **Read-only, always.** Never write a file, never touch a spec's `**Status:**`
   line, never edit `current-feature.md`, never branch, commit, install, or build.
-  To act on the briefing, the user runs `/feature` next.
+  To act on the preview, the user runs `/feature` next.
 - **Explain, don't sequence.** Size, dependencies, and a likely split are the
   value here; the actual build steps are `/feature`'s job. Don't write step lists.
-- **Trace to the spec.** Everything in the briefing comes from the spec, its
+- **Trace to the spec.** Everything in the preview comes from the spec, its
   dependencies, and `docs/project-brief.md`. Don't invent scope; if something is
   underspecified, say so and name the section that needs it.
 - **Always report the status, and lead with it.** It determines whether anything

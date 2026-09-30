@@ -117,7 +117,7 @@ End with a single suggested next action, chosen in this order:
 - `current-feature.md` is the reset stub and a spec is `Ready` -> `/feature` and
   name that spec.
 - `current-feature.md` is the reset stub and every spec is `Draft` -> say the
-  queue is blocked on human review, name the `Draft` specs, and suggest `/brief`
+  queue is blocked on human review, name the `Draft` specs, and suggest `/preview`
   to see what each one still needs before it can be promoted.
 - Every spec is `Complete` -> say the current milestone is complete; suggest
   hardening, release, or docs when appropriate, or writing the next spec.

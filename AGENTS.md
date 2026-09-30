@@ -207,7 +207,7 @@ conversation before the next `/feature`.
 
 | Skill | What it does |
 |-------|--------------|
-| `brief` | Read-only briefing on a spec before you build it: what it involves, what it depends on, what would block it |
+| `preview` | Read-only preview of a spec before you build it: what it involves, what it depends on, what would block it |
 | `feature` | Turns the next `Ready` spec into a work order at `context/current-feature.md`, with small reviewable build steps |
 | `implement` | Builds those steps one at a time - diff, plain-English explanation, verification, approval - on the branch you are already on |
 | `check` | Proves each "done when" against the running app and captures the evidence |

@@ -161,13 +161,13 @@ After writing:
 - point at `docs/workflow.md` Step 5 as the next step: a component spec for each
   item in the feature's "Components required" list, using
   `docs/specs/_component-template.spec.md`
-- mention that `/brief <spec>` will read back any spec, at any status, and say
+- mention that `/preview <spec>` will read back any spec, at any status, and say
   what it still needs before it can be promoted to `Ready`
 
 ## Rules
 
 - This skill is always optional. Never make it a prerequisite for `/feature`,
-  `/brief`, or anything else.
+  `/preview`, or anything else.
 - Never start it automatically because the brief is unfilled or the project is
   new.
 - Never imply that a brief or spec written by hand is inferior merely because
