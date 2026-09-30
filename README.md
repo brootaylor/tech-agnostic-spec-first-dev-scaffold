@@ -2,6 +2,11 @@
 
 A starter template for building web projects — tech-agnostic, spec-first, and works whether you build by hand, use an "Ai" coding agent, or both.
 
+**What you get is a way of working, not an app.** Each new piece of work gets a spec, saying what it must do and how you'll know it's done, before you or an "Ai" agent build it.
+
+- **In the download:** documents, spec templates, worked example specs, and workflow skills. No application code.
+- **Works for:** a new project or one that already has code. [Quick start](#quick-start) shows both routes.
+
 > [!IMPORTANT]
 > **Status:** *This is an active, evolving experiment, not a finished product. It'll keep changing as the idea gets tested against real projects — issues and discussion are welcome.*
 
@@ -19,14 +24,15 @@ A starter template for building web projects — tech-agnostic, spec-first, and 
   cd my-project
   ```
 
-**Then take the route that matches what you have:**
+**Then make three choices. Only the first one changes where you start:**
 
-| You have | Start here | Your first moves |
-|----------|-----------|------------------|
-| An empty folder | [docs/workflow.md](./docs/workflow.md) — the ten-step guide | Point your agent at the scaffold, describe the project in `docs/project-brief.md`, pick your stack and install it. |
-| A codebase that already exists | [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) | Merge the scaffold in by hand, then `/survey` drafts the brief and `/audit` grades what's already there. |
+| Choice | Options | Where it's covered |
+|--------|---------|--------------------|
+| What you're starting from | An **empty folder** → [docs/workflow.md](./docs/workflow.md), the ten-step guide · An **existing codebase** → [docs/adopting-an-existing-project.md](./docs/adopting-an-existing-project.md) | — |
+| Who writes the code | **You**, using the specs as directions · **An "Ai" coding agent**, running the build loop · or both | [Two ways to build](#two-ways-to-build) |
+| How the brief gets written | **By hand** in `docs/project-brief.md` · **By interview**: `/discovery` asks the questions and drafts it for you | [docs/workflow.md → Step 2](./docs/workflow.md#step-2--fill-in-project-briefmd) |
 
-Only the setup differs. Both routes reach the same specs, the same build loop, and the same gates.
+Every route reaches the same specs, the same build loop, and the same gates.
 
 You'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org) (LTS) — the full list is in [docs/workflow.md → Prerequisites](./docs/workflow.md#prerequisites).
 
@@ -47,7 +53,7 @@ It also means the tool choice comes last, not first — React, Astro, an "Ai" ag
 | | Handcrafted | Ai-assisted |
 |---|---|---|
 | **How** | Use the specs and workflow as directions for building yourself | Use an "Ai" coding agent to read specs and generate implementation |
-| **Setup** | No extra config needed | See [docs/workflow.md → Step 1](./docs/workflow.md#step-1--configure-your-agent) for agent setup |
+| **Setup** | Skip Step 1 — it's agent-only | See [docs/workflow.md → Step 1](./docs/workflow.md#step-1--configure-your-agent) for agent setup |
 | **Building** | Work through the spec in order — interface, tests, implementation | Run the build loop: `/feature` → `/implement` → `/check` → `/audit` → `/complete` |
 
 Both paths follow the same workflow and use the same specs.
@@ -58,7 +64,7 @@ Both paths follow the same workflow and use the same specs.
 
 - **Spec-first workflow** — specs are written before any code is produced; the spec is the source of truth for humans and agents alike
 - **Tech-agnostic** — currently supports 'Vanilla', Astro, Eleventy, React, React + Next.js, Svelte, and Svelte + SvelteKit. More tech stack options can be added if needed.
-- **Agent-agnostic** — any tool that reads the `AGENTS.md` convention works with no setup at all, Claude Code included (it needs one link to find the workflow skills), so every agent gets one source of truth, and there's a clear pattern for adding any other
+- **Agent-agnostic** — any tool that reads the `AGENTS.md` convention picks up the project's rules with no setup, so every agent gets one source of truth. How each tool finds the workflow skills is in [docs/agent-setup.md](./docs/agent-setup.md), along with the pattern for adding another
 - **A build loop with review gates** — 18 shared workflow skills take a `Ready` spec through work order, implementation, verification, audit, and completion, stopping for human review at each step. They're plain markdown shared by every agent, not one tool's feature
 - **Modern platform guide** — a reference for humans and agents for which web platform APIs and features to use, and when a fallback is acceptable.
 - **Optional: service worker** — offline and caching support with a strategy selector and framework-specific guidance
@@ -206,4 +212,4 @@ my-project/
 ```
 
 > [!IMPORTANT]
-> *The example specs in `docs/features/` and `docs/specs/` are real, working examples that follow the same conventions you'd use in a production project. Use them as a reference or replace them with your own.*
+> *The example specs in `docs/features/` and `docs/specs/` are real, working examples that follow the same conventions you'd use in a production project. Use them as a reference or replace them with your own. **They all ship as `Draft`, so `/feature` finds nothing to build until you promote one.** On a new project, to try the loop on one, set up your stack first ([docs/workflow.md → Step 3](./docs/workflow.md#step-3--set-up-your-stack)), then change `docs/specs/components/button.spec.md` to `**Status:** Ready`. It has no other spec to wait on. The agent will stop and ask you to settle `docs/design-tokens.md` before it writes any CSS, and that's expected. Adopting into an existing codebase? Its guide has you remove the examples instead.*
