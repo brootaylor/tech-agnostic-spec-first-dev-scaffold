@@ -146,18 +146,51 @@ If you're building with an agent, the workflow is a set of shared skills in `.ag
        └──────────────▶  the next Ready spec
 ```
 
+Every skill, grouped by when you'd reach for it:
+
+### Getting started — once per project
+
 | Skill | What it does |
 |-------|--------------|
-| `/preview` | Preview a spec before committing to it — what it involves, what would block it |
-| `/feature` | Turn a `Ready` spec into a work order with small, reviewable build steps |
-| `/implement` | Build those steps one at a time — diff, plain-English explanation, approval |
-| `/check` | Prove each "done when" against the running app |
-| `/audit` | Review the code against the project's standards |
-| `/try` | Get a manual walkthrough to click through yourself |
-| `/complete` | Write `Complete` back to the spec, archive the work, make one commit |
-| `/status` | See the queue, what's in flight, and the exact next action |
+| [`/discovery`](./.agents/skills/discovery/SKILL.md) | A guided interview that fills in the project brief and drafts your first feature specs |
+| [`/survey`](./.agents/skills/survey/SKILL.md) | Read a codebase that already exists and draft the project brief from what's in it |
+| [`/prototype`](./.agents/skills/prototype/SKILL.md) | Build throwaway static mockups to settle the look before anything is built |
+| [`/tests`](./.agents/skills/tests/SKILL.md) | Add unit testing and turn on the test gate |
+| [`/ci`](./.agents/skills/ci/SKILL.md) | Set up one `Verify` command and matching automatic GitHub checks |
 
-Others sit outside the loop — `/discovery`, `/survey`, `/fix`, `/rollback`, `/debug`, `/prototype`, `/tests`, `/ci`, and `/release` — plus `/autopilot`, which carries a settled spec the whole way instead of stopping at each gate.
+### Building a spec — in this order, once per spec
+
+| Skill | What it does |
+|-------|--------------|
+| [`/preview`](./.agents/skills/preview/SKILL.md) | *Optional.* See what a spec involves and what would block it, before committing to it |
+| [`/feature`](./.agents/skills/feature/SKILL.md) | Turn a `Ready` spec into a work order with small, reviewable build steps |
+| [`/implement`](./.agents/skills/implement/SKILL.md) | Build those steps one at a time — diff, plain-English explanation, approval |
+| [`/check`](./.agents/skills/check/SKILL.md) | Prove each "done when" against the running app |
+| [`/audit`](./.agents/skills/audit/SKILL.md) | Review the code against the project's standards |
+| [`/try`](./.agents/skills/try/SKILL.md) | Get a manual walkthrough to click through yourself |
+| [`/complete`](./.agents/skills/complete/SKILL.md) | Write `Complete` back to the spec, archive the work, make one commit |
+
+[`/autopilot`](./.agents/skills/autopilot/SKILL.md) carries a settled spec from work order to review in one pass, without stopping at each gate. It never runs `/complete` — that stays yours.
+
+### When something goes wrong
+
+| Skill | What it does |
+|-------|--------------|
+| [`/debug`](./.agents/skills/debug/SKILL.md) | Reproduce and isolate a failure without editing code, then hand the evidence on |
+| [`/fix`](./.agents/skills/fix/SKILL.md) | Write up a bug or small change that has no spec of its own, then run it through the loop |
+| [`/rollback`](./.agents/skills/rollback/SKILL.md) | Plan a safe reversal of a completed feature |
+
+### Shipping
+
+| Skill | What it does |
+|-------|--------------|
+| [`/release`](./.agents/skills/release/SKILL.md) | Get a deployment to Render or Vercel ready — config, environment, smoke tests |
+
+### Any time
+
+| Skill | What it does |
+|-------|--------------|
+| [`/status`](./.agents/skills/status/SKILL.md) | See the queue, what's in flight, and the exact next action |
 
 > [!IMPORTANT]
 > *Two rules hold however a skill is invoked: **no skill moves a spec from `Draft` to `Ready`**, and **no skill creates, switches, merges, or deletes a branch** — the loop commits to whatever branch you're already on. See [AGENTS.md](./AGENTS.md) for the full reference.*
