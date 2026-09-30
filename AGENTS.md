@@ -71,9 +71,8 @@ rediscover what was known.
 
 **Read them before acting when starting cold**, and after any `/clear` or
 `/compact`. Neither is imported with this file, the way the three above are, so
-they have to be opened deliberately. Read only the **Where
-things stand** block of `sessions.md`; any dated entries below it are optional
-depth. From `decisions.md`, read only the headings (`grep '^## '
+they have to be opened deliberately. Read `sessions.md` in full - it is one
+twenty-line block. From `decisions.md`, read only the headings (`grep '^## '
 context/decisions.md`), and open the full entry when a choice looks settled
 and you are about to revisit it. The whole file grows without limit, so reading
 all of it costs more with every decision recorded.

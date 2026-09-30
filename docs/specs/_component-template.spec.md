@@ -76,7 +76,7 @@ The agent will derive the implementation interface directly from this section.
 
 | Event | Fires when | Payload |
 |-------|------------|---------|
-| change / onChange / on:change | … | `{ value: string }` |
+| change / onChange / onchange | … | `{ value: string }` |
 
 ### Public methods _(if applicable)_
 
@@ -225,7 +225,7 @@ for the active selection.
 **Svelte:**
 
 ```svelte
-<ComponentName prop1="value" on:change={handleChange} />
+<ComponentName prop1="value" onchange={handleChange} />
 ```
 -->
 

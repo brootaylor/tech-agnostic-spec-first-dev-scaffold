@@ -51,18 +51,18 @@ the acceptance criteria that must be met for it to be considered complete.
 > As a developer or designer, I want to see documentation for each component
 > alongside its visual representation so I can understand how to use it.
 
-- [ ] **AC-01** — Each story includes a description of the component and its variants
-- [ ] **AC-02** — Props / attributes are documented in the Storybook controls panel
-- [ ] **AC-03** — Usage examples are visible alongside the rendered component
+- [ ] **AC-04** — Each story includes a description of the component and its variants
+- [ ] **AC-05** — Props / attributes are documented in the Storybook controls panel
+- [ ] **AC-06** — Usage examples are visible alongside the rendered component
 
 ### US-03 — Design system showcase
 
 > As a stakeholder, I want to browse all components and patterns in one place
 > so I can review the design system without needing access to the codebase.
 
-- [ ] **AC-01** — Storybook can be built as a static site via the project's `build-storybook` script
-- [ ] **AC-02** — The static build can be deployed independently of the main project
-- [ ] **AC-03** — All components are browsable and searchable in the built output
+- [ ] **AC-07** — Storybook can be built as a static site via the project's `build-storybook` script
+- [ ] **AC-08** — The static build can be deployed independently of the main project
+- [ ] **AC-09** — All components are browsable and searchable in the built output
 
 ---
 

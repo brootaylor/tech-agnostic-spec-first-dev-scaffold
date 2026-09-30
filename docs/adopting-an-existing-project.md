@@ -116,6 +116,7 @@ Keep the copies until Step F, not just Step B. `/survey` reads them at B as **cl
 Clone it somewhere outside the project rather than copying from a working copy you already have on disk.
 
 ```bash
+rm -rf /tmp/scaffold      # clears a copy left by an earlier adoption; git clone refuses to overwrite one
 git clone --depth 1 https://github.com/brootaylor/tech-agnostic-spec-first-dev-scaffold.git /tmp/scaffold
 rm -rf /tmp/scaffold/.git
 ```
@@ -125,13 +126,25 @@ rm -rf /tmp/scaffold/.git
 
 ### A4 — Check for name collisions, then copy
 
-Look before merging into `docs/`. Most of the scaffold's filenames are distinctive, but `workflow.md` and `security.md` are plausible in any project — a project's own process notes are as likely to be called `workflow.md` as anything else. List every file at any depth, because the copy below merges recursively and a nested collision would not show up in a top-level listing:
+Look before merging into the three directories the copy below writes to: `docs/`, `.agents/` and `context/`. Most of the scaffold's filenames are distinctive, but not all:
+
+- **`docs/`** — `workflow.md` and `security.md` are plausible in any project; a project's own process notes are as likely to be called `workflow.md` as anything else.
+- **`.agents/`** — Codex reads skills from `.agents/skills/`, so a project built with it may already have skills there, and one called `debug`, `tests` or `release` shares a folder name with one of the scaffold's.
+- **`context/`** — a common name for a folder of notes or prompts.
+
+List every file at any depth, because the copy merges recursively and a nested collision would not show up in a top-level listing:
 
 ```bash
-find "$PROJECT/docs" -type f 2>/dev/null
+find "$PROJECT/docs" "$PROJECT/.agents" "$PROJECT/context" -type f 2>/dev/null
 ```
 
-If any of the scaffold's filenames appear in that listing — `project-brief.md`, `stack-setup.md`, `agent-setup.md`, `design-tokens.md`, `security.md`, `service-worker.md`, `storybook.md`, `modern-platform-guide.md`, `workflow.md`, `adopting-an-existing-project.md` — rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it.
+Compare that listing with the scaffold's own:
+
+```bash
+cd /tmp/scaffold && find docs .agents context -type f
+```
+
+Any path that appears in both, rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it. For a skill, rename its folder — `git mv .agents/skills/debug .agents/skills/debug-original` — and the tool that uses it will list it under the new name.
 
 Then copy the workflow layer across:
 
@@ -147,6 +160,16 @@ Copy `.editorconfig` and `.markdownlint.json` too if the project has none.
 
 > [!IMPORTANT]
 > **Never copy the scaffold's `package.json`, `src/`, `README.md`, `LICENSE` or `.nvmrc`.** *The scaffold ships a placeholder `package.json` naming no dependencies and a three-file `src/` (`index.html`, `scripts/main.js`, `assets/icons/spinner.svg`) that exists to give a new project somewhere to start. Copying either over a real project destroys the dependency list or the application entry point, and a broad `cp -R /tmp/scaffold/. .` does exactly that in one stroke — which is why the commands above name each path. The other three are the scaffold's own identity and belong to it, not to the project.*
+
+Then remove the scaffold's five example specs, keeping the two templates:
+
+```bash
+rm docs/features/dark-mode.md \
+   docs/specs/components/button.spec.md docs/specs/components/theme-toggle.spec.md \
+   docs/specs/layouts/main-layout.spec.md docs/specs/pages/home.spec.md
+```
+
+They describe the scaffold's own demonstration — a dark mode, a button, a home page — not this project. Left in, `/status` reports all five as `Draft` work in the queue, and `button.spec.md` depends on `src/assets/icons/spinner.svg`, which the copy above deliberately leaves behind. When Step F sends you to `docs/workflow.md` for how to write a spec, the worked examples it names are still in the [scaffold's repository](https://github.com/brootaylor/tech-agnostic-spec-first-dev-scaffold/tree/main/docs).
 
 ### A5 — Merge `.gitignore` rather than replacing it
 

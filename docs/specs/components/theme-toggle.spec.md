@@ -49,7 +49,7 @@ The agent will derive the implementation interface directly from this section.
 
 | Event | Fires when | Payload |
 |-------|------------|---------|
-| change / onChange / on:change | The user activates the toggle | `'light' \| 'dark'` — the new theme value as a plain string |
+| change / onChange / onchange | The user activates the toggle | `'light' \| 'dark'` — the new theme value as a plain string |
 
 ### Public methods _(if applicable)_
 
@@ -191,7 +191,7 @@ is what the Example usage row in the checklist below is asking for.
 **Svelte:**
 
 ```svelte
-<ThemeToggle initialTheme="light" on:change={(e) => console.log(e.detail)} />
+<ThemeToggle initialTheme="light" onchange={(theme) => console.log(theme)} />
 ```
 
 ---

@@ -43,7 +43,7 @@ A reference for the prefixes used throughout this document.
 | Prefix | Stands for | Description |
 |--------|------------|-------------|
 | `US-##` | User Story | A feature requirement from the user's perspective |
-| `AC-##` | Acceptance Criteria | A condition that must be met for the story to be complete |
+| `AC-##` | Acceptance Criteria | A condition that must be met for the story to be complete. Numbered continuously across the whole feature, not restarted per story, so each ID names one criterion wherever a report cites it |
 
 ---
 
@@ -66,7 +66,7 @@ implementation details.
 
 > As a [type of user], I want [capability], so that [benefit].
 
-- [ ] **AC-01** — …
+- [ ] **AC-03** — …
 
 ---
 

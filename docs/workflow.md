@@ -13,7 +13,7 @@ SETUP  ·  once per project
 
   clone the template
       │
-      ├─  Step 1   configure agent ····  .agents/<tool>/, linked to it
+      ├─  Step 1   configure agent ····  create context/sessions.md and context/decisions.md
       ├─  Step 2   project-brief.md ····  describe it, pick your stack
       └─  Step 3   set up the stack ····  dependencies and configuration
                                           + /tests  /ci
@@ -227,8 +227,9 @@ It covers setup only — specs and design tokens come in later steps.
 
 | Framework | What to do |
 |-----------|------------|
-| Vanilla | Keep both as they are |
-| React, Svelte | Keep both — and update `main.js` to mount the app |
+| Vanilla | Keep both as they are — and with Vite, set its `root` to `src` (`docs/stack-setup.md` → Tool combinations) |
+| React | Keep both — rename `main.js` to `main.jsx` (`main.tsx` under TypeScript), point the `<script src>` in `index.html` at it, and mount the app there |
+| Svelte | Keep both — and update `main.js` to mount the app |
 | Astro, Eleventy, React + Next.js, Svelte + SvelteKit | Remove both — these four manage their own pages and routing |
 
 `src/assets/icons/spinner.svg` stays whichever framework you picked: an icon file is framework-neutral, and `docs/specs/components/button.spec.md` lists it as a dependency and requires it inlined.
@@ -366,7 +367,7 @@ Generated code appears in `src/` under the relevant directory (see the table in 
 
 Once everything checks out, close the work out — by hand or with `/complete`.
 
-**By hand:** set the spec's `**Status:**` to `Complete` and its `**Last updated:**` to today's date, archive `context/current-feature.md` to `context/history/features/`, reset it to its stub, then commit.
+**By hand:** set the spec's `**Status:**` to `Complete` and its `**Last updated:**` to today's date, then archive `context/current-feature.md` as `context/history/features/NN-name.md` — `NN` one higher than the last number already in that folder, so nothing is overwritten and the build order stays readable. Move any resolved findings from `context/findings.md` into a `## Findings` section at the end of that archive, leaving open ones in the ledger. Reset `context/current-feature.md` to its stub, then commit.
 
 **With an agent:** `/complete` does all of that. It is the only part of the loop allowed to edit a spec file, and only those two lines. It makes one commit covering the code and the bookkeeping, and stops to ask before pushing — finishing is not permission to push.
 
@@ -376,19 +377,14 @@ Once everything checks out, close the work out — by hand or with `/complete`.
 
 ## Step 9 — Run it locally or deploy
 
-**Most frameworks** (Vanilla + Vite, React, React + Next.js, Svelte, Svelte + SvelteKit, Astro):
+Install the dependencies, then run the **Dev server** command you recorded in `AGENTS.md` → Commands at Step 3:
 
 ```bash
 npm install
-npm run dev
+npm run dev        # the script the Dev server row names
 ```
 
-**Eleventy:**
-
-```bash
-npm install
-npx @11ty/eleventy --serve
-```
+The script name varies by framework, so check the Commands row rather than assuming `dev`: it names the script your `package.json` actually contains.
 
 For deployment, [Netlify](https://www.netlify.com), [Vercel](https://vercel.com), and [Render](https://render.com) all work well with these frameworks. Connect your Git repository, set the build command and output directory for your framework, and they handle the rest.
 

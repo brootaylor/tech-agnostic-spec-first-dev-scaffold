@@ -100,7 +100,8 @@ in first, since its values are what the files implement. The file extension foll
 the active Styles selection in `docs/project-brief.md`.
 
 **If using an agent:** ask it to read this document and create the token and main
-style files. It will stop and ask you to fill this document in if it is still empty.
+style files. It will stop and ask you to settle the values first while the
+`**Last updated:**` line at the top still holds its placeholder.
 
 **If building by hand:** create both files before writing any styles. The token file
 should follow the structure in this document.
@@ -119,6 +120,46 @@ Reference tokens in any stylesheet like this:
   transition: color var(--duration-base) var(--easing-default);
 }
 ```
+
+### Under Tailwind
+
+When Tailwind is the active Styles selection, the two layers stay exactly as
+this document describes, and components reach them through utility classes
+rather than `var()`. Tailwind 4 generates a utility for every variable declared
+in an `@theme` block, so declare the **semantic** tokens there, and keep the
+primitives in plain `:root`, where no utility is generated for them:
+
+```css
+@import "tailwindcss";
+
+:root {
+  /* primitives */
+  --color-slate-50: #f8fafc;
+  --color-slate-900: #0f172a;
+}
+
+@theme static {
+  --color-*: initial;                          /* drop Tailwind's default palette */
+  --color-bg-page: var(--color-slate-50);      /* → bg-bg-page */
+  --color-text-body: var(--color-slate-900);   /* → text-text-body */
+}
+
+[data-theme="dark"] {
+  --color-bg-page: var(--color-slate-900);
+  --color-text-body: var(--color-slate-50);
+}
+```
+
+- **Clear the default palette.** Tailwind ships its own `slate-50`, `red-500` and
+  the rest, so without `--color-*: initial` a component can still reach a
+  primitive through `bg-slate-50`, which is exactly what the two-layer rule forbids.
+- **Use `@theme static`.** Without `static`, Tailwind writes out only the
+  variables it sees used in a class or in CSS it processes, so a token read from
+  JavaScript or from a stylesheet Tailwind never sees is missing from the build,
+  and nothing reports it.
+- **Never use `@theme inline` for semantic colours.** `inline` copies the light
+  value into each utility at build time, so the `[data-theme="dark"]` override
+  never reaches it, and dark mode silently does nothing.
 
 ---
 

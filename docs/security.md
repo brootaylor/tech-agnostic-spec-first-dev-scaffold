@@ -50,18 +50,18 @@ the acceptance criteria that must be met for it to be considered complete.
 > As a developer, I want a Content Security Policy defined and enforced so that
 > only trusted sources of scripts, styles, and other resources are permitted.
 
-- [ ] **AC-01** — A CSP header (or meta tag equivalent) is present on all pages
-- [ ] **AC-02** — The policy restricts script and style sources to `'self'` by default
-- [ ] **AC-03** — Any exception to the default policy (e.g. an external font or analytics script) is explicitly listed in this file and documented with a reason
-- [ ] **AC-04** — No `unsafe-eval` is present in the production policy
+- [ ] **AC-04** — A CSP header (or meta tag equivalent) is present on all pages
+- [ ] **AC-05** — The policy restricts script and style sources to `'self'` by default
+- [ ] **AC-06** — Any exception to the default policy (e.g. an external font or analytics script) is explicitly listed in this file and documented with a reason
+- [ ] **AC-07** — No `unsafe-eval` is present in the production policy
 
 ### US-03 — Consistent enforcement
 
 > As a developer, I want security configuration to be defined in one place so
 > that it is applied consistently and does not drift between environments.
 
-- [ ] **AC-01** — All header values are defined in this file and not duplicated elsewhere
-- [ ] **AC-02** — If a component spec requires an external resource, it declares it in its Dependencies table — this file is then updated before the component is marked `Complete`
+- [ ] **AC-08** — All header values are defined in this file and not duplicated elsewhere
+- [ ] **AC-09** — If a component spec requires an external resource, it declares it in its Dependencies table — this file is then updated before the component is marked `Complete`
 
 ---
 

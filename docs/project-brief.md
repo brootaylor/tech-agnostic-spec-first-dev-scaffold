@@ -290,7 +290,7 @@ language. Agents must follow them when generating any file.
 - **Style files** — match the component they belong to: `Button.css`
 - **Test files** — match the file under test with a `.test` suffix: `Button.test.js`
 - **Asset files** — kebab-case: `icon-sun.svg`, `hero-image.webp`
-- **CSS class names** — Block-Element-Modifier (BEM): `.btn`, `.btn--primary`, `.btn__label`
+- **CSS class names** — Block-Element-Modifier (BEM): `.btn`, `.btn--primary`, `.btn__label`. This applies to class names you write in a stylesheet. Under Tailwind, styling is done with utility classes and this rule does not apply to them; see `docs/design-tokens.md` → Under Tailwind for how the tokens reach those utilities
 - **CSS custom properties** — kebab-case with semantic prefix: `--color-primary`, `--space-md`
 - **JavaScript variables and functions** — camelCase
 - **TypeScript types and interfaces** — PascalCase

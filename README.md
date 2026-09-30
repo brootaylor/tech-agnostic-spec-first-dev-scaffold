@@ -47,7 +47,7 @@ It also means the tool choice comes last, not first — React, Astro, an "Ai" ag
 | | Handcrafted | Ai-assisted |
 |---|---|---|
 | **How** | Use the specs and workflow as directions for building yourself | Use an "Ai" coding agent to read specs and generate implementation |
-| **Setup** | No extra config needed | See [AGENTS.md](./AGENTS.md) for agent setup |
+| **Setup** | No extra config needed | See [docs/workflow.md → Step 1](./docs/workflow.md#step-1--configure-your-agent) for agent setup |
 | **Building** | Work through the spec in order — interface, tests, implementation | Run the build loop: `/feature` → `/implement` → `/check` → `/audit` → `/complete` |
 
 Both paths follow the same workflow and use the same specs.

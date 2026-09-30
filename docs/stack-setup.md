@@ -74,7 +74,7 @@ Two rules hold throughout:
 ### Default starting files
 
 - **Vanilla + Vite** — `src/index.html` is the default home page and `src/scripts/main.js` is the JavaScript file it references. Both are included as minimal starting files to build out
-- **React** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the React app
+- **React** — `src/index.html` and `src/scripts/main.js` are the default starting files. Rename `main.js` to `main.jsx` (`main.tsx` under TypeScript) before mounting the React app in it — Vite does not transform JSX in a `.js` file — and update the `<script src>` in `src/index.html` to match
 - **React + Next.js** — pages and routing are managed by Next.js. Remove `src/index.html` and `src/scripts/main.js` if switching to Next.js
 - **Svelte** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the Svelte app
 - **Svelte + SvelteKit** — pages and routing are managed by SvelteKit. Remove `src/index.html` and `src/scripts/main.js` if switching to SvelteKit
@@ -115,6 +115,18 @@ in `docs/project-brief.md` → Stack does not apply to these.
 Notes for specific combinations that require extra setup steps or have known
 conflicts. Check here whenever two or more selections interact.
 
+- **Vite, with the shipped `src/index.html`** (Vanilla, React, Svelte) — Vite looks for `index.html` at the project root, so with the starting file in `src/` the dev server answers every request with a 404 and nothing reports why. Set the root in `vite.config.js`, and send the build back out of `src/`:
+
+  ```js
+  // vite.config.js
+  import { defineConfig } from 'vite';
+  export default defineConfig({
+    root: 'src',
+    build: { outDir: '../dist', emptyOutDir: true },
+  });
+  ```
+
+  `emptyOutDir` has to be explicit because the output now sits outside the root, and Vite will not clear a directory there without being told to. Static files served as-is go in `src/public/`, since the public directory is resolved from the root too
 - **Vanilla + Vite + Jest** — Jest requires additional config to handle ECMAScript modules (ESM) in a Vite project. Prefer Vitest for Vite-based stacks to avoid this complexity
 - **Tailwind** — Tailwind 4 is CSS-first. Install `tailwindcss` plus the adapter for the build tool (`@tailwindcss/vite` for Vite, or `@tailwindcss/postcss` and `postcss` for a PostCSS pipeline), then `@import "tailwindcss";` at the top of the main stylesheet. There is no `tailwind.config.js`, and `autoprefixer` is not needed
 - **Tailwind + Astro** — run `npx astro add tailwind`, which on Astro 5.2 and later installs the `@tailwindcss/vite` plugin and writes the config. Do not reach for the `@astrojs/tailwind` integration: it is legacy, kept only to keep Tailwind 3 projects working
@@ -130,6 +142,10 @@ conflicts. Check here whenever two or more selections interact.
 
 Testing tools require framework-specific wiring beyond a standard install. Read
 the relevant entry below before generating any test config file.
+
+The entries below name config files with a `.ts` extension. Match the extension
+to the Language selection in `docs/project-brief.md` instead: under JavaScript,
+`vitest.config.ts` is `vitest.config.js`.
 
 **React + Vitest**
 - Install `@testing-library/react`, `@testing-library/jest-dom`, and `jsdom`
@@ -180,11 +196,16 @@ the relevant entry below before generating any test config file.
 - Use `@astrojs/check` for type checking (it understands `.astro` files); `tsc` alone does not
 
 **Eleventy + TypeScript**
-- Eleventy does not natively process TypeScript source files
-- A separate compilation step is required — compile `src/` with `tsc` and point Eleventy at
-  the output, or use a bundler plugin
-- This significantly increases setup complexity. If TypeScript is only needed for the Eleventy
-  config file itself, use a `.eleventy.ts` approach with `ts-node` instead
+- Eleventy 3 runs TypeScript through Node.js's built-in type stripping, which needs Node.js
+  22.6 or later — check `.nvmrc`. No compiler or `ts-node` is involved
+- Config file: name it `eleventy.config.ts` and pass it explicitly —
+  `npx @11ty/eleventy --config=eleventy.config.ts` — in both the dev and build scripts
+- Templates: `.11ty.ts` files need registering in that config, with
+  `eleventyConfig.addExtension("11ty.ts", { key: "11ty.js" })` and
+  `eleventyConfig.addTemplateFormats("11ty.ts")`. They take no front matter; export `data` instead
+- Type stripping removes types without checking them, so add `tsc --noEmit` as a separate check
+- See [Eleventy's TypeScript documentation](https://www.11ty.dev/docs/languages/typescript/)
+  for the `tsx` alternative
 
 ---
 

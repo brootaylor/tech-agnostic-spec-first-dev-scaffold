@@ -41,18 +41,18 @@ Each user story describes a requirement from the user's perspective, followed by
 > As a user, I want to manually switch between light and dark mode, so I can
 > override my OS setting when I choose to.
 
-- [ ] **AC-01** — A toggle is accessible from every page
-- [ ] **AC-02** — Switching applies immediately without a page reload
-- [ ] **AC-03** — The selected preference is saved and restored on return visits
+- [ ] **AC-03** — A toggle is accessible from every page
+- [ ] **AC-04** — Switching applies immediately without a page reload
+- [ ] **AC-05** — The selected preference is saved and restored on return visits
 
 ### US-03 — Persistence
 
 > As a returning user, I want my colour scheme preference to be remembered, so
 > I don't have to set it every time I visit.
 
-- [ ] **AC-01** — Preference is stored in `localStorage` under the key `color-scheme`
-- [ ] **AC-02** — Stored preference takes priority over the OS setting on return visits
-- [ ] **AC-03** — Clearing browser storage resets the preference to OS default
+- [ ] **AC-06** — Preference is stored in `localStorage` under the key `color-scheme`
+- [ ] **AC-07** — Stored preference takes priority over the OS setting on return visits
+- [ ] **AC-08** — Clearing browser storage resets the preference to OS default
 
 ---
 

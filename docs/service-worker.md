@@ -47,11 +47,11 @@ the acceptance criteria that must be met for it to be considered complete.
 > As a user, I want the site to load quickly on repeat visits by serving
 > cached assets where possible.
 
-- [ ] **AC-01** — Mandatory static assets (CSS, offline page) are cached during the service worker `install` event; installation fails if any of these cannot be cached
-- [ ] **AC-02** — Non-mandatory assets (pre-cached pages, supplementary images) are cached opportunistically and do not block installation if they fail
-- [ ] **AC-03** — Cached assets are served immediately on repeat visits without a network round-trip
-- [ ] **AC-04** — When a new version of the service worker is deployed, outdated caches are deleted during the `activate` event
-- [ ] **AC-05** — Page and image caches are bounded by a maximum item count; the oldest entries are evicted when limits are reached
+- [ ] **AC-06** — Mandatory static assets (CSS, offline page) are cached during the service worker `install` event; installation fails if any of these cannot be cached
+- [ ] **AC-07** — Non-mandatory assets (pre-cached pages, supplementary images) are cached opportunistically and do not block installation if they fail
+- [ ] **AC-08** — Cached assets are served immediately on repeat visits without a network round-trip
+- [ ] **AC-09** — When a new version of the service worker is deployed, outdated caches are deleted during the `activate` event
+- [ ] **AC-10** — Page and image caches are bounded by a maximum item count; the oldest entries are evicted when limits are reached
 
 ---
 

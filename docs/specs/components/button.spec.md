@@ -53,7 +53,7 @@ The agent will derive the implementation interface directly from this section.
 
 | Event | Fires when | Payload |
 |-------|-----------|---------|
-| click / onClick / on:click | User clicks and button is neither disabled nor loading | `MouseEvent` |
+| click / onClick / onclick | User clicks and button is neither disabled nor loading | `MouseEvent` |
 
 ### Public methods _(if applicable)_
 
@@ -195,7 +195,7 @@ is what the Example usage row in the checklist below is asking for.
 **Svelte:**
 
 ```svelte
-<Button label="Save changes" variant="primary" on:click={handleSave} />
+<Button label="Save changes" variant="primary" onclick={handleSave} />
 ```
 
 ---
