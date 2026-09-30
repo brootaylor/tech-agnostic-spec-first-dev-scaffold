@@ -16,7 +16,7 @@ This page is the sequence, not the execution. Each step names the skill that car
 
 Steps A and B are human work. Everything from C onward is agent-driven, with a human review at each gate.
 
-That split is structural, not a preference. **Step A cannot be agent work, because the agent does not exist in that project until Step A finishes** — `.claude/skills` and the `CLAUDE.md` pointer are created at A6, and until then a session opened there has no skills and no project conventions loaded. It is the bootstrap, so it is done by hand.
+That split is structural, not a preference. **Step A cannot be agent work, because the agent does not exist in that project until Step A finishes** — until A6 removes the project's own `CLAUDE.md` and creates `.claude/skills`, a session opened there has no skills and none of the scaffold's conventions loaded. It is the bootstrap, so it is done by hand.
 
 | Step | Who acts | Why |
 |------|----------|-----|
@@ -88,7 +88,7 @@ Whether to do this on a branch is your call — no part of the loop creates, swi
 
 ### A2 — Preserve the project's existing agent instructions
 
-A project built with an "Ai" assistant usually carries instructions of its own, and two of them do not survive this step. A4 copies the scaffold's `AGENTS.md` over the project's, and A6 deletes its `CLAUDE.md` to make room for the pointer. Those two must be copied before you go any further.
+A project built with an "Ai" assistant usually carries instructions of its own, and two of them do not survive this step. A4 copies the scaffold's `AGENTS.md` over the project's, and A6 deletes its `CLAUDE.md` files, because while any exists Claude Code reads it instead of `AGENTS.md`. Those must be copied before you go any further.
 
 Nothing here touches any other tool's instructions — `.cursor/rules`, `.github/copilot-instructions.md`, `.windsurfrules`, `.clinerules` — and A5 says explicitly not to untrack them. Copy them anyway, so Steps B and F have one folder holding everything the project said about itself.
 
@@ -96,13 +96,14 @@ Run this from inside the project, replacing `my-project` with your project's nam
 
 ```bash
 mkdir -p ~/adopted-agent-instructions/my-project
-for f in CLAUDE.md AGENTS.md .cursor/rules .github/copilot-instructions.md .windsurfrules .clinerules; do
+for f in CLAUDE.md CLAUDE.local.md AGENTS.md .cursor/rules .github/copilot-instructions.md .windsurfrules .clinerules; do
   [ -e "$f" ] && cp -R "$f" ~/adopted-agent-instructions/my-project/
 done
+[ -e .claude/CLAUDE.md ] && cp .claude/CLAUDE.md ~/adopted-agent-instructions/my-project/dot-claude-CLAUDE.md
 ls -aR ~/adopted-agent-instructions/my-project
 ```
 
-Missing files are skipped, so run it whatever the project has. `cp -R` because `.cursor/rules` is a directory in current Cursor, not a file; `ls -aR` because `.windsurfrules` and `.clinerules` are dotfiles a plain `ls -R` would hide.
+Missing files are skipped, so run it whatever the project has. `.claude/CLAUDE.md` gets its own line and a new name so it cannot overwrite the root `CLAUDE.md` copy. `cp -R` because `.cursor/rules` is a directory in current Cursor, not a file; `ls -aR` because `.windsurfrules` and `.clinerules` are dotfiles a plain `ls -R` would hide.
 
 **Your home directory, not `/tmp`.** Step B reads these copies and Step F reads them again, which on a real engagement is weeks later. macOS deletes anything in `/tmp` left untouched for three days, nightly and without reporting it (`man 8 tmp_cleaner`); Linux distributions clear it on schedules of their own. Naming the folder after the project also keeps two adoptions from mixing one client's instructions into another's.
 
@@ -164,8 +165,7 @@ context/decisions.md
 EOF
 ```
 
-> [!IMPORTANT]
-> **The leading slash on `/CLAUDE.md` is load-bearing, and dropping it fails silently.** *A pattern with no slash in it matches at every depth, so a bare `CLAUDE.md` also ignores `.agents/claude/CLAUDE.md` — the config A4 has just copied in, and the only real copy of it. A7's `git add -A` then skips that file without a word, `git status` cannot list what it never staged, and A6's two checks still pass because they read the working tree rather than the index. The adoption commits without the Claude config, works perfectly for you, and reaches the next person as a dangling symlink. Prove the anchor took with `git check-ignore -v .agents/claude/CLAUDE.md`, which should print nothing.*
+`.claude/` holds the skills pointer A6 creates. `/CLAUDE.md` is ignored because Claude Code reads `AGENTS.md` only while no `CLAUDE.md` exists, so a committed one would switch every clone's Claude Code away from the scaffold's instructions. Keep the leading slash: without it the pattern matches at every depth.
 
 An ignore rule does not untrack a file that is already tracked. If the project already commits a `CLAUDE.md` or a `.claude/` directory, git keeps carrying it and your new rule has no effect. Check, and untrack anything it finds:
 
@@ -177,27 +177,20 @@ git rm --cached <each path listed>
 > [!IMPORTANT]
 > *That grep names only the two paths the block above ignores. Do not widen it to `.cursor/`, `copilot-instructions` or any other tool's config: the scaffold takes no position on those, and a project that deliberately commits them for its team is entitled to keep doing so. `git rm --cached` on one of those untracks a file nobody asked you to remove.*
 
-### A6 — Create the agent pointer
+### A6 — Remove the project's `CLAUDE.md` and link the skills
 
-Delete the project's own `CLAUDE.md` first, if it has one. A2 already holds the copy, so nothing is lost by removing it now — and if it is still there, `ln -s` refuses to create the pointer:
-
-```
-ln: CLAUDE.md: File exists
-```
-
-That is one line among several commands, and everything after it keeps running. The result is a project where the agent reads the old instructions and none of the scaffold's, which looks like the scaffold not working rather than a link that was never made.
+Delete the project's own `CLAUDE.md` files. A2 already holds the copies, so nothing is lost by removing them now — and while any of them is still there, Claude Code reads it instead of `AGENTS.md`. Nothing reports that. The result is a project where the agent reads the old instructions and none of the scaffold's, which looks like the scaffold not working rather than a file left behind.
 
 ```bash
-rm -f CLAUDE.md                 # A2 has the copy
-ln -s .agents/claude/CLAUDE.md CLAUDE.md
+rm -f CLAUDE.md CLAUDE.local.md .claude/CLAUDE.md   # A2 has the copies
 mkdir -p .claude && ln -s ../.agents/skills .claude/skills
-head -3 CLAUDE.md               # proves the CLAUDE.md link resolves
-ls .claude/skills               # proves the skills link resolves
+ls CLAUDE.md CLAUDE.local.md .claude/CLAUDE.md      # proves they are gone
+ls .claude/skills                                   # proves the skills link resolves
 ```
 
-Those last two lines are the check, and each must print something: `head` should show the first lines of the scaffold's config, and `ls` should list the skill directories — `audit`, `feature`, `implement`, and the rest. Silence or an error from either means that link is broken. Verify this way rather than with `ls -l`, which displays a symlink pointing at a path that does not exist exactly as it displays a working one.
+Those last two lines are the check. The first must report all three as missing. The second must list the skill directories — `audit`, `feature`, `implement`, and the rest; silence or an error means the link is broken. Verify this way rather than with `ls -l`, which displays a symlink pointing at a path that does not exist exactly as it displays a working one.
 
-The project's own `AGENTS.md` has been replaced by the scaffold's at A4, and its `CLAUDE.md` by the pointer just created. Both survive in `~/adopted-agent-instructions/my-project/` from A2, which is where Step B picks them up.
+The project's own `AGENTS.md` has been replaced by the scaffold's at A4, and its `CLAUDE.md` removed. Both survive in `~/adopted-agent-instructions/my-project/` from A2, which is where Step B picks them up.
 
 ### A7 — Commit the adoption on its own
 
@@ -205,13 +198,13 @@ One commit containing nothing but the scaffold, so the diff of every later commi
 
 ```bash
 git add -A
-git diff --cached --name-only | grep '^\.agents/'   # must list the skills AND .agents/claude/
+git diff --cached --name-only | grep '^\.agents/'   # must list the whole skills tree
 git status                                          # read it before committing
 ```
 
-That `grep` is the one check `git status` cannot do for you. A file an ignore rule swallowed never reaches the index, so it appears in no status output and no diff — the only way to notice is to ask what *did* get staged. Expect `.agents/claude/CLAUDE.md` and the whole `.agents/skills/` tree. If the config line is missing, A5's ignore block lost its leading slash.
+That `grep` is the one check `git status` cannot do for you. A file an ignore rule swallowed never reaches the index, so it appears in no status output and no diff — the only way to notice is to ask what *did* get staged. Expect the whole `.agents/skills/` tree. If any of it is missing, an ignore rule is swallowing it: `git check-ignore -v .agents/skills/status/SKILL.md` names the rule.
 
-Then open your agent in the project and run `/status`. It should report the spec queue and find nothing in flight. If it does not recognise the command, the `.claude/skills` link from A6 is wrong.
+Then open your agent in the project and run `/status`. It should report the spec queue and find nothing in flight. If it does not recognise the command, the `.claude/skills` link from A6 is wrong. If it does not know the scaffold's rules, a `CLAUDE.md` is still being read instead of `AGENTS.md` — Claude Code's `/memory` lists the files it loaded.
 
 ---
 

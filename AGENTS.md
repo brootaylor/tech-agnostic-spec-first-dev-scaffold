@@ -2,15 +2,11 @@
 
 Instructions for "Ai" coding agents working in this project.
 
-`AGENTS.md` is a cross-tool convention that most coding agents read directly, so
-this is the entry point for any of them. Claude Code reads `CLAUDE.md`, which
-imports this file, so there is a single source of truth either way.
-
-Most agents read this file natively - Codex, Cursor, GitHub Copilot, Gemini CLI,
-Jules, Aider, Zed, Windsurf, Devin and OpenCode among them - and need no config of
-their own, so they work as soon as they open the project. Claude Code is the
-notable holdout, and the single ready-made config under `.agents/` is its. For any
-other agent that expects a config file of its own, see `docs/agent-setup.md`.
+`AGENTS.md` is a cross-tool convention that most coding agents read directly from
+the project root - Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI and
+OpenCode among them - so this is the entry point for all of them, with no config
+file of their own. For an agent that expects one anyway, see
+`docs/agent-setup.md`.
 
 ## What this is
 
@@ -31,11 +27,9 @@ the framework's config files written from the Stack selections in
 > [!IMPORTANT]
 > *Do not run a framework scaffolder (`create-next-app`, `npm create vite`, and
 > so on) inside the clone. They expect an empty directory and overwrite the
-> files this one already has - and because `CLAUDE.md` here is a symlink, that
-> write follows the link and destroys the tracked `.agents/claude/CLAUDE.md`.
-> Nor do they reliably refuse: `create-vite` offers "Remove existing files and
-> continue" as one of three choices. Step 3 writes the framework config directly
-> instead.*
+> files this one already has, and they do not reliably refuse: `create-vite`
+> offers "Remove existing files and continue" as one of three choices. Step 3
+> writes the framework config directly instead.*
 
 For a codebase that already exists, the order is reversed - the code is there
 first and the scaffold merges in on top - and the early steps differ: see
@@ -44,6 +38,18 @@ first and the scaffold merges in on top - and the early steps differ: see
 The workflow is defined by the local skills and context files below.
 
 ## Read these for full context
+
+Start with these three, before acting. An agent that expands `@` imports -
+Claude Code does - already has them in context and should not read them again:
+
+- @docs/project-brief.md - **the single source of truth**: stack selection,
+  browser targets, accessibility standard, coding conventions, and agent
+  behaviour rules
+- @context/current-feature.md - the work order for the one feature, fix, or
+  rollback being built right now, or the stub when nothing is in flight
+- @context/findings.md - the review ledger `/audit` writes and `/complete` clears
+
+Then, when they apply:
 
 - `context/sessions.md` - where the work stands. With `decisions.md` below, one of
   the only two files that survive a `/compact` or `/clear`. One **Where things
@@ -54,9 +60,6 @@ The workflow is defined by the local skills and context files below.
   first. Append-only, and one entry per decision rather than per session. The
   only thing here that git history cannot reconstruct. Gitignored and personal
   to you as well; create it on first use
-- `context/current-feature.md` - the work order for the one feature, fix, or
-  rollback being built right now, or the stub when nothing is in flight
-- `context/findings.md` - the review ledger `/audit` writes and `/complete` clears
 - `context/history/` - archived work orders: what was built, in what order, and why
 
 ## Keep the state file current
@@ -67,9 +70,8 @@ and nothing warns you - there is no error, just a later session that has to
 rediscover what was known.
 
 **Read them before acting when starting cold**, and after any `/clear` or
-`/compact`. Neither is loaded automatically - `CLAUDE.md` imports `AGENTS.md`,
-`docs/project-brief.md`, `context/current-feature.md` and `context/findings.md`,
-but not these - so they have to be opened deliberately. Read only the **Where
+`/compact`. Neither is imported with this file, the way the three above are, so
+they have to be opened deliberately. Read only the **Where
 things stand** block of `sessions.md`; any dated entries below it are optional
 depth. From `decisions.md`, read only the headings (`grep '^## '
 context/decisions.md`), and open the full entry when a choice looks settled
@@ -90,12 +92,9 @@ and dropped is what stops a later session repeating it.
 **Do not narrate the work.** Git history already holds what changed. If the user
 asks to update memory, that always includes both files.
 
-The project's own documentation set is authoritative for everything else:
+Beyond `docs/project-brief.md`, the project's own documentation set is
+authoritative for everything else:
 
-- `docs/project-brief.md` - **the single source of truth.** Read it in full
-  before doing anything else, unless your agent already loaded it (Claude Code
-  imports it): stack selection, browser targets, accessibility standard, coding
-  conventions, and agent behaviour rules
 - `docs/modern-platform-guide.md` - read before writing any HTML, CSS, or JS
 - `docs/design-tokens.md` - read before writing any CSS
 - `docs/security.md` - read before generating HTML or deployment config
@@ -114,29 +113,17 @@ context, use that copy rather than reading it again.
 ## Specs are contracts
 
 Specs live in `docs/features/` (user-facing) and `docs/specs/` (components,
-pages, layouts). Each carries a status line:
-
-| Status | Meaning | Who acts |
-|--------|---------|----------|
-| `Draft` | Incomplete - do not implement | Human only |
-| `Ready` | Complete - proceed with implementation | Human + agent |
-| `Complete` | Implemented and tested | Human only |
+pages, layouts). What each `**Status:**` value allows - `Draft`, `Ready`,
+`Complete` - and the template each kind of spec follows are in
+`docs/project-brief.md` → Spec conventions; which spec owns a value its
+components share is in → Features and components.
 
 **The `**Status:**` line is the work queue.** `/feature` builds the next `Ready`
 spec, `/status` reports the queue by status, and `/complete` writes `Complete`
 back when the work is done.
 
-**Agents read specs and never edit them.** Do not implement a `Draft` spec; stop
-and ask. Do not re-implement or overwrite a `Complete` spec; the human resets it
-to `Ready` first.
-
-New specs follow the template for their kind — `docs/features/_feature-template.md`
-for something a user can do, `docs/specs/_component-template.spec.md` for a
-component, page, or layout. A feature spec's Implementation notes table is
-authoritative for any value its components must agree on; component specs
-reference those values and never restate them.
-
-Two edits are the only exceptions in the whole workflow:
+**Agents read specs and never edit them.** Two edits are the only exceptions in
+the whole workflow:
 
 - `/complete` sets a finished spec's `**Status:**` and `**Last updated:**` lines,
   and nothing else. That is `Complete` for a feature or a fix, and `Complete`
@@ -199,8 +186,8 @@ everyone who clones the template.
 
 The pointer table, the setup commands, adding, switching or removing an agent,
 and troubleshooting are all in `docs/agent-setup.md`, which you read only when
-changing that wiring. **Never delete `.agents/`**: it holds the only real copies
-of the agent config and the skills tree, and every pointer dangles without it.
+changing that wiring. **Never delete `.agents/`**: it holds the only real copy
+of the skills tree, and of any agent config, and every pointer dangles without it.
 
 ## Workflow
 
@@ -208,29 +195,16 @@ Build one feature, fix, or rollback at a time, behind review gates. This is the
 automated form of `docs/workflow.md` Steps 4-10, not a second workflow: the spec
 `**Status:**` line is still the queue, and Steps 4-6 (writing feature specs,
 component specs, and design tokens) stay human work. Each skill is plain markdown
-any capable agent can read and follow. Where each tool finds them:
-
-- Claude Code: discovers `.claude/skills/<skill>/SKILL.md` on its own, and
-  invokes them as `/feature`, `/implement` and so on
-- Every other agent: `AGENTS.md` names the path,
-  `.agents/skills/<skill>/SKILL.md`, and you name the skill in your prompt
-
-> [!IMPORTANT]
-> *Only Claude Code loads this tree by itself. For every other agent the path is
-> written down where the agent will read it, and **naming the skill is what runs
-> it** - there is no auto-discovery to rely on. A tool that has its own skills
-> convention will not find these at `.agents/skills/`. The review gates are in the
-> `SKILL.md`, so a skill followed this way behaves the same as one invoked.*
-
-When changing shared workflow behavior, edit
-`.agents/skills/<skill>/SKILL.md` - the one tracked copy. Every tool reaches it
-through its own pointer, so there is nothing to keep in sync and no second tree
-to create.
+any capable agent can read and follow, at `.agents/skills/<skill>/SKILL.md` -
+the one tracked copy, so that is where shared workflow behaviour is changed. How
+each tool finds and runs them is in `docs/agent-setup.md`.
 
 ### The build loop
 
 These run in order, once per spec. Each stops at a review gate rather than
-running on into the next.
+running on into the next. Every skill reads its state from disk, so each can
+start in a fresh session; after `/complete`, suggest the user clear the
+conversation before the next `/feature`.
 
 | Skill | What it does |
 |-------|--------------|
@@ -279,12 +253,10 @@ GitHub Copilot, OpenCode, and any other tool with no dedicated syntax for these,
 name the skill and ask the agent to follow its `SKILL.md` - the gates are in the
 file, so a skill followed manually behaves the same as one invoked.
 
-**Two rules hold however a skill is invoked.** No skill moves a spec from
-`Draft` to `Ready` - that is the human's signal that the contract is settled, and
-a rollback's `Complete` -> `Ready` is a restoration rather than that move (see
-"Specs are contracts" above). And no skill creates, switches, merges, or deletes
-a branch; the loop commits to whatever branch is checked out, matching the
-"commit your work" checkpoints in `docs/workflow.md`.
+**Two rules hold however a skill is invoked:** no skill promotes a spec from
+`Draft` to `Ready` (see "Specs are contracts" above), and no skill creates,
+switches, merges, or deletes a branch - the loop commits to whatever branch is
+checked out.
 
 Deployment is also explicit. `/release` can prepare local Render or Vercel config
 and run readiness checks, but it must stop before deploy, remote service changes,

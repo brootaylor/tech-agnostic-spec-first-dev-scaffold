@@ -334,7 +334,7 @@ These rules are enforced by ESLint when the Linting option is active. See `docs/
 These rules govern how agents must behave when working on this project.
 They apply regardless of which agent is used.
 
-- **Read this file first** — before doing anything else, read `docs/project-brief.md` in full, unless your agent already loads it into context (Claude Code imports it), in which case do not read it again
+- **Read this file first** — before doing anything else, read `docs/project-brief.md` in full, unless it is already in your context (an agent that expands the `@` imports in `AGENTS.md` has it), in which case do not read it again
 - **Read the spec before implementing** — never generate implementation code without first reading the relevant spec
 - **Do not implement `Draft` specs** — see Spec conventions above
 - **Do not re-implement `Complete` specs** — if a spec is marked `Complete`, skip it. If changes are needed, the human must update the spec and reset its status to `Ready` first
@@ -350,8 +350,7 @@ They apply regardless of which agent is used.
 - **Tests before implementation, when the project has a test runner** — a real `Test` command under Commands in `AGENTS.md` is the switch. While one is declared, write the test first and implement until it passes. Unit testing ships as `None`, so on a fresh clone there is nothing to write tests with: point the human at `/tests` rather than installing a runner yourself or claiming a step was tested
 - **One spec at a time** — unless explicitly asked to scaffold multiple specs at once, implement one spec per session and confirm before moving to the next
 - **Confirm the stack before setup** — the `[active]` marks in the Stack section ship pre-filled with the scaffold's default, and nothing distinguishes a default left untouched from a decision the human made. Before running initial project setup, or generating any config file or dependency list from those marks, count the marks in every category, then state the active selections back to the human and confirm they are this project's actual choices. **A category with two or more `[active]` marks, or with none, is unresolved — stop and ask which one applies rather than picking one.** Two marks usually means a shipped default was never cleared, so do not assume the newer or lower entry is the intended one
-- **Read compatibility notes before setup** — before generating any config file, check `docs/stack-setup.md` → Stack compatibility notes for the active stack combination and follow any instructions there
-- **Stop and report when setup fails** — if initial project setup produces errors or a tool cannot be configured correctly after a single attempt, stop immediately. Report exactly what failed, the full error message, and what was tried. Do not attempt further fixes in a loop. Wait for the human to review and advise before continuing
+- **Follow `docs/stack-setup.md` for initial setup** — it holds the setup procedure, the compatibility notes, and the rules for when setup fails
 - **Ask, don't assume** — if a spec is ambiguous, a constraint is unclear, or a decision would affect the whole project, ask rather than guess
 
 ---

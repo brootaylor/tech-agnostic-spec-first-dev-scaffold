@@ -24,9 +24,14 @@ node_modules/
 # (`git config --global core.excludesFile`), not in a template everyone clones.
 #
 # Anchor every pointer with a leading slash. A pattern with no slash in it
-# matches at any depth, so a bare `CLAUDE.md` would also ignore the real config
-# at `.agents/claude/CLAUDE.md` — and git reports nothing when `git add -A`
-# skips it.
+# matches at any depth, so it would also ignore a real config of the same name
+# under `.agents/` — and git reports nothing when `git add -A` skips it.
+#
+# `.claude/` holds Claude Code's skills pointer. `/CLAUDE.md` is not created by
+# setup: it is ignored because Claude Code reads `AGENTS.md` only while no
+# `CLAUDE.md` exists. Committed, one (from `/init`, say) would silently switch
+# every clone's Claude Code away from `AGENTS.md`; kept local, it is the personal
+# `@AGENTS.md` fallback docs/agent-setup.md describes for older versions.
 .claude/
 /CLAUDE.md
 

@@ -60,6 +60,17 @@ out, and some frameworks override the Build selection entirely.
 11. If a security option is active, apply the configuration following `docs/security.md`
 12. Do not install any dependencies not directly required by the active stack selections
 
+Two rules hold throughout:
+
+- **Read the compatibility notes first** — before generating any config file,
+  check Stack compatibility notes below for the active stack combination and
+  follow any instructions there
+- **Stop and report when setup fails** — if setup produces errors, or a tool
+  cannot be configured correctly after a single attempt, stop immediately.
+  Report exactly what failed, the full error message, and what was tried. Do not
+  attempt further fixes in a loop. Wait for the human to review and advise
+  before continuing
+
 ### Default starting files
 
 - **Vanilla + Vite** — `src/index.html` is the default home page and `src/scripts/main.js` is the JavaScript file it references. Both are included as minimal starting files to build out

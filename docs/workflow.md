@@ -130,26 +130,25 @@ Make sure your agent has what it needs:
 | Agent | Prerequisites | Setup |
 |-------|--------------|-------|
 | Codex, Cursor, GitHub Copilot, Gemini CLI, Jules, Aider, Zed, Windsurf, Devin, OpenCode | Whatever the tool itself needs to run | **None.** They read `AGENTS.md` from the project root, which points them at the workflow skills — you invoke those by name (Step 7) |
-| Claude Code | A [Claude](https://claude.ai) Pro, Max, Team or Enterprise plan to sign in with, or an [Anthropic Console account](https://console.anthropic.com) billed by usage — the free plan does not include Claude Code. The installer ships a self-contained binary, so Claude Code itself needs no Node.js | The two links below |
+| Claude Code | A [Claude](https://claude.ai) Pro, Max, Team or Enterprise plan to sign in with, or an [Anthropic Console account](https://console.anthropic.com) billed by usage — the free plan does not include Claude Code. The installer ships a self-contained binary, so Claude Code itself needs no Node.js. Version 2.1.277 or later, which [reads `AGENTS.md` directly](https://code.claude.com/docs/en/memory#agents-md) | The skills link below |
 
-`AGENTS.md` is an open convention that most coding agents now read directly from the project root, so for them there is nothing to set up at all. Claude Code is the exception: [it reads `CLAUDE.md`, not `AGENTS.md`](https://code.claude.com/docs/en/memory), and gives you no way to change that filename. The scaffold's `CLAUDE.md` imports `AGENTS.md`, which is the approach Anthropic's own documentation recommends, so Claude Code ends up reading the same instructions as everything else — it just needs a pointer to reach them.
+`AGENTS.md` is an open convention that most coding agents now read directly from the project root, Claude Code included, so for reading the project's instructions there is nothing to set up at all.
 
-This scaffold keeps that configuration in `.agents/` instead, so cloning it never forces one developer's tool on everybody else. If you're using Claude Code, your one setup task is to create links at the filenames it expects, pointing back into `.agents/`:
+Claude Code needs one thing more: it finds workflow skills only under `.claude/skills/`, and this scaffold keeps them in `.agents/skills/` so cloning it never forces one developer's tool on everybody else. If you're using Claude Code, your one setup task is a link from where it looks to where they live:
 
 ```bash
-ln -s .agents/claude/CLAUDE.md CLAUDE.md
 mkdir -p .claude && ln -s ../.agents/skills .claude/skills
 ```
 
 > [!IMPORTANT]
 > *Two ways this step goes wrong:*
 >
-> - *`.claude/` is gitignored, so it does not exist in a fresh clone. Without the `mkdir -p`, that second command fails with `No such file or directory` and none of the workflow skills are available to you.*
-> - **Do not run Claude Code's built-in `/init`.** *It generates a `CLAUDE.md` by analysing the codebase, but here that filename is a symlink into `.agents/`. Running it either writes straight through the link and overwrites the tracked original, or replaces your pointer with a regular file that shadows it and drifts from it silently. If you have already run it: delete the root `CLAUDE.md`, then run `git status`. If it reports `.agents/claude/CLAUDE.md` as modified, the original was overwritten — restore it with `git restore .agents/claude/CLAUDE.md`. Then recreate the link. Deleting the root file alone does not undo the overwrite: the link will resolve happily to the generated content, so check `git status` before assuming you have recovered.*
+> - *`.claude/` is gitignored, so it does not exist in a fresh clone. Without the `mkdir -p`, the link fails with `No such file or directory` and none of the workflow skills are available to you.*
+> - **Do not run Claude Code's built-in `/init`.** *It generates a root `CLAUDE.md` by analysing the codebase, and Claude Code reads `AGENTS.md` only while no `CLAUDE.md` exists. From the next session it reads the generated file instead, and the brief, the specs' rules and the whole workflow silently drop out. If you have already run it, delete the root `CLAUDE.md`.*
 
-Both links are gitignored, so your choice of agent never travels with the repository. On Windows, where `ln -s` needs Developer Mode or an elevated terminal, copy the files instead and keep them in sync by hand.
+The link is gitignored, so your choice of agent never travels with the repository. On Windows, where `ln -s` needs Developer Mode or an elevated terminal, copy the folder instead and keep it in sync by hand.
 
-See `docs/agent-setup.md` for the pointer table and the notes on adding an agent that expects a config file of its own.
+See `docs/agent-setup.md` for older Claude Code versions, and for adding an agent that expects a config file of its own.
 
 ### Create the two state files
 
@@ -407,6 +406,8 @@ It stops before any actual deploy, remote service change, remote environment var
 ## Step 10 — Iterate
 
 **Ready for the next feature?** Once a spec is marked `Complete` and committed, return to Step 4 and repeat the cycle — feature spec first, then component specs, then build and review.
+
+**Start each feature in a fresh session.** After `/complete`, clear the conversation (`/clear` in Claude Code, a new chat elsewhere) before `/feature`. Everything the loop needs is on disk — the specs, the work order, the findings ledger, the archive — so nothing is lost. What you shed is the last feature's diffs, test output and file reads, which by then usually take up more of the agent's context than its instructions do, and crowd out the room it needs for the next one. On a large feature, clearing between `/implement` and `/audit` helps too: the audit then reads the code as it is, not as the build remembers it. Update `context/sessions.md` first if the session settled anything.
 
 **Picking up after a break, or a cleared context?** Run `/status`. It reports the spec queue, what's in progress, and the exact next action, all read from files on disk — so a fresh session knows exactly as much as the last one did.
 
