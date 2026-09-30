@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Optional explicit mode that runs one bounded pass of the build loop without pausing at every review point. It can pick or resume the current work order, write it when needed, implement small steps, run verification, apply the check, audit, and try-guide gates, make checkpoint commits, repair confirmed high-severity findings, and stop with a review packet. It never completes, pushes, deploys, publishes, sends, or performs destructive actions without explicit approval. Use only when the user explicitly runs /autopilot or directly asks for it.
+description: "Optional explicit mode that runs one bounded pass of the build loop - work order, build steps, gates, checkpoint commits, repairs of confirmed high-severity findings - without pausing at each review point, then stops with a review packet. Never completes, pushes, deploys, publishes, or does anything destructive without explicit approval. Use only when the user explicitly runs /autopilot or directly asks for it."
 ---
 
 # autopilot - run the loop without stopping at every gate
@@ -171,6 +171,4 @@ Stop immediately and report instead of continuing when Autopilot would need to:
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

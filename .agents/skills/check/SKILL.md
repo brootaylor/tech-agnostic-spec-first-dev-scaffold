@@ -30,14 +30,16 @@ verify the whole current feature against every "done when" in
 
 ## Step 1 - build the checklist
 
-`/check` runs automatically only when `/implement` or `/complete` judges that a
-"done when" needs observed runtime behaviour. An explicit `/check` or `$check`
-request always runs. Running it never grants permission to start a server or take
-any other action the project instructions or user have not authorized.
+The loop runs this skill on its own per step from `/implement` Step 2, and at
+wrap-up from `/complete`'s Quality gates; an explicit `/check` or `$check`
+request always runs. Running it never grants permission to start a server or
+take any other action the project instructions or user have not authorized.
 
 Read `context/current-feature.md`, then **the spec named on its `Spec:`
 line**. Pull the observable "done when" criteria from the build steps, and pull
-the acceptance criteria, states, and **test cases** from the spec itself.
+the acceptance criteria, states, and **test cases** from the spec itself. A
+`Type: Fix` work order has no `Spec:` line by design: its done-whens and its
+Verification section, regression path included, are the whole checklist.
 
 The spec is what the work is actually held to. A work order can paraphrase it
 loosely or miss a state; proving only the paraphrase is how a feature passes
@@ -54,7 +56,8 @@ Turn all of this into a concrete checklist of claims to prove - each one a
 specific, observable behavior, not "it works". If the user named one thing, scope
 to that.
 
-If there's no current feature spec, ask what to verify rather than guessing.
+If `current-feature.md` is the reset stub, ask what to verify rather than
+guessing.
 
 ## Step 2 - get the app running
 
@@ -99,7 +102,7 @@ Give a short, honest verdict, one line per checklist item:
     [pass] Download PDF saves certificate-<slug>.pdf - file downloaded, opened to the cert
     [pass] Both buttons show a loading state - screenshot: loading-state.png
     [fail] PDF border missing - printBackground not set; screenshot: pdf-no-border.png
-    [skip] Production redirect behaviour - can't verify locally (feature 9)
+    [skip] Production redirect behaviour - needs the deployed host
 
 Then state the bottom line: are all the feature's done-whens proven, or not yet.
 
@@ -125,11 +128,9 @@ change the spec, checkboxes, findings, or product files from `/check`.
   a screenshot, output, a response. No assumed passes from reading the code.
 - **Honest over green.** "Couldn't verify" and "failed" are valid, useful results.
   Faking a pass defeats the entire gate.
-- **Check the spec, not vibes.** Verify against the done-whens in
-  `current-feature.md`, so "works" means what the spec said it would do.
+- **Check the contract, not vibes.** Verify against the spec and the work
+  order's done-whens together, so "works" means what the spec said it would do.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

@@ -141,5 +141,5 @@ Choose the next action without writing files:
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown with a short evidence list and a clear next action.
+Output follows `AGENTS.md` - Output conventions. Add a short evidence list and a
+clear next action.

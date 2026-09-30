@@ -42,23 +42,12 @@ when the feature has no visual target.
 
 - What it deliberately doesn't touch (deferred to a later feature).
 
-## Build loop
-
-Build one step at a time, never the whole feature at once.
-
-1. Plan mode lays out the step before any code.
-2. The "Ai" implements just that step.
-3. It shows the diff (not full files); you read it and understand it.
-4. You approve, then choose whether to commit a checkpoint or roll straight on.
-   Checkpoints are optional; `/complete` makes the real feature-level commit at the end.
-
-Never accept a step you haven't read. If a diff is too big to review, the step was too big, so split it.
-
 ## Build steps
 
-Small, reviewable units. Each ends with something working. `/implement` checks
-these off as it finishes them, so progress survives a context clear: a fresh
-session reads which boxes are ticked and resumes from the first unchecked step.
+Small, reviewable units. Each ends with something working. `/implement` builds
+them one at a time, shows each diff for review, and checks them off as it
+finishes them, so progress survives a context clear: a fresh session reads which
+boxes are ticked and resumes from the first unchecked step.
 
 - [ ] **Step 1 - <step>** - what you build. *Done when:* <observable criteria>.
 - [ ] **Step 2 - <step>** - what you build. *Done when:* <observable criteria>.

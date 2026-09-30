@@ -139,6 +139,4 @@ drift is half the value of the command.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

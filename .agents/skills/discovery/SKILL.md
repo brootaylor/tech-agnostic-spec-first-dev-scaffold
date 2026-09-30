@@ -1,6 +1,6 @@
 ---
 name: discovery
-description: "Optional deep, multi-turn project discovery that helps the user fill in docs/project-brief.md and draft the first feature specs in docs/features/ through an adaptive conversation, then writes them only after the user says they are ready. Use when the user explicitly runs /discovery, asks for a guided planning interview, wants to think through a new product before writing anything down, or wants help deepening an existing brief. Do not use merely because the brief is unfilled or the project is new; users may always write these files directly, by hand or through any conversation they prefer."
+description: "Optional multi-turn planning conversation that helps the user fill in docs/project-brief.md and draft the first feature specs in docs/features/, writing them only after the user approves the drafts. Use when the user explicitly runs /discovery, asks for a guided planning interview, wants to think through a new product before writing anything down, or wants help deepening an existing brief. Never start it just because the brief is unfilled or the project is new."
 ---
 
 # discovery - fill in the brief and the first specs through a deep conversation
@@ -187,7 +187,6 @@ After writing:
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`. During
-discovery, ask one focused question per turn. For snapshots and draft reviews,
-use concise headings and lists so confirmed decisions and remaining gaps are easy
-to inspect.
+Output follows `AGENTS.md` - Output conventions. During discovery, ask one
+focused question per turn. For snapshots and draft reviews, use concise headings
+and lists so confirmed decisions and remaining gaps are easy to inspect.

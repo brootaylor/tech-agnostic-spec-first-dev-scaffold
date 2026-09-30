@@ -18,11 +18,9 @@ expect this result, and watch for these failure signs.
 It is always read-only. It does not edit files, install dependencies, commit,
 merge, push, or run destructive commands.
 
-`/try` runs automatically only when `/complete` or `/autopilot` judges that the
-change affects something a person uses directly: UI, navigation, copy, a public
-API or command-line interface (CLI), or output. An explicit `/try` or `$try`
-request always runs. A generated guide never counts as evidence that the user
-performed the walkthrough.
+When the loop runs this skill on its own is decided in `/complete`'s Quality
+gates; an explicit `/try` or `$try` request always runs. A generated guide never
+counts as evidence that the user performed the walkthrough.
 
 ## Input
 
@@ -61,7 +59,8 @@ say that is what you used.
 Do not dump the spec. Pull out the routes, commands, UI surfaces, CLI commands,
 API endpoints, data states, and done-whens that matter for a human trying it.
 For a rollback, lead with the path that proves the removed behavior is gone, then
-include one unaffected regression path from the rollback spec.
+include the unaffected regression path from the rollback work order's
+Verification section.
 
 ## Step 2 - identify how to run the app
 
@@ -123,6 +122,5 @@ such as an API response, CLI output, log line, or unit test command.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with numbered steps for the manual path and short bullets
-for warnings.
+Output follows `AGENTS.md` - Output conventions. Use numbered steps for the
+manual path and short bullets for warnings.

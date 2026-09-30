@@ -1,6 +1,6 @@
 ---
 name: survey
-description: "Read an existing codebase and draft docs/project-brief.md, plus the Commands rows in AGENTS.md, from what is actually there - stack, package manager, real run commands, conventions, entry points - separating what the code proves from what it only suggests, and naming what cannot be determined from code at all. Shows the proposed drafts and writes only on explicit approval. Use when the user runs /survey, has just adopted the scaffold into a project that already has code, asks what stack a codebase uses, or needs docs/project-brief.md filled in for a project nobody has documented. Not for a new project with no code yet - that is /discovery."
+description: "Read an existing codebase and draft docs/project-brief.md, plus the Commands rows in AGENTS.md, from what is actually there - separating what the code proves from what it only suggests, and naming what code cannot answer. Writes only on explicit approval. Use when the user runs /survey, has adopted the scaffold into a project that already has code, asks what stack a codebase uses, or needs the brief filled in for an undocumented project. Not for a new project with no code yet - that is /discovery."
 ---
 
 # survey - read a codebase, draft the brief from the evidence
@@ -236,7 +236,5 @@ After writing:
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs. Lead with the survey findings; the proposed file contents
-come after them.
+Output follows `AGENTS.md` - Output conventions. Lead with the survey findings;
+the proposed file contents come after them.

@@ -20,15 +20,10 @@ dependencies, commits, merges, pushes, or starts product work. Its one write is
 the findings ledger at `context/findings.md` (Step 4), the durable
 record of findings and their status.
 
-`/complete` and `/autopilot` invoke this skill automatically in two cases, both
-defined in `/complete`'s Quality gates: a full `/audit current` when the work
-touches a security boundary - authentication, authorization, payments, secrets,
-personal or user data, migrations, destructive operations, or external side
-effects - and `/audit current accessibility` when the work added or changed
-markup, styles, or design tokens, since that lens is where contrast and
-semantics get measured. `/implement` calls it for one narrower reason: to
-re-review a repair it marked `fixed`, since a repair never closes itself. An
-explicit `/audit` or `$audit` request always runs it, whatever the work touches.
+When `/complete` and `/autopilot` run this skill on their own is decided in
+`/complete`'s Quality gates. `/implement` also runs it to re-review a repair it
+marked `fixed`, since a repair never closes itself. An explicit `/audit` or
+`$audit` request always runs it, whatever the work touches.
 
 ## Input
 
@@ -311,6 +306,4 @@ review as a full-project audit.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

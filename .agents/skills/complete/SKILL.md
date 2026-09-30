@@ -1,6 +1,6 @@
 ---
 name: complete
-description: Wrap up a finished feature, fix, or rollback. Runs a final safety pass, writes the source spec's Status line back to Complete, archives the work order to context/history/features/, context/history/fixes/, or context/history/rollbacks/, resets context/current-feature.md to its stub, and makes one work-level commit. Asks before pushing. Use when the user runs /complete, or asks to finish, wrap up, or close out the current feature, fix, or rollback after it is built and reviewed.
+description: "Close out a finished feature, fix, or rollback - final safety pass, the spec's Status written back, the work order archived under context/history/, one work-level commit, then ask before pushing. Use when the user runs /complete, or asks to finish, wrap up, or close out the current feature, fix, or rollback after it is built and reviewed."
 ---
 
 # complete - log the finished work and make the work commit
@@ -12,16 +12,8 @@ Where this sits in the workflow:
 
 `/implement` built the feature, fix, or rollback, with optional per-step commit
 checkpoints. This skill closes it out: it writes the spec's status back, logs the
-work, and makes the single work-level commit. Run it only when the work is done,
-reviewed, and the documented `Verify` command, or the fallback build and tests,
-passes.
-
-## Before you start
-
-Confirm the work is actually finished: `context/current-feature.md` holds a real
-work order, its steps are all checked, and `Verify`, or the fallback build and
-tests, passes. Uncommitted step work is expected because per-step checkpoints are
-optional; this skill commits it. Don't require the steps to be pre-committed.
+work, and makes the single work-level commit. Step 0 decides whether the work is
+finished enough to close.
 
 ## Quality gates
 
@@ -53,7 +45,9 @@ for any of these explicitly, and P0/P1 finding blockers apply either way.
 
 Before logging or committing, run a short safety pass and report blockers only:
 
-- an active work order exists and its build steps are all checked
+- an active work order exists and its build steps are all checked. Uncommitted
+  step work is expected - per-step checkpoints are optional, and this skill
+  commits it
 - changed files are tied to the active spec, with no unrelated dirty work mixed
   in (a dirty `context/findings.md` is expected, since `/audit` writes it)
 - the exact `Verify` command from `AGENTS.md` passed in this session, when one is
@@ -83,6 +77,16 @@ Before logging or committing, run a short safety pass and report blockers only:
   them) or `invalid` (an `/audit` re-examination verdict with recorded
   evidence, or the user's explicit call). A missing ledger file means no
   findings.
+- when the work consumed `prototypes/` (its Design reference points there), the
+  theme port is finished. Step 1 deletes that folder, and `theme.css` exists
+  nowhere else, so this is checked here, before anything is written. Compare
+  `docs/design-tokens.md` against `prototypes/theme.css` value by value: every
+  colour, type and spacing value must have a matching entry, and the file's
+  `**Last updated:**` line must no longer hold the template's placeholder
+  comment. "Are there tokens in it" proves nothing - that file ships complete,
+  so a skipped port looks exactly like a finished one, and the project would
+  keep the scaffold's baseline palette with nothing reporting it. If either
+  fails, hand back to `/implement` to finish the port
 
 Do not claim "passed", "verified", or "working" without naming the command,
 route, screenshot, or output that proves it. Stop before Step 1 if required
@@ -110,7 +114,9 @@ inferred it.
 touch only two lines.** Read the work order's `Spec:` line to find the source
 spec in `docs/features/` or `docs/specs/`, then:
 
-- Set `**Status:**` to `Complete` (or back to `Ready` for a rollback).
+- Set `**Status:**` to `Complete` - or, for a rollback, back to `Ready`: the
+  contract still stands and only the implementation was withdrawn. Retiring the
+  spec for good is a separate human decision.
 - Set `**Last updated:**` to today's date, in the format the file already uses.
   On a spec's first completion the line is still the template's placeholder
   comment, so there is no format to match — write ISO 8601 (`YYYY-MM-DD`),
@@ -145,10 +151,7 @@ A feature spec goes `Complete` when its own acceptance criteria are met.
 - **Rollback** - archive it to
   `context/history/rollbacks/YYYY-MM-DD-NN-name.md`, preserving the original
   completed feature archive. Create `context/history/rollbacks/` first if an
-  older installation does not have it yet. Reset the target spec's `**Status:**`
-  from `Complete` back to `Ready`, since the contract still stands and only the
-  implementation was withdrawn. If the user later decides the feature is permanently abandoned rather than
-  pending rebuild, retiring the spec is a separate human decision.
+  older installation does not have it yet.
 
 **Archive resolved findings.** If `context/findings.md` holds any
 findings, append a `## Findings` section to the archive file just written with
@@ -162,11 +165,11 @@ resolved for archival. A `fixed` entry is not resolved at any severity: never
 append it to the archive or remove it from the live ledger.
 
 Then remove only the archived entries from the ledger. Entries with `open`,
-`fixed`, or `unverified` status stay in the ledger with their IDs so they are
-never silently dropped. A fixed P2/P3 finding does not block completion, but it
-must remain verbatim for a later `/audit` re-review. When no `open`, `fixed`, or
-`unverified` entries remain, reset the ledger to exactly this stub, and create it the
-same way if the file is missing (an older install):
+`fixed`, or `unverified` status stay verbatim with their IDs, never rewritten
+and never silently dropped - a fixed P2/P3 finding does not block completion,
+but a later `/audit` still has to re-review it. Only when none of those remain,
+reset the ledger to exactly this stub, and create it the same way if the file is
+missing (an older install):
 
     # Findings
 
@@ -179,11 +182,9 @@ same way if the file is missing (an older install):
 
     _No findings recorded. `/audit` appends findings here when it finds them._
 
-Keep every unresolved entry in the ledger. Do not replace it with the empty stub
-while it still contains any open, fixed, or unverified finding. After archiving
-resolved findings, replace `context/current-feature.md` with
-the canonical stub below. Do not paraphrase it or substitute an abbreviated "no
-work" stub. Before committing, read the file and confirm it exactly matches:
+Then replace `context/current-feature.md` with the canonical stub below. Do not
+paraphrase it or substitute an abbreviated "no work" stub. Before committing,
+read the file and confirm it exactly matches:
 
     # Current Feature
 
@@ -196,40 +197,22 @@ work" stub. Before committing, read the file and confirm it exactly matches:
 
     _Nothing in progress. Run `/feature`, `/fix`, or `/rollback` to start._
 
-When no open, fixed, or unverified ledger entries remain, confirm
-`context/findings.md` exactly matches the canonical Findings stub
-above. Otherwise, preserve the remaining entries without rewriting them.
+If the ledger was reset, confirm `context/findings.md` exactly matches the
+Findings stub above as well.
 
 Don't commit yet; the next step makes one work commit covering the code and these
 documentation changes. The archive is the build history.
 
-**Discard consumed prototypes.** If this feature built the look from `prototypes/`
-- its Design reference pointed there and an early step ported
-`prototypes/theme.css` into the app - delete the `prototypes/` folder now and fold
-the deletion into this feature's commit. The HTML mockups were always throwaway.
-Skip this if the feature didn't consume prototypes.
-
-**Compare `docs/design-tokens.md` against `prototypes/theme.css` first, value by
-value.** Deleting `prototypes/` is the point of no return: `theme.css` exists
-nowhere else, and a theme that only reached the stylesheet leaves
-`docs/design-tokens.md` - the file every agent is told to read before writing any
-CSS - holding the scaffold's baseline palette for the life of the project.
-Nothing errors, and no later pass detects it.
-
-**"Are there tokens in the file" is not the check.** That file ships complete, so
-it is full whether the port ran or not, and a skipped port looks exactly like a
-finished one. Two things have to hold before anything is deleted: every colour,
-type and spacing value in `theme.css` resolves to a matching entry in
-`docs/design-tokens.md`, and that file's `**Last updated:**` line no longer holds
-the template's placeholder comment. If either fails, **stop and hand back to
-`/implement`** to finish the port.
+**Discard consumed prototypes.** If this feature built the look from
+`prototypes/`, delete the folder now - Step 0 has already confirmed the theme
+reached `docs/design-tokens.md` - and fold the deletion into this feature's
+commit. The HTML mockups were always throwaway.
 
 ## Step 2 - make the work commit
 
 Stage everything for this work item (any uncommitted step work plus the Step 1
 logging changes) and make one conventional work commit (for example
-`feat: <feature>`, `fix: <name>`, or `revert: roll back <feature>`). `Verify`, or
-the fallback build and tests, must pass first.
+`feat: <feature>`, `fix: <name>`, or `revert: roll back <feature>`).
 
 If the work carried per-step checkpoint commits, leave them as they are. They are
 this work item's history on the current branch, and rewriting them is not this
@@ -241,13 +224,9 @@ Stop and ask whether to push. Completing is not permission to push: it needs a
 separate explicit yes in the current chat. If the repo has no remote or upstream,
 say so instead of guessing.
 
-Then point the user at `/feature`, `/fix`, or `/rollback` for the next thing.
-
-Finish with a concise **How to try it** note for the completed work. For a
-rollback, explain how to confirm the removed behavior is gone and name one
-unaffected regression path. If the
-manual path is more than a couple of steps, tell the user to run `/try latest`;
-that command can read the archived feature after `current-feature.md` is reset.
+Then point the user at `/feature`, `/fix`, or `/rollback` for the next thing,
+and at `/try latest` for a manual walkthrough - it reads the archive, so it
+works after `current-feature.md` is reset.
 
 ## Rules
 
@@ -255,8 +234,7 @@ that command can read the archived feature after `current-feature.md` is reset.
   feature, fix, or rollback, plus any checkpoints made along the way.
 - A rollback preserves the original feature archive and adds a separate rollback
   archive. Never rewrite history to make the feature look as if it never existed.
-- Don't complete unfinished or failing work. The documented `Verify` command, or
-  the fallback build and tests, must pass first.
+- Don't complete unfinished or failing work; Step 0 is the gate.
 - Never complete while a P0 or P1 finding is `open` or `fixed` in the ledger. The
   recorded ways past the gate without code are `accepted` (only by the user's
   explicit decision, with their reason) or `invalid` (only from re-examination
@@ -267,11 +245,7 @@ that command can read the archived feature after `current-feature.md` is reset.
 - Pushing is the user's call. Do not treat `/complete`, an approved work commit,
   or "looks good" as permission to push; ask, and push only after an explicit yes
   in the current chat.
-- One item per completion. If a parent feature still has unchecked sub-features,
-  leave the parent unchecked.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

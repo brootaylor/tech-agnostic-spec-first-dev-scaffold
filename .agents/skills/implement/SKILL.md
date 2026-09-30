@@ -1,6 +1,6 @@
 ---
 name: implement
-description: "Build the feature, fix, or rollback described by the work order in context/current-feature.md, one small reviewable step at a time. Implements each step, shows the diff and explains it in plain English, tests, and iterates until it works. A Type: Rollback work order uses a guarded reverse patch that preserves the loop's own history. After each approved step it offers an optional commit checkpoint; the work-level commit and logging are /complete's job. Use when the user runs /implement, or asks to build, implement, or start the current feature, fix, or rollback once its work order is ready."
+description: "Build the feature, fix, or rollback in context/current-feature.md one small reviewed step at a time - diff, plain-English explanation, verification, and an optional commit checkpoint per step. A Type: Rollback work order uses a guarded reverse patch. The work-level commit is /complete's job. Use when the user runs /implement, or asks to build, implement, or start the current feature, fix, or rollback once its work order is ready."
 ---
 
 # implement - build the current work order, one reviewed step at a time
@@ -48,29 +48,21 @@ ad-hoc bug or change), or `/rollback` (for a completed feature reversal) first.
 Pull the conventions, active stack, browser targets, and accessibility standard
 from `docs/project-brief.md` so the code matches them.
 
-If the work order's Design reference points at `prototypes/*.html`, those mockups
-are the visual target - build components to match them, and treat
+If the work order's Design reference points at `prototypes/*.html`, those
+mockups are the visual target - build components to match them, and treat
 `prototypes/theme.css` as the token source. The work order's first step ports it
-into `docs/design-tokens.md` **and** the app's global stylesheet before any
-component is built. Both halves are required: `/complete` deletes `prototypes/`
-afterwards, and a theme that only reached the stylesheet leaves
-`docs/design-tokens.md` - the file every agent is told to read before writing
-CSS - holding the scaffold's shipped baseline palette for the rest of the
-project. That file arrives complete, so it looks correct either way; the port is
-done when its values match `theme.css` and its `**Last updated:**` line carries a
-date rather than the template's placeholder comment.
+into `docs/design-tokens.md` **and** the app's global stylesheet; hold that step
+to its "done when" exactly, because `/complete` refuses to delete `prototypes/`
+until both halves match.
 
 **Resuming?** If the **work order** already has some build steps checked off
 (`- [x]`), this feature was started earlier and interrupted (often a cleared
 context). Read the boxes in `context/current-feature.md` and nowhere else: a spec
 carries `- [x]` boxes of its own, in its test cases and its `Draft -> Ready`
 checklist, and reading those as build progress will skip work that was never
-done. The work order and
-its ticked steps are files, so pick up where it left off: read which steps are done,
-check `git status` and the log to see what is committed and what is still
+done. Check `git status` and the log to see what is committed and what is still
 in the working tree, then continue from the **first unchecked step** instead of
-starting over. No separate save/load is needed - the project instructions load
-`current-feature.md` every session.
+starting over. No separate save/load is needed - the ticked steps are on disk.
 
 ## Step 1 - record where this work starts
 
@@ -87,60 +79,11 @@ make before running `/implement`.
 
 ### Type: Rollback safeguard
 
-For a rollback work order, do not hand-delete the old feature and do not run a whole
-commit `git revert`. Completed feature commits also contain loop history and
-plan bookkeeping, while `current-feature.md` now contains the active rollback
-work order. Reversing the whole commit would damage that state.
-
-Before the first rollback build step:
-
-1. Read the approved work order's `Target commit` and `Target parent` fields. Stop
-   unless both values match `^[0-9a-f]{40}$`. Do not accept abbreviated,
-   uppercase, or otherwise malformed SHAs.
-2. Resolve the archive's introducing commit and verify it has exactly one parent.
-   Stop on a merge target. Resolve that single parent to a full SHA value.
-   Confirm the resolved commit exactly equals `Target commit` and the resolved
-   parent exactly equals `Target parent`. Stop on any mismatch.
-3. Confirm the resolved target is an ancestor of `HEAD` and the only dirty path
-   before applying the patch is the approved rollback work order. Stop on drift.
-4. Preview the resolved target's product diff while excluding `.agents/**`,
-   `.claude/**`, `context/**`, `docs/**`, `AGENTS.md`, `CLAUDE.md`, and
-   `prototypes/**`. Confirm the preview is non-empty and matches the Product
-   paths in the work order.
-5. Apply that resolved product diff in reverse with three-way conflict detection
-   and stage it. Use only the resolved full SHA values before running:
-
-       git diff --binary <target-parent> <target-commit> -- . \
-         ':(exclude).agents/**' \
-         ':(exclude).claude/**' ':(exclude)context/**' \
-         ':(exclude)docs/**' \
-         ':(exclude)AGENTS.md' ':(exclude)CLAUDE.md' \
-         ':(exclude)prototypes/**' |
-         git apply --reverse --3way --index
-
-   Never omit the protected pathspec exclusions for convenience.
-6. Show both `git diff --cached` and `git status`. Confirm no protected path is
-   staged or modified before presenting the step for review.
-
-> [!IMPORTANT]
-> A conflicting reverse apply does not leave the tree untouched. `--3way` writes
-> conflict markers into the working tree files and leaves the index at unmerged
-> stages, and git reports it as `Applied patch to '<file>' with conflicts.` -
-> the word *Applied*, on a command that exited non-zero. Leaving it for a later
-> skill to notice is not a plan: `/complete` stages everything for the work
-> commit, so anything still conflicted here is committed as product code with
-> its markers intact. Its safety pass rejects an unmerged index for exactly this
-> reason, but that is a backstop, not the fix - resolve it or report it here.
-
-If the reverse patch conflicts, say so explicitly and report three things: the
-exact paths, the later commit that appears involved, and the fact that the
-working tree now holds conflict markers. Confirm the damage with `git status`
-(conflicted paths show as `UU`) and `git ls-files -u`. Do not auto-resolve,
-discard, stash, reset, or switch to a broad checkout - those are the user's call
-precisely because the tree is already dirty. Ask whether to resolve only the
-conflict allowed by the approved work order or abandon the attempt, and if the
-answer is to abandon, ask before running the cleanup rather than choosing one. A
-cascade into another completed feature needs a new rollback plan.
+For a `Type: Rollback` work order, the first build step is the guarded reverse
+patch in `.agents/skills/rollback/reference/rollback-procedure.md`. Read it in
+full before that step and follow it exactly - its SHA checks, protected-path
+exclusions and conflict handling are not optional, and nothing else in this file
+replaces them.
 
 ## Step 2 - build one step, review, iterate, checkpoint
 
@@ -165,63 +108,49 @@ review and approval gate below after every step.
    assertion). This summary is the comprehension gate, so keep it concrete, not
    ceremonial. Include a short **How to try it** note when the step has a manual
    path: the command, URL, click, endpoint, or output the user can check.
-4. **Verify the step.** If `AGENTS.md` declares a `Verify` command, run that exact
-   command as the automated gate. It is only an umbrella for checks the project
-   actually has, so do not invent tests or other checks to satisfy it. If no
-   `Verify` command exists, run the documented build command, and the test
-   command when the project declares one. **A real `Test` command under Commands
-   in `AGENTS.md` is the switch**, and `/tests` is what adds one: while one is
-   declared, a step that adds logic must ship a passing test in the same diff and
-   the suite must be green before the step is approved; while none is declared,
-   say so plainly rather than claiming the step is tested. The Unit testing
-   selection in `docs/project-brief.md` records the human's intent, not the
-   gate - a runner marked `[active]` there with no command in `AGENTS.md` means
-   the setup has not been run, so point at `/tests` rather than installing one
-   mid-step. UI and integration-only steps ride on
-   screenshot plus build evidence. Run a focused test separately when it gives
-   faster feedback, then use `Verify` as the final automated gate. Create focused
-   test files next to the source they cover. Never install a runner mid-step
-   unless the current work order is explicitly the unit-testing setup itself (for
-   example `/fix "add unit testing"`); point at `/tests` instead. If a step
-   surfaces non-trivial logic the spec did not foresee, add a focused test then,
-   or note why not. Run `/check` when a "done when" needs observed runtime
-   behaviour - a click, download, request, command-line command, background job,
-   or flow across screens - and prove it against the real app rather than
-   eyeballing it.
+4. **Verify the step.**
+   - **Automated gate.** Run the `Verify` command from `AGENTS.md` when one is
+     declared - it wraps only checks the project really has, so never invent
+     one to satisfy it. Without it, run the documented build command, plus the
+     test command when one is declared. A focused test may run first for faster
+     feedback; the gate still runs last.
+   - **Testing switch.** A real `Test` command under Commands in `AGENTS.md`
+     turns testing on. While it is on, a step that adds logic ships a passing
+     test in the same diff, placed next to the source it covers, and the suite
+     is green before approval; logic the spec did not foresee gets a test too,
+     or a note saying why not. While it is off, say so plainly rather than
+     claiming the step is tested. UI and integration-only steps ride on
+     screenshot plus build evidence either way.
+   - **Never install a runner mid-step** - point at `/tests`, even when the
+     brief marks a runner `[active]` (that records intent; the missing command
+     means setup never ran). The one exception is a work order that is itself
+     the testing setup, such as `/fix "add unit testing"`.
+   - **Runtime behaviour.** When a "done when" needs the running app - a click,
+     download, request, command, background job, or multi-screen flow - run
+     `/check` rather than eyeballing it.
 5. **Iterate until it works.** If it fails or the user wants changes, revise the
    step (re-prompt or hand-edit the code), show the updated diff, and re-test.
    Repeat until the user approves.
-6. **Mark it done, then prompt when required.** After the applicable gate is
-   satisfied, check the step off (`- [x]`) in
-   `context/current-feature.md` so progress survives a context
-   clear. If the step repaired a finding tracked in
-   `context/findings.md`, set that finding's status to `fixed` now too
-   and note the repair in its **Resolution** line. **Read the work order's
-   `Fixes:` line to find which finding that is** - `/fix F-03` stamps the ID
-   there precisely so the link survives a context clear. Fall back to matching
-   the repair against the ledger only when the line is absent, and say you did.
-   Never set `closed`: a repair
-   is re-reviewed by `/audit` before it clears, because a fix can introduce a
-   worse defect than the one it removed. Then offer a short choice, noting that
-   checkpoints are optional since `/complete` makes the real work-level
-   commit. Use the current tool's short
-   user-input prompt when available; when you've just produced a long block to
-   read (a deep explanation, a big
-   walk-through), ask in plain text instead, so the prompt doesn't cover what the
-   user is still reading:
-   - **Continue** (default) - roll into the next step without committing.
-   - **Commit checkpoint** - commit just this step with a conventional message
-     (a cheap rollback point).
-   - **Walk me through it** - give a deeper, line-level explanation of the new or
-     changed code (why this approach, what each part does, any gotchas), then
-     re-ask this checkpoint prompt. A loop-back, not a terminal choice.
-   - **Stop here** - pause the loop so the user can review or come back later.
+6. **Mark it done, then offer a checkpoint.** Once the gate passes, tick the
+   step (`- [x]`) in `context/current-feature.md` so progress survives a context
+   clear. If it repaired a finding in `context/findings.md`, set that finding
+   `fixed` and note the repair in its **Resolution** line. The work order's
+   `Fixes:` line names the finding - `/fix F-03` stamps it there so the link
+   survives a context clear; match against the ledger only when the line is
+   absent, and say you did. Never set `closed`: `/audit` re-reviews every
+   repair, because a fix can introduce a worse defect than the one it removed.
 
-   On **Continue** or after **Commit checkpoint**, go to the next step. On **Walk
-   me through it**, explain in depth and then re-ask this prompt in plain text (the
-   explanation is long, so a modal would cover it). On **Stop here**, stop and say
-   where things stand: the work is intact on disk; run `/implement` again to
-   resume, or `/complete` to wrap up what's built so far.
+   Then offer a short choice. Use the current tool's short user-input prompt,
+   except straight after a long block of reading (such as a walk-through), where
+   plain text keeps the prompt from covering it:
+   - **Continue** (default) - roll into the next step without committing.
+   - **Commit checkpoint** - commit just this step with a conventional message,
+     a cheap rollback point. Optional: `/complete` makes the work-level commit.
+   - **Walk me through it** - a deeper, line-level explanation of the new or
+     changed code (why this approach, what each part does, any gotchas), then
+     ask this again.
+   - **Stop here** - pause. Say where things stand: the work is intact on disk,
+     and running `/implement` again resumes from the first unchecked step.
 
 ### Where the code goes, and the co-located spec copy
 
@@ -307,6 +236,4 @@ Then tell the user `/complete` makes the one work-level commit and logs the work
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

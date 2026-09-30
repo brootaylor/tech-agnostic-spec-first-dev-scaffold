@@ -22,11 +22,15 @@ sends"`. If the user just reported the problem in chat, use that.
 
 The input may also be a finding ID from `context/findings.md`, alone
 or with a description, for example `/fix F-03`. Pull the problem statement from
-that ledger entry. Use this form only between work items, when
-`current-feature.md` is the reset stub: this skill overwrites that file, so
-while a spec is active, repair its findings through `/implement` instead.
+that ledger entry.
 
 ## Step 1 - write the fix work order
+
+**Stop first if `context/current-feature.md` holds anything but the reset
+stub.** This skill overwrites that file, and a work order in flight would lose
+its ticked steps and its `**Base commit:**` without a word. Name it and point at
+`/implement` or `/complete`; a finding against active work is repaired through
+`/implement` instead.
 
 Pull context from `docs/project-brief.md` and `AGENTS.md`, then write a short
 work order to `context/current-feature.md` (this file holds whatever is being built
@@ -67,6 +71,4 @@ Then stop. Tell the user to review the fix work order, then run `/implement` to 
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

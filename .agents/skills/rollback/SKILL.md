@@ -51,10 +51,8 @@ Match the requested name against specs marked `**Status:** Complete` in
 `docs/features/` and `docs/specs/`, and against
 `context/history/features/*.md`. Exclude the directory README.
 
-Record the target spec's path in the work order. `/complete` resets it from
-`Complete` back to `Ready` when the rollback lands: the contract still stands,
-only the implementation is being withdrawn. Retiring the spec entirely is a
-separate human decision, never one this skill takes.
+Record the target spec's path on the work order's `Spec:` line; `/complete`
+resets it from `Complete` back to `Ready` when the rollback lands.
 
 Use the archive path to locate the commit that added it:
 
@@ -73,21 +71,9 @@ committed, explain that git cannot reconstruct a safe rollback from it.
 ## Step 2 - separate product changes from workflow history
 
 Inspect the target commit and build the product-path set from the files it
-changed. Exclude these protected workflow paths, the same set `/implement`
-excludes when it applies the reverse patch:
-
-- `.agents/**`
-- `.claude/**`
-- `context/**`
-- `docs/**`
-- `AGENTS.md`
-- `CLAUDE.md`
-- `prototypes/**`
-
-The rollback must preserve the original feature archive, the specs themselves,
-the active rollback work order, the skills, and throwaway prototype history.
-Root `README.md` and application code are product files unless the project says
-otherwise.
+changed, excluding the protected paths listed in
+`reference/rollback-procedure.md` - the same list `/implement` excludes when it
+applies the reverse patch, kept in that one file so the two cannot drift.
 
 If no product paths remain, stop. Do not create an empty rollback that only
 rewrites the loop's own records.
@@ -127,10 +113,11 @@ Fill in:
 - compatibility work that is allowed, if any
 - exact verification commands and observable removal criteria
 
-The first build step must apply the target commit's product diff in reverse using
-the guarded Type: Rollback behaviour in `/implement`. Later steps may repair only
-the specific downstream compatibility issues named in the work order. Do not use
-a rollback as permission for unrelated cleanup.
+The first build step must apply the target commit's product diff in reverse
+using the guarded procedure in `reference/rollback-procedure.md`, which
+`/implement` follows. Later steps may repair only the specific downstream
+compatibility issues named in the work order. Do not use a rollback as
+permission for unrelated cleanup.
 
 Red-team the draft before presenting it:
 
@@ -158,5 +145,5 @@ the work order, then run `/implement` to apply it.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown with a small risk table when later commits overlap.
+Output follows `AGENTS.md` - Output conventions. Add a small risk table when
+later commits overlap.

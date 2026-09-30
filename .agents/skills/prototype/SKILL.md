@@ -42,7 +42,7 @@ Step 2 is where the gaps get filled by asking.
 
 ## Step 2 - ask about the look and the pages
 
-Work in plan mode. Ask the user a short set of questions (use the current tool's
+Write nothing yet. Ask the user a short set of questions (use the current tool's
 short user-input prompt for discrete choices when available), seeded with what
 the plan already says:
 
@@ -95,11 +95,8 @@ Tell the user to open the files in a browser and iterate on the look. Point them
 at the concrete next step: run `/feature` on the first UI feature - it detects
 `prototypes/`, links these mockups as the work order's Design reference, and makes
 porting `theme.css` into `docs/design-tokens.md` **and** the project's stylesheet
-its first build step. Both halves matter: `/complete` deletes `prototypes/` once
-the look is built, so a port that skipped `docs/design-tokens.md` loses the theme
-from the one document every later agent is told to read. When the theme feels
-right the tokens carry across; the HTML mockups are reference and get discarded
-at that feature's `/complete`.
+its first build step. The tokens carry across; the HTML mockups get discarded at
+that feature's `/complete`.
 
 **Commit `prototypes/`, do not ignore it.** `theme.css` is the durable output and
 until it is ported it lives nowhere else, and the mockups are the build reference
@@ -110,6 +107,4 @@ never lands. This skill locks the look, it does not build the app.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.

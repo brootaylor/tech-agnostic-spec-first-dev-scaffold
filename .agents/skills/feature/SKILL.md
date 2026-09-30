@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Turn a Ready spec into a buildable work order. With no argument, picks the next spec marked Ready in docs/features/ or docs/specs/; given a name or path, uses that one. Refuses Draft specs and will not re-implement Complete ones. If a request has no spec yet, offers to draft one as Draft for the human to review and promote. Sizes the work, writes small reviewable build steps to context/current-feature.md, then red-teams its own draft for gaps, oversized steps, and scope creep before stopping at a review gate. Use when the user runs /feature, names a spec or feature, asks to start the next feature, or asks to break down or start work on a spec.
+description: "Turn a Ready spec into a buildable work order in context/current-feature.md - small reviewable build steps, red-teamed before a review gate. With no argument, takes the next Ready spec. Refuses Draft and Complete specs; with no spec at all, offers to draft one as Draft. Use when the user runs /feature, names a spec or feature, asks to start the next feature, or asks to break down or start work on a spec."
 ---
 
 # feature - turn a Ready spec into a buildable work order
@@ -52,7 +52,7 @@ This is not advisory. It is the project's core rule, stated in
 
 | Status | What this skill does |
 |--------|----------------------|
-| `Draft` | **Stop.** Do not spec, do not build. Report which sections look incomplete and ask the human to finish the spec and set it to `Ready`. |
+| `Draft` | **Stop.** Do not plan, do not build. Point at `/brief <spec>`, which reports what it still needs, and ask the human to finish it and set it to `Ready`. |
 | `Ready` | Proceed. |
 | `Complete` | **Stop.** Do not re-implement or overwrite. Tell the user the human must update the spec and reset it to `Ready` first. |
 
@@ -149,11 +149,16 @@ reviewable diffs it takes to satisfy it is a build decision.
 
 ## Step 3 - write the work order
 
+**Stop first if `context/current-feature.md` holds anything but the reset
+stub.** That is work in flight, and writing over it silently loses its ticked
+steps and its `**Base commit:**`. Name it and point at `/implement` to finish it
+or `/complete` to close it.
+
 For the one spec being built now, write a work order to
 `context/current-feature.md` (create `context/` if needed), following
-`reference/feature-work-order-template.md`. Fill every section: goal, design reference
-(when the feature has a visual target), in/out of scope, the build loop, small
-build steps as a checklist (`- [ ]`, each with an observable "done when" -
+`reference/feature-work-order-template.md`. Fill every section: goal, design
+reference (when the feature has a visual target), in/out of scope, small build
+steps as a checklist (`- [ ]`, each with an observable "done when" -
 `/implement` ticks them off and resumes from the first unchecked one),
 files/areas, data/contracts, testing, and notes for the "Ai".
 
@@ -229,6 +234,9 @@ code exists. Run the draft against these questions:
   steps, never a later one? Resequence if not.
 - **Contracts.** Is any type, route, or stored shape that a later feature will
   touch left undefined here? Lock it now and flag it load-bearing.
+- **Conventions.** Does the work order flag client vs server where it matters,
+  and the conventions in `docs/project-brief.md` that apply (for example,
+  filtering user-scoped queries by the authenticated user's id)?
 - **Scope honesty.** Is anything creeping in that belongs to a later feature? Is
   anything pushed to "out of scope" that this feature actually can't ship without?
 - **Done-whens.** Is each one observable and checkable by `/check`, or is it a
@@ -247,24 +255,7 @@ the gate working before a line of code is written.
 
 Tell the user to review and adjust. This skill plans; it never starts building.
 
-## Rules the spec must follow
-
-- **Small, reviewable steps.** Each step ends with something working and a diff
-  small enough to read in full. If a step's diff would be too big to review, the
-  step is too big - split it. This review gate is the point.
-- **Build in order.** Sequence the steps so each builds on the last and leaves
-  the app working.
-- **Lock data contracts early.** If a shape (type, API response, stored field) is
-  used by a later feature, define it now and flag it as load-bearing.
-- **Flag client vs server** and any conventions from `docs/project-brief.md`
-  (for example, filtering user-scoped queries by the authenticated user's id).
-- **Scope honestly.** State what is deferred so the feature stays contained.
-
-## When the work is done
-
-`/complete` handles it: it sets the source spec's `**Status:**` to `Complete`,
-updates its `**Last updated:**` line, archives the finished work order to
-`context/history/features/`. Then run `/feature` again for the next `Ready` spec.
+## Rules
 
 **This skill never edits a spec file.** Not the status line, not the content. The
 only exceptions in the whole workflow are `/complete` writing the status back, and
@@ -273,6 +264,4 @@ explicit approval.
 
 ## Formatting
 
-Format the output to match the project's conventions in `AGENTS.md`: concise,
-scannable markdown, with lists for enumerations and tables for matrices rather
-than dense paragraphs.
+Output follows `AGENTS.md` - Output conventions.
