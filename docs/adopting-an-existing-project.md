@@ -350,7 +350,7 @@ Worth knowing before quoting the work:
 |-----|---------------------------|
 | No reverse-engineering | Nothing reads the codebase and describes its behaviour. Producing that account is manual work |
 | No dependency scanning | `/audit` reviews code, not the supply chain. Run the ecosystem's own scanner alongside it |
-| The brief is manual | Recording the stack accurately is your reading of the codebase, and everything downstream depends on it |
+| The brief is only a draft | `/survey` separates proven from inferred, but approving it is your reading of the codebase, and everything downstream depends on it |
 | Specs only for new work | The loop does not retrospectively specify code you are not touching, by design |
 
 None of these blocks the work. These are the parts that stay yours.
