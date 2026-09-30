@@ -31,8 +31,9 @@ explain why the feature was removed.
 
 ## Step 0 - preflight
 
-Read `AGENTS.md`, `docs/project-brief.md`, `context/current-feature.md`, the
-completed feature archives in `context/history/features/`, and git state.
+Read `AGENTS.md`, `docs/project-brief.md` and `context/current-feature.md`
+unless they are already in context, then the completed feature archives in
+`context/history/features/` and git state.
 
 Stop before writing when:
 

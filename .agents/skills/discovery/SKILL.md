@@ -70,7 +70,7 @@ Cover the areas that matter to this project, not a fixed questionnaire:
 The brief's `## Stack` section is a set of exclusive choices - one `[active]`
 option per category - so treat an unsettled stack as a real question rather than
 a detail to fill in later. The choice constrains every spec written afterward,
-and `docs/setup.md` documents the compatibility traps for combinations
+and `docs/stack-setup.md` documents the compatibility traps for combinations
 that fight each other. `## Browser support` and `## Accessibility standard` have
 defaults worth confirming rather than interviewing at length.
 

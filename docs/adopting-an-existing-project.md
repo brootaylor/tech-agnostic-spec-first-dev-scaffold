@@ -130,7 +130,7 @@ Look before merging into `docs/`. Most of the scaffold's filenames are distincti
 find "$PROJECT/docs" -type f 2>/dev/null
 ```
 
-If any of the scaffold's filenames appear in that listing — `project-brief.md`, `setup.md`, `design-tokens.md`, `security.md`, `service-worker.md`, `storybook.md`, `modern-platform-guide.md`, `workflow.md`, `adopting-an-existing-project.md` — rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it.
+If any of the scaffold's filenames appear in that listing — `project-brief.md`, `stack-setup.md`, `agent-setup.md`, `design-tokens.md`, `security.md`, `service-worker.md`, `storybook.md`, `modern-platform-guide.md`, `workflow.md`, `adopting-an-existing-project.md` — rename the project's copy before you run the commands below, because `cp -R` overwrites silently and the project's version is the one that holds real content. `git mv docs/security.md docs/security-original.md` keeps it in history and out of the way; fold anything worth keeping into the scaffold's version at Step B, then delete it.
 
 Then copy the workflow layer across:
 

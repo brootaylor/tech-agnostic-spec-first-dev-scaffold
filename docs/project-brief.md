@@ -188,7 +188,7 @@ Content Security Policy (CSP) configuration, and framework-specific setup guidan
 ### Before you build from these selections
 
 Some combinations need extra wiring, and some frameworks override the Build
-selection entirely. `docs/setup.md` holds both the compatibility notes for those
+selection entirely. `docs/stack-setup.md` holds both the compatibility notes for those
 combinations and the one-time procedure that puts dependencies and config files
 in place. Read it once, after these selections are settled and before any
 implementation code exists; nothing in the build loop needs it afterwards.
@@ -334,7 +334,7 @@ These rules are enforced by ESLint when the Linting option is active. See `docs/
 These rules govern how agents must behave when working on this project.
 They apply regardless of which agent is used.
 
-- **Read this file first** — before doing anything else, read `docs/project-brief.md` in full
+- **Read this file first** — before doing anything else, read `docs/project-brief.md` in full, unless your agent already loads it into context (Claude Code imports it), in which case do not read it again
 - **Read the spec before implementing** — never generate implementation code without first reading the relevant spec
 - **Do not implement `Draft` specs** — see Spec conventions above
 - **Do not re-implement `Complete` specs** — if a spec is marked `Complete`, skip it. If changes are needed, the human must update the spec and reset its status to `Ready` first
@@ -350,7 +350,7 @@ They apply regardless of which agent is used.
 - **Tests before implementation, when the project has a test runner** — a real `Test` command under Commands in `AGENTS.md` is the switch. While one is declared, write the test first and implement until it passes. Unit testing ships as `None`, so on a fresh clone there is nothing to write tests with: point the human at `/tests` rather than installing a runner yourself or claiming a step was tested
 - **One spec at a time** — unless explicitly asked to scaffold multiple specs at once, implement one spec per session and confirm before moving to the next
 - **Confirm the stack before setup** — the `[active]` marks in the Stack section ship pre-filled with the scaffold's default, and nothing distinguishes a default left untouched from a decision the human made. Before running initial project setup, or generating any config file or dependency list from those marks, count the marks in every category, then state the active selections back to the human and confirm they are this project's actual choices. **A category with two or more `[active]` marks, or with none, is unresolved — stop and ask which one applies rather than picking one.** Two marks usually means a shipped default was never cleared, so do not assume the newer or lower entry is the intended one
-- **Read compatibility notes before setup** — before generating any config file, check `docs/setup.md` → Stack compatibility notes for the active stack combination and follow any instructions there
+- **Read compatibility notes before setup** — before generating any config file, check `docs/stack-setup.md` → Stack compatibility notes for the active stack combination and follow any instructions there
 - **Stop and report when setup fails** — if initial project setup produces errors or a tool cannot be configured correctly after a single attempt, stop immediately. Report exactly what failed, the full error message, and what was tried. Do not attempt further fixes in a loop. Wait for the human to review and advise before continuing
 - **Ask, don't assume** — if a spec is ambiguous, a constraint is unclear, or a decision would affect the whole project, ask rather than guess
 
@@ -484,7 +484,8 @@ docs/
   service-worker.md                                       # ← service worker configuration
   storybook.md                                            # ← storybook configuration
   security.md                                             # ← security headers and CSP configuration
-  setup.md                                                # ← one-time setup: procedure and stack compatibility notes
+  stack-setup.md                                          # ← one-time stack setup: procedure and compatibility notes
+  agent-setup.md                                          # ← wiring each "Ai" agent's config pointers
   workflow.md                                             # ← the ten-step human guide, setup to deployment
   adopting-an-existing-project.md                         # ← setup guide for a codebase that already exists
   features/                                               # ← user-facing feature specs
@@ -512,40 +513,7 @@ AGENTS.md                                                 # ← cross-tool agent
 - **Raster images** — place in `src/assets/images/` and reference via `<img>` with appropriate `alt` text
 - Do not place assets directly in `src/assets/` root — always use the subdirectories above
 
-### Default starting files
-
-- **Vanilla + Vite** — `src/index.html` is the default home page and `src/scripts/main.js` is the JavaScript file it references. Both are included as minimal starting files to build out
-- **React** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the React app
-- **React + Next.js** — pages and routing are managed by Next.js. Remove `src/index.html` and `src/scripts/main.js` if switching to Next.js
-- **Svelte** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the Svelte app
-- **Svelte + SvelteKit** — pages and routing are managed by SvelteKit. Remove `src/index.html` and `src/scripts/main.js` if switching to SvelteKit
-- **Astro** — pages and templating are managed by Astro's own file-based routing. Remove `src/index.html` and `src/scripts/main.js` if switching to Astro
-- **Eleventy** — pages and templating are managed by Eleventy's own templating system. Remove `src/index.html` and `src/scripts/main.js` if switching to Eleventy
-- **Every stack** — `src/assets/icons/spinner.svg` is framework-neutral and stays in place whichever stack is active. `docs/specs/components/button.spec.md` lists it as a dependency and requires it inlined, so removing it breaks that spec
-
----
-
-## Where to look
-
-| Question | File |
-|----------|------|
-| Which kind of spec do I write? | `docs/project-brief.md` → Features and components |
-| Which platform APIs and CSS features should I use? | `docs/modern-platform-guide.md` |
-| How do I write a feature spec? | `docs/features/_feature-template.md` |
-| How do I write a component, page, or layout spec? | `docs/specs/_component-template.spec.md` |
-| What does a feature need to do? | `docs/features/<feature>.md` |
-| What should a component do? | `docs/specs/components/<name>.spec.md` |
-| What should a page look like? | `docs/specs/pages/<name>.spec.md` |
-| What should a layout do? | `docs/specs/layouts/<name>.spec.md` |
-| What are the design tokens? | `docs/design-tokens.md` |
-| How is the service worker configured? | `docs/service-worker.md` |
-| How is Storybook configured? | `docs/storybook.md` |
-| What are the security headers and CSP? | `docs/security.md` |
-| How do I set the project up for the first time? | `docs/setup.md` |
-| Does my stack combination need extra wiring? | `docs/setup.md` → Stack compatibility notes |
-| Where does the work stand, and what is still open? | `context/sessions.md` → Where things stand |
-| Why was a past decision made that way? | `context/decisions.md` |
-| What is being built right now? | `context/current-feature.md` |
-| What review findings are open? | `context/findings.md` |
-| What has been built already, and in what order? | `context/history/` |
-| Which skill do I run, and when? | `AGENTS.md` |
+Which of the `src/` starting files each framework keeps or removes is in
+`docs/stack-setup.md` → Default starting files. What each document in `docs/`
+and `context/` is for, and when to read it, is in `AGENTS.md` → Read these for
+full context.

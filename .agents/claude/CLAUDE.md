@@ -1,7 +1,7 @@
 # Claude Code — Agent Config
 
-> Read `docs/project-brief.md` before doing anything else.
-> All project conventions, workflow rules, and context live there.
+> `docs/project-brief.md` is imported below, so it is already in context - do
+> not read it again. All project conventions, workflow rules, and context live there.
 > This file only contains additions specific to Claude Code.
 
 Shared cross-tool instructions live in `AGENTS.md`, imported below along with the

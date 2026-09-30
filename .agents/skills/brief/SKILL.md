@@ -1,6 +1,6 @@
 ---
 name: brief
-description: "Read-only briefing on a spec before you build it. With no argument, briefs the next Ready spec; given a name or path, briefs that one, whatever its status. Reads the spec, docs/project-brief.md, and the specs it depends on, then explains what it is, what it depends on, what it will touch, how big it is, whether it will split, and what still blocks it - without writing anything. Use when the user runs /brief, asks what the next feature involves, wants to preview a spec before /feature, wants to know why a Draft spec is not ready, or is deciding what to build next."
+description: "Read-only briefing on a spec before you build it - the next Ready spec, or a named one whatever its status: what it involves, depends on, and touches, how big it is, and what still blocks it. Use when the user runs /brief, asks what the next feature involves, wants to preview a spec before /feature, asks why a Draft spec is not ready, or is deciding what to build next."
 ---
 
 # brief - understand a spec before you build it

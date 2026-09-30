@@ -1,13 +1,13 @@
-# Setup
+# Stack setup
 
 > **This is a one-time setup guide, not a spec.** It carries no `**Status:**`
 > line and is never promoted to `Ready`. Read it once, before the first build;
 > the build loop never needs it again.
 
-It holds the two parts of `docs/project-brief.md` that only ever apply before
+It holds the parts of `docs/project-brief.md` that only ever apply before
 any implementation code exists: the procedure that puts dependencies and config
-files in place, and the compatibility notes for stack combinations that need
-extra wiring. They live here rather than in the brief so the file every agent
+files in place, which starting files each framework keeps or removes, and the
+compatibility notes for stack combinations that need extra wiring. They live here rather than in the brief so the file every agent
 loads on every session stays the part that governs the work, not the part that
 started it.
 
@@ -59,6 +59,17 @@ out, and some frameworks override the Build selection entirely.
 10. If ESLint is active, install ESLint and the plugins listed in `docs/security.md` and generate `eslint.config.mjs` — flat config, never `.eslintrc`, which ESLint v10 does not read at all
 11. If a security option is active, apply the configuration following `docs/security.md`
 12. Do not install any dependencies not directly required by the active stack selections
+
+### Default starting files
+
+- **Vanilla + Vite** — `src/index.html` is the default home page and `src/scripts/main.js` is the JavaScript file it references. Both are included as minimal starting files to build out
+- **React** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the React app
+- **React + Next.js** — pages and routing are managed by Next.js. Remove `src/index.html` and `src/scripts/main.js` if switching to Next.js
+- **Svelte** — `src/index.html` and `src/scripts/main.js` are the default starting files. Update `main.js` to mount the Svelte app
+- **Svelte + SvelteKit** — pages and routing are managed by SvelteKit. Remove `src/index.html` and `src/scripts/main.js` if switching to SvelteKit
+- **Astro** — pages and templating are managed by Astro's own file-based routing. Remove `src/index.html` and `src/scripts/main.js` if switching to Astro
+- **Eleventy** — pages and templating are managed by Eleventy's own templating system. Remove `src/index.html` and `src/scripts/main.js` if switching to Eleventy
+- **Every stack** — `src/assets/icons/spinner.svg` is framework-neutral and stays in place whichever stack is active. `docs/specs/components/button.spec.md` lists it as a dependency and requires it inlined, so removing it breaks that spec
 
 ---
 

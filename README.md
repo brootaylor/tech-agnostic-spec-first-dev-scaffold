@@ -76,10 +76,11 @@ In the order you meet them:
 |------|---------|
 | [`docs/workflow.md`](./docs/workflow.md) | Step-by-step guide from setup through to deployment — start here |
 | [`docs/project-brief.md`](./docs/project-brief.md) | Single source of truth — stack selector, conventions, agent rules |
-| [`docs/setup.md`](./docs/setup.md) | One-time setup — the procedure, and compatibility notes per stack combination |
+| [`docs/stack-setup.md`](./docs/stack-setup.md) | One-time stack setup — the procedure, and compatibility notes per stack combination |
+| [`docs/agent-setup.md`](./docs/agent-setup.md) | Wiring each "Ai" agent's config pointers, and adding or removing an agent |
 | [`docs/modern-platform-guide.md`](./docs/modern-platform-guide.md) | Which web platform APIs and features to use |
 | [`docs/design-tokens.md`](./docs/design-tokens.md) | Colour, spacing, and typography definitions |
-| [`AGENTS.md`](./AGENTS.md) | How "Ai" agents are configured in this project |
+| [`AGENTS.md`](./AGENTS.md) | Cross-tool instructions every "Ai" agent reads, and the skill reference |
 
 Optional configuration docs:
 
@@ -167,7 +168,8 @@ my-project/
 │   ├── workflow.md                         ← the ten-step guide, setup to deployment
 │   ├── adopting-an-existing-project.md     ← setup route for an existing codebase
 │   ├── project-brief.md                    ← single source of truth
-│   ├── setup.md                            ← one-time setup: procedure and stack compatibility notes
+│   ├── stack-setup.md                      ← one-time stack setup: procedure and compatibility notes
+│   ├── agent-setup.md                      ← wiring each "Ai" agent's config pointers
 │   ├── modern-platform-guide.md
 │   ├── design-tokens.md
 │   ├── service-worker.md

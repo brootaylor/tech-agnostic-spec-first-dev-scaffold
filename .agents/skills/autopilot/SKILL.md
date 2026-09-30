@@ -65,9 +65,10 @@ dependency and conflict gates in `/rollback` and `/implement`.
 
 ## Step 1 - preflight
 
-Read the state `/status` reads: `AGENTS.md`, `docs/project-brief.md`, the target
-spec and anything it depends on, `context/current-feature.md`,
-`context/findings.md`, and the git branch, status and recent log.
+Read the state `/status` reads: the target spec and anything it depends on,
+and the git branch, status and recent log - plus `AGENTS.md`,
+`docs/project-brief.md`, `context/current-feature.md` and
+`context/findings.md` unless they are already in context.
 
 Then decide whether it is safe to run at all. Stop before changing any file when:
 

@@ -10,7 +10,7 @@ Most agents read this file natively - Codex, Cursor, GitHub Copilot, Gemini CLI,
 Jules, Aider, Zed, Windsurf, Devin and OpenCode among them - and need no config of
 their own, so they work as soon as they open the project. Claude Code is the
 notable holdout, and the single ready-made config under `.agents/` is its. For any
-other agent that expects a config file of its own, see "Adding a new agent" below.
+other agent that expects a config file of its own, see `docs/agent-setup.md`.
 
 ## What this is
 
@@ -66,12 +66,15 @@ survive a context reset.** A `/compact` or `/clear` discards the conversation,
 and nothing warns you - there is no error, just a later session that has to
 rediscover what was known.
 
-**Read both files before acting when starting cold**, and after any `/clear` or
+**Read them before acting when starting cold**, and after any `/clear` or
 `/compact`. Neither is loaded automatically - `CLAUDE.md` imports `AGENTS.md`,
 `docs/project-brief.md`, `context/current-feature.md` and `context/findings.md`,
-but not these - so they have to be opened deliberately. `sessions.md` is short by
-design; read it every time. Read `decisions.md` when a choice looks settled and
-you are about to revisit it.
+but not these - so they have to be opened deliberately. Read only the **Where
+things stand** block of `sessions.md`; any dated entries below it are optional
+depth. From `decisions.md`, read only the headings (`grep '^## '
+context/decisions.md`), and open the full entry when a choice looks settled
+and you are about to revisit it. The whole file grows without limit, so reading
+all of it costs more with every decision recorded.
 
 **Rewrite it wholesale, every session; never append to it.** It is a snapshot of
 now, not a changelog. Appending leaves a confident account of a state that
@@ -90,19 +93,23 @@ asks to update memory, that always includes both files.
 The project's own documentation set is authoritative for everything else:
 
 - `docs/project-brief.md` - **the single source of truth.** Read it in full
-  before doing anything else: stack selection, browser targets, accessibility
-  standard, coding conventions, and agent behaviour rules
+  before doing anything else, unless your agent already loaded it (Claude Code
+  imports it): stack selection, browser targets, accessibility standard, coding
+  conventions, and agent behaviour rules
 - `docs/modern-platform-guide.md` - read before writing any HTML, CSS, or JS
 - `docs/design-tokens.md` - read before writing any CSS
 - `docs/security.md` - read before generating HTML or deployment config
 - `docs/service-worker.md` and `docs/storybook.md` - optional features, only when
   marked active in `docs/project-brief.md`
-- `docs/setup.md` - read once, before any implementation code exists: the
+- `docs/stack-setup.md` - read once, before any implementation code exists: the
   initial setup procedure, and the compatibility notes for stack combinations
   that need extra wiring. Nothing in the build loop reads it afterwards
 - `docs/workflow.md` - the ten-step human guide from setup through to deployment
 - `docs/adopting-an-existing-project.md` - the setup half of that guide for a
   project that already has code; it rejoins `docs/workflow.md` at Step 4
+
+Read each of these once per session, not once per step. If one is already in
+context, use that copy rather than reading it again.
 
 ## Specs are contracts
 
@@ -190,138 +197,10 @@ pointer, not in the repo.
 That rule is the whole premise: committing one tool's config forces that tool on
 everyone who clones the template.
 
-### Structure
-
-Any agent that needs a config of its own gets a directory:
-
-```bash
-.agents/
-├── claude/     # Claude Code
-├── skills/     # the shared workflow skills, read by any capable agent
-└── ...         # add any agent that has a config file convention
-```
-
-Every file inside an agent directory does two things only:
-
-1. Points the agent at the context files listed above, starting with
-   `docs/project-brief.md`
-2. Adds anything genuinely specific to that agent (custom commands, model
-   settings)
-
-Nothing else belongs in them. `.agents/skills/` is shared, not tool-specific:
-every agent works from the same tree, whether it discovers it through a pointer
-or is sent there by `AGENTS.md`.
-
-### How the pointers are wired
-
-An agent that reads `AGENTS.md` needs no pointer at all - this file is already at
-the project root. Claude Code looks for project config at `./CLAUDE.md` or
-`./.claude/CLAUDE.md`, with no setting that repoints it at `.agents/` - and
-`.claude/` is gitignored here, so anything put there stays personal to one
-machine. It therefore needs a pointer at each location it expects.
-
-| Location | Points to |
-|----------|-----------|
-| `CLAUDE.md` | `.agents/claude/CLAUDE.md` |
-| `.claude/skills` | `../.agents/skills` |
-
-**macOS and Linux** - symlink:
-
-```bash
-ln -s .agents/claude/CLAUDE.md CLAUDE.md
-mkdir -p .claude && ln -s ../.agents/skills .claude/skills
-```
-
-> [!IMPORTANT]
-> *The `.claude/skills` pointer needs both the `mkdir -p` and the leading `../`,
-> and each guards a different failure. `.claude/` is gitignored, so it does not
-> exist in a fresh clone and `ln -s` will not create it. And a symlink's target is
-> resolved relative to the link's own directory, so `.agents/…` without the `../`
-> creates a link pointing at `.claude/.agents/…` - which `ln` reports as success
-> and `ls -l` displays as if it were correct. `ls .claude/skills` is what proves
-> it resolves. Only the root-level `CLAUDE.md` line needs neither guard.*
-
-**Windows** - `ln -s` needs Developer Mode or an elevated terminal. If neither is
-available, copy instead, then keep the copies in sync by hand:
-
-```bat
-copy .agents\claude\CLAUDE.md CLAUDE.md
-if not exist .claude mkdir .claude
-xcopy /E /I .agents\skills .claude\skills
-```
-
-**Every pointer is gitignored**, so a Windows copy and a macOS symlink never
-collide in git, and no one inherits another developer's agent choice. Symlink
-where you can: a copy drifts from its source, which is how the shared skills tree
-ended up symlinked rather than duplicated per tool.
-
-### Switching between agents
-
-There is no project-level switch. Every agent reads the same
-`docs/project-brief.md` and the same specs, so they always share one
-understanding of the project. For most agents there is nothing to do but open the
-project; for one that needs a pointer, create it first.
-
-### Adding a new agent
-
-First check whether the agent reads `AGENTS.md` - most now do, and those need
-none of the steps below. For one that insists on a config file of its own:
-
-1. Create `.agents/<agent-name>/`
-2. Create the agent's required config file inside it
-3. In that file, tell the agent to read `docs/project-brief.md` first. See
-   `.agents/claude/CLAUDE.md` for a working example
-4. Add any agent-specific config below that instruction
-5. Create the pointer at the location the agent expects, per the table above
-6. Add that pointer path to `.gitignore`, **anchored with a leading slash** -
-   `/<CONFIG>.md`, not `<CONFIG>.md`
-
-All project conventions are already in `docs/project-brief.md`, so there is
-nothing else to duplicate.
-
-> [!IMPORTANT]
-> **A `.gitignore` pattern containing no slash matches at every depth, not just
-> the root.** *Unanchored, the pointer's filename ignores the pointer **and** the
-> real config at `.agents/<agent-name>/` - the only tracked copy. This project's
-> own `.gitignore` carried an unanchored `CLAUDE.md` until it was fixed; nothing
-> was lost only because that file was already tracked, and an ignore rule cannot
-> untrack. A config you add now has no such protection. Nothing reports it:
-> `git add -A` skips the file in silence, `git status` cannot list what it never
-> staged, and the pointer resolves perfectly for whoever created it. The failure
-> surfaces only in someone else's clone, as a dangling link. Anchor the pattern,
-> then prove it with `git check-ignore -v .agents/<agent-name>/<file>` - it
-> should print nothing.*
-
-### Removing an agent
-
-Delete the pointer and the directory:
-
-```bash
-rm CLAUDE.md
-rm -rf .agents/claude
-```
-
-Nothing else changes.
-
-### Troubleshooting
-
-**The agent isn't reading `docs/project-brief.md`.** Check the pointer exists
-where the agent expects it. `ls -la` should show an entry like
-`CLAUDE.md -> .agents/claude/CLAUDE.md`. If it's missing, recreate it.
-
-**The agent reads its config but ignores the project brief.** Some agents need an
-explicit instruction to read external files; a path alone isn't always enough.
-Check the agent's documentation and copy how the existing configs in `.agents/`
-handle it.
-
-**The agent produces output that contradicts the project brief.** The brief is
-probably incomplete or ambiguous in that area. Clarify the relevant section and
-re-run. Don't hand-edit the agent's output to paper over a brief that needs
-fixing.
-
-**The agent implemented the wrong thing.** Check the spec it built against. The
-spec is the contract, so a wrong result usually means a spec that was promoted to
-`Ready` before it was settled.
+The pointer table, the setup commands, adding, switching or removing an agent,
+and troubleshooting are all in `docs/agent-setup.md`, which you read only when
+changing that wiring. **Never delete `.agents/`**: it holds the only real copies
+of the agent config and the skills tree, and every pointer dangles without it.
 
 ## Workflow
 
@@ -342,18 +221,6 @@ any capable agent can read and follow. Where each tool finds them:
 > it** - there is no auto-discovery to rely on. A tool that has its own skills
 > convention will not find these at `.agents/skills/`. The review gates are in the
 > `SKILL.md`, so a skill followed this way behaves the same as one invoked.*
-
-Unused pointers can be removed, but **`.agents/` is never one of them.** Those
-pointer paths are gitignored; `.agents/` holds the only real copies of
-both the agent config and the skills tree. Deleting it leaves every pointer
-dangling - no config and no skills, with `ls -l` still showing links that look
-healthy.
-
-A project using no Claude Code can delete the `CLAUDE.md` pointer, `.claude/` and
-`.agents/claude/`, but must keep `AGENTS.md` and `.agents/skills/` - the first is
-what every other tool reads, the second is where the skills actually live. Do not
-duplicate the skills under `.cursor/`, `.opencode/skills/` or any other tool's
-tree; each of those discovers a compatible tree already.
 
 When changing shared workflow behavior, edit
 `.agents/skills/<skill>/SKILL.md` - the one tracked copy. Every tool reaches it
@@ -449,25 +316,9 @@ for that skill.
 
 ## Automatic verification
 
-Automatic GitHub checks are a separate explicit setup. Running `/ci` inspects the
-real project and defines one `Verify` command from checks that already exist.
-Use this order when available: typecheck, tests, then build. Never invent a test
-runner or another check just to fill the command.
-
-For JavaScript and TypeScript projects, prefer a package script such as `verify`
-and use the detected package manager. For other stacks, use the native task
-runner or exact combined command. Record the exact command under Commands below.
-
-The optional `.github/workflows/verify.yml` must run that same command for pull
-requests and pushes to the default branch. Preserve existing workflows, use the
-project's real runtime and install command, and grant only `contents: read` by
-default. This setup does not add local git hooks, coverage, browser tests,
-security scans, or version matrices. Those remain later project choices.
-
-GitHub branch protection or a ruleset can require the check after the repository
-is pushed, but that is a separate remote setting. A project with no automatic
-GitHub checks still works; the loop falls back to the documented build and test
-commands.
+Automatic GitHub checks are a separate, explicit setup, and `/ci` owns their
+rules. A project with no automatic GitHub checks still works: the loop falls
+back to the documented build and test commands.
 
 ## Commands
 

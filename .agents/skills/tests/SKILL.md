@@ -33,7 +33,7 @@ Read enough files to identify the real setup:
 - package manager lockfile
 - an existing `Verify` command and `.github/workflows/verify.yml`, when present
 - `docs/project-brief.md`
-- `docs/setup.md` -> Stack compatibility notes -> Testing setup, for the
+- `docs/stack-setup.md` -> Stack compatibility notes -> Testing setup, for the
   framework-specific wiring a test config needs beyond a standard install
 
 Do not assume Next.js. Detect the stack from files.

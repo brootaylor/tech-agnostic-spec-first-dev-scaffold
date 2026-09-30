@@ -149,7 +149,7 @@ mkdir -p .claude && ln -s ../.agents/skills .claude/skills
 
 Both links are gitignored, so your choice of agent never travels with the repository. On Windows, where `ln -s` needs Developer Mode or an elevated terminal, copy the files instead and keep them in sync by hand.
 
-See `AGENTS.md` for the pointer table and the notes on adding an agent that expects a config file of its own.
+See `docs/agent-setup.md` for the pointer table and the notes on adding an agent that expects a config file of its own.
 
 ### Create the two state files
 
@@ -203,7 +203,7 @@ Open `docs/project-brief.md` and complete two things before anything else:
 
 With your stack selected, `package.json` needs to be populated with the correct dependencies.
 
-The procedure itself lives in `docs/setup.md` rather than being repeated here, so there's no second copy to fall out of date — and it's the file your agent reads anyway. Two sections there matter:
+The procedure itself lives in `docs/stack-setup.md` rather than being repeated here, so there's no second copy to fall out of date — and it's the file your agent reads anyway. Two sections there matter:
 
 - **Setup instructions** — the procedure in two versions: a list to work through by hand, and the numbered version an agent executes. Follow whichever suits you.
 - **Stack compatibility notes** — the combinations that need extra wiring. Check yours before generating any config.
@@ -211,7 +211,7 @@ The procedure itself lives in `docs/setup.md` rather than being repeated here, s
 **With an agent, this is the whole prompt:**
 
 ```
-Read `docs/project-brief.md`, then follow `docs/setup.md` to complete the initial project setup.
+Read `docs/project-brief.md`, then follow `docs/stack-setup.md` to complete the initial project setup.
 ```
 
 It covers setup only — specs and design tokens come in later steps.

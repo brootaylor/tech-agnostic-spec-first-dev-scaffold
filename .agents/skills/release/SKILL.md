@@ -1,6 +1,6 @@
 ---
 name: release
-description: Prepare a spec-first project for deployment to Render or Vercel. Reads the specs, project commands, app config, and current repo state; verifies build, start, output, env, health checks, and provider config; can create or update render.yaml or vercel.json when requested; and stops before any external deploy, service creation, remote env change, push, publish, or destructive action unless the user explicitly approves. Use when the user runs /release, invokes $release, asks for Render setup, Vercel setup, deploy readiness, deployment config, render.yaml, or vercel.json.
+description: Prepare a spec-first project for deployment to Render or Vercel - verify build, start, env and provider config, and write render.yaml or vercel.json on request. Stops before any deploy, push, or remote change without explicit approval. Use when the user runs /release, invokes $release, or asks for Render or Vercel setup, deploy readiness, or deployment config.
 ---
 
 # release - deployment readiness for Render and Vercel

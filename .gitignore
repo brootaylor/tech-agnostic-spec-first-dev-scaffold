@@ -19,8 +19,8 @@ node_modules/
 # Only the pointers this scaffold's own setup creates, ignored so no one's tool
 # choice travels with the repo. Agents that read AGENTS.md need nothing here —
 # that file is committed. Add an agent that wants a config file of its own, and
-# its pointer goes here too (see AGENTS.md, "Adding a new agent"). Config your
-# editor writes for you alone belongs in your global gitignore
+# its pointer goes here too (see docs/agent-setup.md, "Adding a new agent").
+# Config your editor writes for you alone belongs in your global gitignore
 # (`git config --global core.excludesFile`), not in a template everyone clones.
 #
 # Anchor every pointer with a leading slash. A pattern with no slash in it
