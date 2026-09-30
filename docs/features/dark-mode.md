@@ -117,4 +117,4 @@ Complete every item before changing the status to `Ready`.
 
 > This spec is `Draft` for exactly one reason: `ThemeToggle` is still `Draft`, so
 > the unchecked row above is the blocker. Promote that component spec first, then
-> this one. `/brief docs/features/dark-mode.md` reports the same thing.
+> this one. `/preview docs/features/dark-mode.md` reports the same thing.
